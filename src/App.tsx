@@ -1,12 +1,8 @@
 import './index.css';
-import { Button } from '@/Components/ui/button.tsx';
+import { Layout } from '@/Components/components.ts';
 
 function App() {
-  return (
-    <div>
-      <Button>Music</Button>
-    </div>
-  );
+  return <Layout />;
 }
 
 export default App;
