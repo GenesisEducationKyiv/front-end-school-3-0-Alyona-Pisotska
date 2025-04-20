@@ -1,7 +1,12 @@
-import "./index.css";
+import './index.css';
+import { Button } from '@/Components/ui/button.tsx';
 
 function App() {
-  return <div className="text-red-500 bg-red-300">Music app</div>;
+  return (
+    <div>
+      <Button>Music</Button>
+    </div>
+  );
 }
 
 export default App;
