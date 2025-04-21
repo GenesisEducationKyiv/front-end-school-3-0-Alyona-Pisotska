@@ -3,20 +3,20 @@ import { Input, FormControl, FormField, FormItem, FormLabel, FormMessage } from 
 
 import type { TrackMetadataValues } from '@/lib/types/types.ts';
 
-type TrackTitleFieldProps = {
+type ArtistNameFieldProps = {
   control: Control<TrackMetadataValues>;
 };
 
-const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
+const ArtistNameField = ({ control }: ArtistNameFieldProps) => {
   return (
     <FormField
       control={control}
-      name='title'
+      name='artist'
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Track title</FormLabel>
+          <FormLabel>Artist name</FormLabel>
           <FormControl>
-            <Input placeholder='Enter composition name' {...field} />
+            <Input placeholder='Enter artist name' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -25,4 +25,4 @@ const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
   );
 };
 
-export { TrackTitleField };
+export { ArtistNameField };

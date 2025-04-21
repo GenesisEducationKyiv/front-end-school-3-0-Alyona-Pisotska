@@ -1,3 +1,6 @@
+import { z } from 'zod';
+import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
+
 import type { Order } from './types.ts';
 
 type Track = {
@@ -29,4 +32,6 @@ type TrackListQueryParams = {
   search?: string;
 };
 
-export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams };
+type TrackMetadataValues = z.infer<typeof trackMetadataSchema>;
+
+export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams, TrackMetadataValues };

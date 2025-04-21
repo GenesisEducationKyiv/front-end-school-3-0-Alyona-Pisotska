@@ -1,17 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button, Form } from '@/Components/components.ts';
-import { TrackTitleField } from './components/components.ts';
+import { TrackTitleField, ArtistNameField } from './components/components.ts';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
 
-type TrackMetadataValues = z.infer<typeof trackMetadataSchema>;
+import type { TrackMetadataValues } from '@/lib/types/types.ts';
 
 const TrackForm = () => {
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
     defaultValues: {
       title: '',
+      artist: '',
     },
   });
 
@@ -29,6 +29,7 @@ const TrackForm = () => {
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
         <TrackTitleField control={control} />
+        <ArtistNameField control={control} />
 
         <Button type='submit'>Save</Button>
       </form>
