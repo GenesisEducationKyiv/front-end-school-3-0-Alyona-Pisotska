@@ -45,15 +45,3 @@ export {
   FormMessage,
   FormField,
 } from './ui/form.tsx';
-export {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select.tsx';
