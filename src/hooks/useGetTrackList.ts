@@ -17,7 +17,7 @@ const processTrackList = (data: TrackListResponse | undefined) => {
 
 const useGetTrackList = ({ page, sort, order, search }: TrackListQueryParams) => {
   const { isFetching, data } = useQuery<TrackListResponse>({
-    queryKey: [API_ENDPOINTS.trackList, page, sort, order, search],
+    queryKey: [URL, page, sort, order, search],
     queryFn: () => {
       const params = new URLSearchParams();
 
