@@ -15,9 +15,9 @@ const processTrackList = (data: TrackListResponse | undefined) => {
   };
 };
 
-const useGetTrackList = ({ page, sort, order }: TrackListQueryParams) => {
+const useGetTrackList = ({ page, sort, order, search }: TrackListQueryParams) => {
   const { isFetching, data } = useQuery<TrackListResponse>({
-    queryKey: [API_ENDPOINTS.trackList, page, sort, order],
+    queryKey: [API_ENDPOINTS.trackList, page, sort, order, search],
     queryFn: () => {
       const params = new URLSearchParams();
 
@@ -25,6 +25,7 @@ const useGetTrackList = ({ page, sort, order }: TrackListQueryParams) => {
       params.append('limit', LIMIT.toString());
       params.append('sort', sort);
       params.append('order', order);
+      search?.length && params.append('search', search);
 
       return fetcherGet<TrackListResponse>(URL, { params });
     },

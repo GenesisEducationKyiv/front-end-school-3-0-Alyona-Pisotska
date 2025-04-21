@@ -26,6 +26,7 @@ type TrackListQueryParams = {
   page: number;
   sort: string;
   order: Order;
+  search?: string;
 };
 
 export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams };
