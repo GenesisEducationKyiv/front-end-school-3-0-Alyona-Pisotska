@@ -1,7 +1,8 @@
-import "./index.css";
+import './index.css';
+import { Layout } from '@/Components/components.ts';
 
 function App() {
-  return <div className="text-red-500 bg-red-300">Music app</div>;
+  return <Layout />;
 }
 
 export default App;
