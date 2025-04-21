@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetcherGet } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
-import { TrackListResponse } from '@/lib/types/types.ts';
+import type { TrackListResponse } from '@/lib/types/types.ts';
 
 const processTrackList = (data: TrackListResponse | undefined) => {
   return {
@@ -12,13 +12,19 @@ const processTrackList = (data: TrackListResponse | undefined) => {
   };
 };
 
-const useGetTrackList = () => {
+const useGetTrackList = ({ page, limit, sort, order }) => {
   const { isFetching, data } = useQuery<TrackListResponse>({
-    queryKey: [API_ENDPOINTS.trackList],
+    queryKey: [API_ENDPOINTS.trackList, page, limit, sort, order],
     queryFn: ({ queryKey }) => {
       const [url] = queryKey;
+      const params = new URLSearchParams();
 
-      return fetcherGet<TrackListResponse>(url);
+      params.append('page', page);
+      params.append('limit', limit);
+      params.append('sort', sort);
+      params.append('order', order);
+
+      return fetcherGet<TrackListResponse>(url, { params });
     },
   });
 

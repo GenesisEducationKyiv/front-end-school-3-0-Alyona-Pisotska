@@ -1,23 +1,3 @@
-type Track = {
-  id: string;
-  title: string;
-  artist: string;
-  album: string;
-  genre: [string];
-  slug: string;
-  coverImage: string;
-};
-
-type PaginationMeta = {
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-};
-
-type TrackListResponse = {
-  data: Track[];
-  meta: PaginationMeta;
-};
-
-export { Track, PaginationMeta, TrackListResponse };
+export type { Track, PaginationMeta, TrackListResponse } from './track.type.ts';
+export type { Order } from './order.type.ts';
+export type { TrackListSort } from './track-list-sort.type.ts';
