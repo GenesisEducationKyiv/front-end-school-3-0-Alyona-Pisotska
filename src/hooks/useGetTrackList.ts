@@ -3,7 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { fetcherGet } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
-import type { TrackListResponse } from '@/lib/types/types.ts';
+import type { TrackListResponse, TrackListQueryParams } from '@/lib/types/types.ts';
+
+const LIMIT = 10;
+const URL = API_ENDPOINTS.trackList;
 
 const processTrackList = (data: TrackListResponse | undefined) => {
   return {
@@ -12,19 +15,18 @@ const processTrackList = (data: TrackListResponse | undefined) => {
   };
 };
 
-const useGetTrackList = ({ page, limit, sort, order }) => {
+const useGetTrackList = ({ page, sort, order }: TrackListQueryParams) => {
   const { isFetching, data } = useQuery<TrackListResponse>({
-    queryKey: [API_ENDPOINTS.trackList, page, limit, sort, order],
-    queryFn: ({ queryKey }) => {
-      const [url] = queryKey;
+    queryKey: [API_ENDPOINTS.trackList, page, sort, order],
+    queryFn: () => {
       const params = new URLSearchParams();
 
-      params.append('page', page);
-      params.append('limit', limit);
+      params.append('page', page.toString());
+      params.append('limit', LIMIT.toString());
       params.append('sort', sort);
       params.append('order', order);
 
-      return fetcherGet<TrackListResponse>(url, { params });
+      return fetcherGet<TrackListResponse>(URL, { params });
     },
   });
 

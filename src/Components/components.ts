@@ -3,9 +3,19 @@ export { Search } from './Search/Search.tsx';
 export { CreateTrackButton } from './CreateTrackButton/CreateTrackButton.tsx';
 export { TrackToolbar } from './TrackToolbar/TrackToolbar.tsx';
 export { TracksTable } from './TracksTable/TracksTable.tsx';
+export { AppPagination } from './AppPagination/AppPagination.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';
 export { Input } from './ui/input.tsx';
 export { Checkbox } from './ui/checkbox.tsx';
 export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table.tsx';
+export {
+  Pagination,
+  PaginationContent,
+  PaginationLink,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from './ui/pagination.tsx';
