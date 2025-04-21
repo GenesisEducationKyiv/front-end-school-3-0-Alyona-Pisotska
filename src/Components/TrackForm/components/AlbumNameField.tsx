@@ -3,22 +3,20 @@ import { Input, FormControl, FormField, FormItem, FormLabel, FormMessage } from 
 
 import type { TrackMetadataValues } from '@/lib/types/types.ts';
 
-type TrackTitleFieldProps = {
+type AlbumNameFieldProps = {
   control: Control<TrackMetadataValues>;
 };
 
-const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
+const AlbumNameField = ({ control }: AlbumNameFieldProps) => {
   return (
     <FormField
       control={control}
-      name='title'
+      name='album'
       render={({ field }) => (
         <FormItem>
-          <FormLabel className='gap-0'>
-            Track title <span className='text-red-500'>*</span>
-          </FormLabel>
+          <FormLabel>Album name</FormLabel>
           <FormControl>
-            <Input placeholder='Enter composition name' {...field} />
+            <Input placeholder='Enter album name' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -27,4 +25,4 @@ const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
   );
 };
 
-export { TrackTitleField };
+export { AlbumNameField };

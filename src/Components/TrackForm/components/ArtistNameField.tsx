@@ -14,7 +14,9 @@ const ArtistNameField = ({ control }: ArtistNameFieldProps) => {
       name='artist'
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Artist name</FormLabel>
+          <FormLabel className='gap-0'>
+            Artist name <span className='text-red-500'>*</span>
+          </FormLabel>
           <FormControl>
             <Input placeholder='Enter artist name' {...field} />
           </FormControl>
