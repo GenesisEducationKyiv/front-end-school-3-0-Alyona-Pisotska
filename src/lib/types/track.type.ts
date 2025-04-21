@@ -1,3 +1,5 @@
+import type { Order } from './types.ts';
+
 type Track = {
   id: string;
   title: string;
@@ -20,4 +22,10 @@ type TrackListResponse = {
   meta: PaginationMeta;
 };
 
-export { Track, PaginationMeta, TrackListResponse };
+type TrackListQueryParams = {
+  page: number;
+  sort: string;
+  order: Order;
+};
+
+export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams };
