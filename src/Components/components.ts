@@ -5,6 +5,7 @@ export { TrackToolbar } from './TrackToolbar/TrackToolbar.tsx';
 export { TracksTable } from './TracksTable/TracksTable.tsx';
 export { AppPagination } from './AppPagination/AppPagination.tsx';
 export { Loader } from './Loader/Loader.tsx';
+export { InputWithIcon } from './InputWithIcon/InputWithIcon.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';
