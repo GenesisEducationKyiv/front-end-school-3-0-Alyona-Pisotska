@@ -1,12 +1,12 @@
 import { createContext } from 'react';
-import { useGetTrackList, useState, useMemo } from '@/hooks/hooks.ts';
+import { useGetTrackList, useState, useMemo, useSearchTextContext } from '@/hooks/hooks.ts';
 import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
 import type { Track, PaginationMeta, Order, TrackListSort } from '@/lib/types/types.ts';
 
 const INITIAL_PAGE = 1;
 
-type TrackContextProvider = {
+type TrackContextProviderProps = {
   children: React.ReactNode;
 };
 
@@ -23,15 +23,17 @@ type TTrackContext = {
 
 const TrackContext = createContext<TTrackContext | null>(null);
 
-function TrackContextProvider({ children }: TrackContextProvider) {
+const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const [orderBy, setOrderBy] = useState<Order>(ORDER_BY.asc);
   const [sortBy, setSortBy] = useState<TrackListSort>(TRACK_TABLE_CELL_IDS.artist);
   const [page, setPage] = useState(INITIAL_PAGE);
+  const { debouncedSearchText } = useSearchTextContext();
 
   const { trackList, paginationData, isLoadingTrackList } = useGetTrackList({
     page,
     sort: sortBy,
     order: orderBy,
+    search: debouncedSearchText,
   });
 
   const totalPages = useMemo(() => {
@@ -66,6 +68,6 @@ function TrackContextProvider({ children }: TrackContextProvider) {
       {children}
     </TrackContext.Provider>
   );
-}
+};
 
 export { TrackContextProvider, TrackContext };
