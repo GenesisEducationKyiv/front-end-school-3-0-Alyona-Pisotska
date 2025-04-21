@@ -7,7 +7,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Table, TableBody } from '@/Components/components.ts';
+import { Table, TableBody, Loader } from '@/Components/components.ts';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components.ts';
 import { isTrackListSortableColumn } from '@/lib/utils/utils.ts';
 import { ORDER_BY } from '@/lib/constants/constants.ts';
@@ -15,7 +15,7 @@ import { ORDER_BY } from '@/lib/constants/constants.ts';
 import type { Track, Order } from '@/lib/types/types.ts';
 
 const TracksTable = () => {
-  const { tracks, handleChangeOrder, handleChangeSort } = useTrackContext();
+  const { tracks, isLoadingTrackList, handleChangeOrder, handleChangeSort } = useTrackContext();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -50,6 +50,10 @@ const TracksTable = () => {
       }
     }
   }, [handleChangeOrder, handleChangeSort, sorting]);
+
+  if (isLoadingTrackList) {
+    return <Loader />;
+  }
 
   return (
     <Table className='w-full border-y'>
