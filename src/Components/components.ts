@@ -6,6 +6,7 @@ export { TracksTable } from './TracksTable/TracksTable.tsx';
 export { AppPagination } from './AppPagination/AppPagination.tsx';
 export { Loader } from './Loader/Loader.tsx';
 export { InputWithIcon } from './InputWithIcon/InputWithIcon.tsx';
+export { TrackForm } from './TrackForm/TrackForm.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';
@@ -21,3 +22,15 @@ export {
   PaginationNext,
   PaginationEllipsis,
 } from './ui/pagination.tsx';
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from './ui/dialog.tsx';
