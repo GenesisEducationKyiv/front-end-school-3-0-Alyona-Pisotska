@@ -1,4 +1,12 @@
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/Components/components.ts';
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  TrackForm,
+} from '@/Components/components.ts';
 
 const CreateTrackButton = () => {
   return (
@@ -7,11 +15,14 @@ const CreateTrackButton = () => {
         <Button>Create track</Button>
       </DialogTrigger>
 
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>Create a new track</DialogTitle>
         </DialogHeader>
-        Form here...
+
+        <div className='p-4'>
+          <TrackForm />
+        </div>
       </DialogContent>
     </Dialog>
   );
