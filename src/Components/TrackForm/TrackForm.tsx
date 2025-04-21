@@ -7,7 +7,7 @@ import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.t
 
 type TrackMetadataValues = z.infer<typeof trackMetadataSchema>;
 
-export function TrackForm() {
+const TrackForm = () => {
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
     defaultValues: {
@@ -34,4 +34,6 @@ export function TrackForm() {
       </form>
     </Form>
   );
-}
+};
+
+export { TrackForm };
