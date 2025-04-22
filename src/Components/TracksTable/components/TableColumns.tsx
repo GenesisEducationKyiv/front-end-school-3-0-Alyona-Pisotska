@@ -1,17 +1,18 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { Button, Checkbox } from '@/Components/components.ts';
-import { cn } from '@/lib/utils/utils.ts';
+import { EmptyDataCell, TrackActionsDropdownMenu } from './components.ts';
 import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
 import type { Track } from '@/lib/types/types.ts';
 
 const TABLE_CELL_DATA = {
-  select: { id: TRACK_TABLE_CELL_IDS.select },
+  select: { id: TRACK_TABLE_CELL_IDS.select, label: '' },
   artist: { id: TRACK_TABLE_CELL_IDS.artist, label: 'Artist' },
   title: { id: TRACK_TABLE_CELL_IDS.title, label: 'Composition' },
   album: { id: TRACK_TABLE_CELL_IDS.album, label: 'Album' },
   genres: { id: TRACK_TABLE_CELL_IDS.genres, label: 'Genres' },
+  actions: { id: TRACK_TABLE_CELL_IDS.actions, label: '' },
 };
 
 const TABLE_COLUMNS: ColumnDef<Track>[] = [
@@ -90,10 +91,12 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
       );
     },
   },
+  {
+    id: 'actions',
+    enableHiding: false,
+    header: () => <div className='text-right'>{TABLE_CELL_DATA.actions.label}</div>,
+    cell: ({ row }) => <TrackActionsDropdownMenu />,
+  },
 ];
-
-const EmptyDataCell = ({ textAlign = 'left' }: { textAlign?: 'left' | 'center' | 'right' }) => {
-  return <div className={cn(`text-${textAlign}`, 'text-muted-foreground')}>n/a</div>;
-};
 
 export { TABLE_COLUMNS };

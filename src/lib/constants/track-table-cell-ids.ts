@@ -4,6 +4,7 @@ const TRACK_TABLE_CELL_IDS = {
   genres: 'genres',
   title: 'title',
   album: 'album',
+  actions: 'actions',
 } as const;
 
 export { TRACK_TABLE_CELL_IDS };
