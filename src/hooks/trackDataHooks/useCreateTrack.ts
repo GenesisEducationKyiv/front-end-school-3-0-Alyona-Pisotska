@@ -1,4 +1,4 @@
-import { useMutation } from '@/hooks/hooks.ts';
+import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
 import { fetcherPost } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
@@ -9,18 +9,18 @@ const URL = API_ENDPOINTS.trackList;
 type NewTrack = NewTrackPayload;
 
 const useCreateTrack = () => {
+  const queryClient = useQueryClient();
+
   const { mutateAsync: createNewTrack } = useMutation<NewTrack, Error, NewTrackPayload>({
-    mutationFn: ({ title, artist, album, genres, coverImage }) => {
-      return fetcherPost<NewTrack, NewTrackPayload>(URL, {
-        title,
-        artist,
-        album,
-        genres,
-        coverImage,
-      });
+    mutationFn: (payload) => {
+      return fetcherPost<NewTrack, NewTrackPayload>(URL, payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [URL] });
     },
   });
 
   return { createNewTrack };
 };
+
 export { useCreateTrack };

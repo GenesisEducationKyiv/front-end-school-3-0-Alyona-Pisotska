@@ -9,7 +9,7 @@ export { useTrackContext, useSearchTextContext, useGenreContext } from './contex
 export { useMemo, useState, useEffect, useCallback, useContext } from 'react';
 
 //* react query */
-export { useQuery, useMutation } from '@tanstack/react-query';
+export { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 //* react form */
 export { useForm, useWatch } from 'react-hook-form';
