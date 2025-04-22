@@ -44,7 +44,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => row.getValue(TABLE_CELL_DATA.artist.id),
+    cell: ({ row }) => <div className='font-medium'>{row.getValue(TABLE_CELL_DATA.artist.id)}</div>,
   },
   {
     accessorKey: TABLE_CELL_DATA.title.id,
@@ -56,7 +56,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className='lowercase'>{row.getValue(TABLE_CELL_DATA.title.id)}</div>,
+    cell: ({ row }) => row.getValue(TABLE_CELL_DATA.title.id),
   },
   {
     accessorKey: TABLE_CELL_DATA.album.id,
@@ -68,7 +68,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className='font-medium'>{row.getValue(TABLE_CELL_DATA.album.id) || <EmptyDataCell />}</div>,
+    cell: ({ row }) => row.getValue(TABLE_CELL_DATA.album.id) || <EmptyDataCell />,
   },
   {
     accessorKey: TABLE_CELL_DATA.genres.id,
@@ -83,7 +83,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
       return (
         <>
           {genres.map((genre) => (
-            <div className='text-right font-medium' key={genre}>
+            <div className='text-right' key={genre}>
               {genre}
             </div>
           ))}

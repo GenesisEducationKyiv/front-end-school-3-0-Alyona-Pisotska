@@ -3,6 +3,8 @@ import {
   useGetTrackList,
   useState,
   useMemo,
+  useCallback,
+  useEffect,
   useSearchTextContext,
   useCreateTrack,
   useEditTrack,
@@ -33,6 +35,7 @@ type TTrackContext = {
 const TrackContext = createContext<TTrackContext | null>(null);
 
 const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
+  const [trackList, setTrackList] = useState<Track[]>([]);
   const [orderBy, setOrderBy] = useState<Order>(ORDER_BY.asc);
   const [sortBy, setSortBy] = useState<TrackListSort>(TRACK_TABLE_CELL_IDS.artist);
   const [page, setPage] = useState(INITIAL_PAGE);
@@ -41,35 +44,74 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const { createNewTrack } = useCreateTrack();
   const { editTrack } = useEditTrack();
 
-  const { trackList, paginationData, isLoadingTrackList } = useGetTrackList({
+  const {
+    trackList: fetchedTrackList,
+    paginationData,
+    isLoadingTrackList,
+  } = useGetTrackList({
     page,
     sort: sortBy,
     order: orderBy,
     search: debouncedSearchText,
   });
 
+  useEffect(() => {
+    if (fetchedTrackList) {
+      setTrackList(fetchedTrackList);
+    }
+  }, [fetchedTrackList]);
+
   const totalPages = useMemo(() => {
-    return paginationData?.totalPages || 0;
+    return paginationData?.totalPages ?? 1;
   }, [paginationData?.totalPages]);
 
-  const handleChangeOrder = (newOrder: Order) => {
+  const handleChangeOrder = useCallback((newOrder: Order) => {
     setOrderBy(newOrder);
-  };
+  }, []);
 
-  const handleChangeSort = (newSort: TrackListSort) => {
+  const handleChangeSort = useCallback((newSort: TrackListSort) => {
     setSortBy(newSort);
-  };
+  }, []);
 
-  const handleChangePage = (newPage: number) => {
+  const handleChangePage = useCallback((newPage: number) => {
     setPage(newPage);
-  };
+  }, []);
 
-  const handleAddTrack = async (newTrack: TrackPayload) => {
-    await createNewTrack(newTrack);
-  };
+  const handleAddTrack = useCallback(
+    async (newTrack: TrackPayload) => {
+      await createNewTrack(newTrack);
+    },
+    [createNewTrack],
+  );
 
   const handleEditTrack = async (trackId: Track['id'], editTrackData: TrackPayload) => {
-    await editTrack({ id: trackId, payload: editTrackData });
+    const previousTrack = trackList.find((track) => track.id === trackId);
+
+    setTrackList((prevState) => {
+      return prevState.map((track) => {
+        if (track.id === trackId) {
+          return { ...track, ...editTrackData };
+        }
+
+        return track;
+      });
+    });
+
+    try {
+      await editTrack({ id: trackId, payload: editTrackData });
+    } catch (error) {
+      if (previousTrack) {
+        setTrackList((prevState) => {
+          return prevState.map((track) => {
+            if (track.id === trackId) {
+              return { ...track, ...previousTrack };
+            }
+
+            return track;
+          });
+        });
+      }
+    }
   };
 
   return (
