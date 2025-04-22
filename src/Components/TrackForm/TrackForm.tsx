@@ -10,30 +10,31 @@ import {
 } from './components/components.ts';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
 
-import type { NewTrackPayload, TrackMetadataValues } from '@/lib/types/types.ts';
+import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types.ts';
 
 type TrackFormProps = {
   onFormSubmission: () => void;
+  initialValues?: Track;
 };
 
-const TrackForm = ({ onFormSubmission }: TrackFormProps) => {
-  const { handleAddTrack } = useTrackContext();
+const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
+  const { handleAddTrack, handleEditTrack } = useTrackContext();
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
     defaultValues: {
-      title: '',
-      artist: '',
-      album: '',
-      genres: [],
-      coverImage: '',
+      title: initialValues?.title ?? '',
+      artist: initialValues?.artist ?? '',
+      album: initialValues?.album ?? '',
+      genres: initialValues?.genre ?? [],
+      coverImage: initialValues?.coverImage ?? '',
     },
   });
 
   const { handleSubmit, control } = form;
 
   const onSubmit = (data: TrackMetadataValues) => {
-    const trackData: NewTrackPayload = {
+    const trackData: TrackPayload = {
       title: data.title,
       artist: data.artist,
       album: data.album ?? '',
@@ -41,7 +42,11 @@ const TrackForm = ({ onFormSubmission }: TrackFormProps) => {
       coverImage: data.coverImage ?? '',
     };
 
-    handleAddTrack(trackData).then(() => onFormSubmission());
+    if (initialValues) {
+      handleEditTrack(initialValues.id, trackData).then(() => onFormSubmission());
+    } else {
+      handleAddTrack(trackData).then(() => onFormSubmission());
+    }
   };
 
   return (

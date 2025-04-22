@@ -76,9 +76,13 @@ const AppSelect = <IsMulti extends boolean = false>({
           ...baseStyles,
           padding: 2,
         }),
-        option: (baseStyles) => ({
+        option: (baseStyles, state) => ({
           ...baseStyles,
           fontSize: FONT_SIZE,
+          backgroundColor: state.isSelected ? 'color-mix(in oklab, var(--color-accent) 50%, transparent)' : 'inherit',
+          '&:hover': {
+            backgroundColor: 'color-mix(in oklab, var(--color-accent) 25%, transparent)',
+          },
         }),
         input: (baseStyles) => ({
           ...baseStyles,

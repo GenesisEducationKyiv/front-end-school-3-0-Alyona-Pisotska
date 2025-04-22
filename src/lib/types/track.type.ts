@@ -32,14 +32,10 @@ type TrackListQueryParams = {
   search?: string;
 };
 
-type NewTrackPayload = {
-  title: string;
-  artist: string;
-  album: string;
+type TrackPayload = Pick<Track, 'title' | 'artist' | 'album' | 'coverImage'> & {
   genres: string[];
-  coverImage: string;
 };
 
 type TrackMetadataValues = z.infer<typeof trackMetadataSchema>;
 
-export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams, TrackMetadataValues, NewTrackPayload };
+export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams, TrackMetadataValues, TrackPayload };
