@@ -13,7 +13,11 @@ import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.t
 
 import type { NewTrackPayload, TrackMetadataValues } from '@/lib/types/types.ts';
 
-const TrackForm = () => {
+type TrackFormProps = {
+  onFormSubmission: () => void;
+};
+
+const TrackForm = ({ onFormSubmission }: TrackFormProps) => {
   const { handleAddTrack } = useTrackContext();
 
   const form = useForm<TrackMetadataValues>({
@@ -38,7 +42,7 @@ const TrackForm = () => {
       coverImage: data.coverImage ?? '',
     };
 
-    handleAddTrack(trackData);
+    handleAddTrack(trackData).then(() => onFormSubmission());
   };
 
   return (

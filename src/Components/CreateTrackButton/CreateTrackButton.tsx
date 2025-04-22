@@ -1,3 +1,5 @@
+import { flushSync } from 'react-dom';
+import { useState } from '@/hooks/hooks.ts';
 import {
   Button,
   Dialog,
@@ -10,8 +12,10 @@ import {
 } from '@/Components/components.ts';
 
 const CreateTrackButton = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
       <DialogTrigger asChild>
         <Button>Create track</Button>
       </DialogTrigger>
@@ -25,7 +29,13 @@ const CreateTrackButton = () => {
         </DialogHeader>
 
         <div className='p-4'>
-          <TrackForm />
+          <TrackForm
+            onFormSubmission={() => {
+              flushSync(() => {
+                setIsFormOpen(false);
+              });
+            }}
+          />
         </div>
       </DialogContent>
     </Dialog>

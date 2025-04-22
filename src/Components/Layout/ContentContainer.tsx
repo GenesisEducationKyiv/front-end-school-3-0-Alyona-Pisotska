@@ -1,4 +1,4 @@
-import { useTrackContext } from '@/hooks/hooks';
+import { useTrackContext } from '@/hooks/hooks.ts';
 import { TrackToolbar, TracksTable, AppPagination } from '@/Components/components.ts';
 
 const ContentContainer = () => {
