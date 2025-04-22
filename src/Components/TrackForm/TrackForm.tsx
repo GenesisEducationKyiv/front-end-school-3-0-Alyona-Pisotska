@@ -24,11 +24,7 @@ const TrackForm = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = form;
+  const { handleSubmit, control } = form;
 
   const onSubmit = (data: TrackMetadataValues) => {
     console.log('data:', data);
