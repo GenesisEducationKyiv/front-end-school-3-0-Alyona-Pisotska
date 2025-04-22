@@ -1,7 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Form } from '@/Components/components.ts';
-import { TrackTitleField, ArtistNameField, AlbumNameField, GenreSelectField } from './components/components.ts';
+import {
+  TrackTitleField,
+  ArtistNameField,
+  AlbumNameField,
+  GenreSelectField,
+  CoverImageField,
+} from './components/components.ts';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
 
 import type { TrackMetadataValues } from '@/lib/types/types.ts';
@@ -14,6 +20,7 @@ const TrackForm = () => {
       artist: '',
       album: '',
       genre: [],
+      coverImageUrl: '',
     },
   });
 
@@ -34,6 +41,7 @@ const TrackForm = () => {
         <ArtistNameField control={control} />
         <AlbumNameField control={control} />
         <GenreSelectField control={control} />
+        <CoverImageField control={control} />
 
         <Button type='submit'>Save</Button>
       </form>

@@ -18,7 +18,7 @@ const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
             Track title <span className='text-red-500'>*</span>
           </FormLabel>
           <FormControl>
-            <Input placeholder='Enter composition name' {...field} />
+            <Input placeholder='Enter composition name...' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

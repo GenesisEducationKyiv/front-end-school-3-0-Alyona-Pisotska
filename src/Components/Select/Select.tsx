@@ -23,7 +23,7 @@ const AppSelect = <IsMulti extends boolean = false>({
   value,
   onChange,
   isMulti = false as IsMulti,
-  placeholder = 'Select...'
+  placeholder = 'Select...',
 }: AppSelectProps<IsMulti>) => {
   return (
     <Select

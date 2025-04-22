@@ -16,7 +16,7 @@ const AlbumNameField = ({ control }: AlbumNameFieldProps) => {
         <FormItem>
           <FormLabel>Album name</FormLabel>
           <FormControl>
-            <Input placeholder='Enter album name' {...field} />
+            <Input placeholder='Enter album name...' {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>
