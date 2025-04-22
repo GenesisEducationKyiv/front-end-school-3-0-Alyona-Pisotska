@@ -10,23 +10,24 @@ import {
 } from './components/components.ts';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
 
-import type { NewTrackPayload, TrackMetadataValues } from '@/lib/types/types.ts';
+import type { NewTrackPayload, TrackMetadataValues, Track } from '@/lib/types/types.ts';
 
 type TrackFormProps = {
   onFormSubmission: () => void;
+  initialValues?: Track;
 };
 
-const TrackForm = ({ onFormSubmission }: TrackFormProps) => {
+const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
   const { handleAddTrack } = useTrackContext();
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
     defaultValues: {
-      title: '',
-      artist: '',
-      album: '',
-      genres: [],
-      coverImage: '',
+      title: initialValues?.title ?? '',
+      artist: initialValues?.artist ?? '',
+      album: initialValues?.album ?? '',
+      genres: initialValues?.genre ?? [],
+      coverImage: initialValues?.coverImage ?? '',
     },
   });
 

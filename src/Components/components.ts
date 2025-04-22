@@ -8,6 +8,7 @@ export { Loader } from './Loader/Loader.tsx';
 export { InputWithIcon } from './InputWithIcon/InputWithIcon.tsx';
 export { TrackForm } from './TrackForm/TrackForm.tsx';
 export { Select } from './Select/Select.tsx';
+export { TrackFormDialogButton } from './TrackFormDialogButton/TrackFormDialogButton.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';

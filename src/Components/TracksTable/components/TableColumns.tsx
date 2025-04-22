@@ -95,7 +95,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
     id: 'actions',
     enableHiding: false,
     header: () => <div className='text-right'>{TABLE_CELL_DATA.actions.label}</div>,
-    cell: ({ row }) => <TrackActionsDropdownMenu />,
+    cell: ({ row }) => <TrackActionsDropdownMenu track={row.original} />,
   },
 ];
 

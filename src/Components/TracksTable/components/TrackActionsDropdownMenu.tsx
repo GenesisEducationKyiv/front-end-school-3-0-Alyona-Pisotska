@@ -7,9 +7,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  TrackFormDialogButton,
 } from '@/Components/components.ts';
 
-const TrackActionsDropdownMenu = () => {
+import type { Track } from '@/lib/types/types.ts';
+
+type TrackActionsDropdownMenuProps = {
+  track: Track;
+};
+
+const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
   return (
     <div className='flex justify-end'>
       <DropdownMenu>
@@ -22,7 +29,13 @@ const TrackActionsDropdownMenu = () => {
         <DropdownMenuContent align='end'>
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Edit track</DropdownMenuItem>
+          <TrackFormDialogButton
+            triggerComponent={
+              <DropdownMenuItem onSelect={(event) => event.preventDefault()}>Edit track</DropdownMenuItem>
+            }
+            actionType={'edit'}
+            initialTrackData={track}
+          />
           <DropdownMenuItem>Delete track</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
