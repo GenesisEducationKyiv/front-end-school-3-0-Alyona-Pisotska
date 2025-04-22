@@ -1,4 +1,4 @@
-import { useTrackContext, useState, useEffect } from '@/hooks/hooks.ts';
+import { useTrackContext, useState, useEffect, useCallback } from '@/hooks/hooks.ts';
 import {
   SortingState,
   getCoreRowModel,
@@ -10,12 +10,14 @@ import {
 import { Table, TableBody, Loader } from '@/Components/components.ts';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components.ts';
 import { isTrackListSortableColumn } from '@/lib/utils/utils.ts';
+import { showTrackActionToast } from './libs/helpers.ts';
 import { ORDER_BY } from '@/lib/constants/constants.ts';
 
 import type { Track, Order } from '@/lib/types/types.ts';
 
 const TracksTable = () => {
-  const { tracks, isLoadingTrackList, handleChangeOrder, handleChangeSort } = useTrackContext();
+  const { tracks, isLoadingTrackList, handleChangeOrder, handleChangeSort, handleDeleteMultiTracks } =
+    useTrackContext();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -36,7 +38,16 @@ const TracksTable = () => {
   });
 
   const headersGroup = table.getHeaderGroups();
-  const selectedRawsCount = table.getFilteredSelectedRowModel().rows.length;
+  const selectedRows = table.getFilteredSelectedRowModel().rows;
+  const selectedIds = selectedRows.map((row) => row.original.id);
+
+  const onDeleteTracksClick = useCallback(() => {
+    handleDeleteMultiTracks(selectedIds).finally(() => setRowSelection({}));
+  }, [handleDeleteMultiTracks, selectedIds]);
+
+  useEffect(() => {
+    showTrackActionToast(selectedIds, onDeleteTracksClick);
+  }, [selectedIds, onDeleteTracksClick]);
 
   useEffect(() => {
     if (sorting.length) {

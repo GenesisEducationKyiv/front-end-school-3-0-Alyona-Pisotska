@@ -9,6 +9,7 @@ import {
   useCreateTrack,
   useEditTrack,
   useDeleteTrack,
+  useDeleteMultiTracks,
 } from '@/hooks/hooks.ts';
 import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
@@ -32,6 +33,7 @@ type TTrackContext = {
   handleAddTrack: (value: TrackPayload) => Promise<void>;
   handleEditTrack: (id: Track['id'], value: TrackPayload) => Promise<void>;
   handleDeleteTrack: (id: Track['id']) => Promise<void>;
+  handleDeleteMultiTracks: (ids: Track['id'][]) => Promise<void>;
 };
 
 const TrackContext = createContext<TTrackContext | null>(null);
@@ -46,6 +48,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const { createNewTrack } = useCreateTrack();
   const { editTrack } = useEditTrack();
   const { deleteTrack } = useDeleteTrack();
+  const { deleteMultiTracks } = useDeleteMultiTracks();
 
   const {
     trackList: fetchedTrackList,
@@ -124,6 +127,13 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     [deleteTrack],
   );
 
+  const handleDeleteMultiTracks = useCallback(
+    async (trackIds: Track['id'][]) => {
+      await deleteMultiTracks({ ids: trackIds });
+    },
+    [deleteMultiTracks],
+  );
+
   return (
     <TrackContext.Provider
       value={{
@@ -138,6 +148,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         handleAddTrack,
         handleEditTrack,
         handleDeleteTrack,
+        handleDeleteMultiTracks,
       }}
     >
       {children}

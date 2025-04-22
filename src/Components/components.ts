@@ -64,3 +64,4 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
 } from './ui/dropdown-menu.tsx';
+export { Toaster } from './ui/sonner.tsx';

@@ -4,12 +4,8 @@ const isValidImageUrl = (url?: string): boolean => {
   try {
     const parsedUrl = new URL(url);
     const validProtocols = ['http:', 'https:'];
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg', '.tiff', '.ico'];
 
-    const pathname = parsedUrl.pathname.toLowerCase();
-    const hasValidExtension = imageExtensions.some((ext) => pathname.endsWith(ext));
-
-    return validProtocols.includes(parsedUrl.protocol) && hasValidExtension;
+    return validProtocols.includes(parsedUrl.protocol);
   } catch {
     return false;
   }

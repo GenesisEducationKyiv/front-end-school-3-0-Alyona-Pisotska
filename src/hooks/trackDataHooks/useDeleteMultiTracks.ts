@@ -1,27 +1,27 @@
 import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
-import { fetcherDelete } from '@/lib/utils/utils.ts';
+import { fetcherPost } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
 import type { Track } from '@/lib/types/types.ts';
 
 const URL = API_ENDPOINTS.trackList;
 
-type DeleteTrackVariables = { id: Track['id'] };
+type DeleteTracksPayload = {
+  ids: Track['id'][];
+};
 
-const useDeleteTrack = () => {
+export const useDeleteMultiTracks = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteTrack } = useMutation<void, AxiosError, DeleteTrackVariables>({
-    mutationFn: async ({ id }) => {
-      await fetcherDelete(`${URL}/${id}`);
+  const { mutateAsync: deleteMultiTracks } = useMutation<void, AxiosError, DeleteTracksPayload>({
+    mutationFn: async ({ ids }) => {
+      await fetcherPost<void, DeleteTracksPayload>(`${URL}/delete`, { ids });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [URL] });
     },
   });
 
-  return { deleteTrack };
+  return { deleteMultiTracks };
 };
-
-export { useDeleteTrack };

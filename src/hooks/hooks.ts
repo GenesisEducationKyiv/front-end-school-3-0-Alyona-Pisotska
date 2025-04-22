@@ -1,4 +1,10 @@
-export { useGetTrackList, useCreateTrack, useEditTrack, useDeleteTrack } from './trackDataHooks/trackDataHooks.ts';
+export {
+  useGetTrackList,
+  useCreateTrack,
+  useEditTrack,
+  useDeleteTrack,
+  useDeleteMultiTracks,
+} from './trackDataHooks/trackDataHooks.ts';
 export { useDebounce } from './useDebounce.ts';
 export { useGetGenreList } from './useGetGenreList.ts';
 
