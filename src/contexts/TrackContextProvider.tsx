@@ -8,6 +8,7 @@ import {
   useSearchTextContext,
   useCreateTrack,
   useEditTrack,
+  useDeleteTrack,
 } from '@/hooks/hooks.ts';
 import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
@@ -30,6 +31,7 @@ type TTrackContext = {
   handleChangePage: (value: number) => void;
   handleAddTrack: (value: TrackPayload) => Promise<void>;
   handleEditTrack: (id: Track['id'], value: TrackPayload) => Promise<void>;
+  handleDeleteTrack: (id: Track['id']) => Promise<void>;
 };
 
 const TrackContext = createContext<TTrackContext | null>(null);
@@ -43,6 +45,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
   const { createNewTrack } = useCreateTrack();
   const { editTrack } = useEditTrack();
+  const { deleteTrack } = useDeleteTrack();
 
   const {
     trackList: fetchedTrackList,
@@ -114,6 +117,13 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     }
   };
 
+  const handleDeleteTrack = useCallback(
+    async (trackId: Track['id']) => {
+      await deleteTrack({ id: trackId });
+    },
+    [deleteTrack],
+  );
+
   return (
     <TrackContext.Provider
       value={{
@@ -127,6 +137,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         handleChangePage,
         handleAddTrack,
         handleEditTrack,
+        handleDeleteTrack,
       }}
     >
       {children}

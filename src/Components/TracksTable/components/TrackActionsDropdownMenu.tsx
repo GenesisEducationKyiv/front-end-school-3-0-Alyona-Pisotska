@@ -1,4 +1,5 @@
 import { MoreVertical } from 'lucide-react';
+import { useTrackContext } from '@/hooks/hooks.ts';
 import {
   Button,
   DropdownMenu,
@@ -15,6 +16,8 @@ type TrackActionsDropdownMenuProps = {
 };
 
 const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
+  const { handleDeleteTrack } = useTrackContext();
+
   return (
     <div className='flex justify-end'>
       <DropdownMenu>
@@ -32,7 +35,7 @@ const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
             actionType={'edit'}
             initialTrackData={track}
           />
-          <DropdownMenuItem>Delete track</DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => handleDeleteTrack(track.id)}>Delete track</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
