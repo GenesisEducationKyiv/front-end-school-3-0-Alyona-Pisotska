@@ -4,7 +4,7 @@ export type {
   TrackListResponse,
   TrackListQueryParams,
   TrackMetadataValues,
-  NewTrackPayload,
+  TrackPayload,
 } from './track.type.ts';
 export type { Order } from './order.type.ts';
 export type { TrackListSort } from './track-list-sort.type.ts';

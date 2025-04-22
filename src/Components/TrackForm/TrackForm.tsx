@@ -10,7 +10,7 @@ import {
 } from './components/components.ts';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
 
-import type { NewTrackPayload, TrackMetadataValues, Track } from '@/lib/types/types.ts';
+import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types.ts';
 
 type TrackFormProps = {
   onFormSubmission: () => void;
@@ -18,7 +18,7 @@ type TrackFormProps = {
 };
 
 const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
-  const { handleAddTrack } = useTrackContext();
+  const { handleAddTrack, handleEditTrack } = useTrackContext();
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
@@ -34,7 +34,7 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
   const { handleSubmit, control } = form;
 
   const onSubmit = (data: TrackMetadataValues) => {
-    const trackData: NewTrackPayload = {
+    const trackData: TrackPayload = {
       title: data.title,
       artist: data.artist,
       album: data.album ?? '',
@@ -42,7 +42,11 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
       coverImage: data.coverImage ?? '',
     };
 
-    handleAddTrack(trackData).then(() => onFormSubmission());
+    if (initialValues) {
+      handleEditTrack(initialValues.id, trackData).then(() => onFormSubmission());
+    } else {
+      handleAddTrack(trackData).then(() => onFormSubmission());
+    }
   };
 
   return (

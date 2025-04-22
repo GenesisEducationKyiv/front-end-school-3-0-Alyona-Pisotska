@@ -1,8 +1,15 @@
 import { createContext } from 'react';
-import { useGetTrackList, useState, useMemo, useSearchTextContext, useCreateTrack } from '@/hooks/hooks.ts';
+import {
+  useGetTrackList,
+  useState,
+  useMemo,
+  useSearchTextContext,
+  useCreateTrack,
+  useEditTrack,
+} from '@/hooks/hooks.ts';
 import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
-import type { Track, PaginationMeta, Order, TrackListSort, NewTrackPayload } from '@/lib/types/types.ts';
+import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types.ts';
 
 const INITIAL_PAGE = 1;
 
@@ -19,7 +26,8 @@ type TTrackContext = {
   handleChangeOrder: (value: Order) => void;
   handleChangeSort: (value: TrackListSort) => void;
   handleChangePage: (value: number) => void;
-  handleAddTrack: (value: NewTrackPayload) => Promise<void>;
+  handleAddTrack: (value: TrackPayload) => Promise<void>;
+  handleEditTrack: (id: Track['id'], value: TrackPayload) => Promise<void>;
 };
 
 const TrackContext = createContext<TTrackContext | null>(null);
@@ -31,6 +39,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const { debouncedSearchText } = useSearchTextContext();
 
   const { createNewTrack } = useCreateTrack();
+  const { editTrack } = useEditTrack();
 
   const { trackList, paginationData, isLoadingTrackList } = useGetTrackList({
     page,
@@ -55,8 +64,12 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     setPage(newPage);
   };
 
-  const handleAddTrack = async (newTrack: NewTrackPayload) => {
+  const handleAddTrack = async (newTrack: TrackPayload) => {
     await createNewTrack(newTrack);
+  };
+
+  const handleEditTrack = async (trackId: Track['id'], editTrackData: TrackPayload) => {
+    await editTrack({ id: trackId, payload: editTrackData });
   };
 
   return (
@@ -71,6 +84,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         totalPages,
         handleChangePage,
         handleAddTrack,
+        handleEditTrack,
       }}
     >
       {children}
