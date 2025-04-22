@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTrackContext } from '@/hooks/hooks.ts';
 import { Button, Form } from '@/Components/components.ts';
 import {
   TrackTitleField,
@@ -10,24 +11,34 @@ import {
 } from './components/components.ts';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
 
-import type { TrackMetadataValues } from '@/lib/types/types.ts';
+import type { NewTrackPayload, TrackMetadataValues } from '@/lib/types/types.ts';
 
 const TrackForm = () => {
+  const { handleAddTrack } = useTrackContext();
+
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
     defaultValues: {
       title: '',
       artist: '',
       album: '',
-      genre: [],
-      coverImageUrl: '',
+      genres: [],
+      coverImage: '',
     },
   });
 
   const { handleSubmit, control } = form;
 
   const onSubmit = (data: TrackMetadataValues) => {
-    console.log('data:', data);
+    const trackData: NewTrackPayload = {
+      title: data.title,
+      artist: data.artist,
+      album: data.album ?? '',
+      genres: data.genres ?? [],
+      coverImage: data.coverImage ?? '',
+    };
+
+    handleAddTrack(trackData);
   };
 
   return (

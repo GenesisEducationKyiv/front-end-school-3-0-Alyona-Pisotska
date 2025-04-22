@@ -18,7 +18,7 @@ const GenreSelectField = ({ control }: TrackTitleFieldProps) => {
   return (
     <FormField
       control={control}
-      name='genre'
+      name='genres'
       render={({ field }) => (
         <FormItem>
           <FormLabel className='gap-0'>Genres</FormLabel>

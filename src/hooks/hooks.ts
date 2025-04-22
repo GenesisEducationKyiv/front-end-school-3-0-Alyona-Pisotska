@@ -1,4 +1,4 @@
-export { useGetTrackList } from './useGetTrackList.ts';
+export { useGetTrackList, useCreateTrack } from './trackDataHooks/trackDataHooks.ts';
 export { useDebounce } from './useDebounce.ts';
 export { useGetGenreList } from './useGetGenreList.ts';
 
@@ -7,3 +7,6 @@ export { useTrackContext, useSearchTextContext, useGenreContext } from './contex
 
 //* react hooks */
 export { useMemo, useState, useEffect, useCallback, useContext } from 'react';
+
+//* react query */
+export { useQuery, useMutation } from '@tanstack/react-query';

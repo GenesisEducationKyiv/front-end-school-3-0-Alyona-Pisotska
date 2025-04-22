@@ -1,5 +1,4 @@
-import { useMemo } from '@/hooks/hooks.ts';
-import { useQuery } from '@tanstack/react-query';
+import { useMemo, useQuery } from '@/hooks/hooks.ts';
 import { fetcherGet } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 

@@ -11,7 +11,7 @@ const CoverImageField = ({ control }: CoverImageFieldProps) => {
   return (
     <FormField
       control={control}
-      name='coverImageUrl'
+      name='coverImage'
       render={({ field }) => (
         <FormItem>
           <FormLabel>Cover image link</FormLabel>
