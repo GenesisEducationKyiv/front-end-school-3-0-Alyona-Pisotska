@@ -3,8 +3,10 @@ import { toast } from 'sonner';
 import { fetcherPost } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
-const useUploadAudioTrack = (trackId: string) => {
-  const mutation = useMutation({
+import type { Track } from '@/lib/types/types.ts';
+
+const useUploadAudioTrack = (trackId: Track['id']) => {
+  const { mutateAsync: uploadAudioTrack } = useMutation({
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
@@ -19,9 +21,7 @@ const useUploadAudioTrack = (trackId: string) => {
     onError: (error) => toast.error(`Error. ${error.message}`),
   });
 
-  return {
-    uploadAudioTrack: mutation.mutateAsync,
-  };
+  return { uploadAudioTrack };
 };
 
 export { useUploadAudioTrack };

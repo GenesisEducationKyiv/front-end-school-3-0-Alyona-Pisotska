@@ -8,7 +8,7 @@ export {
   useDeleteTrack,
   useDeleteMultiTracks,
 } from './trackDataHooks/trackDataHooks.ts';
-export { useUploadAudioTrack } from './audioTrackHooks/audioTrackHooks.ts';
+export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audioTrackHooks.ts';
 export { useGetGenreList } from './useGetGenreList.ts';
 
 //* contexts hooks */
