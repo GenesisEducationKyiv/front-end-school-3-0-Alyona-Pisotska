@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   TrackFormDialogButton,
+  TrackInfoDialog,
 } from '@/Components/components.ts';
 
 import type { Track } from '@/lib/types/types.ts';
@@ -28,6 +29,12 @@ const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align='end'>
+          <TrackInfoDialog
+            triggerComponent={
+              <DropdownMenuItem onSelect={(event) => event.preventDefault()}>Track audio</DropdownMenuItem>
+            }
+            trackData={track}
+          />
           <TrackFormDialogButton
             triggerComponent={
               <DropdownMenuItem onSelect={(event) => event.preventDefault()}>Edit track</DropdownMenuItem>
