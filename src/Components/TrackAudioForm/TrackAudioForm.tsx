@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, useUploadAudioTrack, useDeleteAudioFile } from '@/hooks/hooks.ts';
+import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks.ts';
 import { Button, Form } from '@/Components/components.ts';
 import { TrackAudioField } from './components/components.ts';
 import { audioSchema } from '@/lib/validation-schema/validation-schema.ts';
@@ -12,6 +12,7 @@ type TrackFormProps = {
 };
 
 const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
+  const { handleAddAudioTrack, handleDeleteAudioTrack } = useTrackContext();
   const { uploadAudioTrack } = useUploadAudioTrack(trackData.id);
   const { deleteAudioFile } = useDeleteAudioFile(trackData.id);
 
@@ -34,9 +35,13 @@ const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
     };
 
     if (formData.audioFile) {
-      uploadAudioTrack(formData.audioFile).then(() => onFormSubmission());
+      uploadAudioTrack(formData.audioFile)
+        .then((data) => handleAddAudioTrack(trackData.id, data.audioFile))
+        .then(() => onFormSubmission());
     } else {
-      deleteAudioFile().then(() => onFormSubmission());
+      deleteAudioFile()
+        .then(() => handleDeleteAudioTrack(trackData.id))
+        .then(() => onFormSubmission());
     }
   };
 

@@ -34,6 +34,8 @@ type TTrackContext = {
   handleEditTrack: (id: Track['id'], value: TrackPayload) => Promise<void>;
   handleDeleteTrack: (id: Track['id']) => Promise<void>;
   handleDeleteMultiTracks: (ids: Track['id'][]) => Promise<void>;
+  handleAddAudioTrack: (id: Track['id'], audioFile: Track['audioFile']) => void;
+  handleDeleteAudioTrack: (id: Track['id']) => void;
 };
 
 const TrackContext = createContext<TTrackContext | null>(null);
@@ -140,6 +142,30 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     [deleteMultiTracks],
   );
 
+  const handleAddAudioTrack = (trackId: Track['id'], audioUrl: Track['audioFile']) => {
+    setTrackList((prevState) => {
+      return prevState.map((track) => {
+        if (track.id === trackId) {
+          return { ...track, audioFile: audioUrl };
+        }
+
+        return track;
+      });
+    });
+  };
+
+  const handleDeleteAudioTrack = (trackId: Track['id']) => {
+    setTrackList((prevState) => {
+      return prevState.map((track) => {
+        if (track.id === trackId) {
+          return { ...track, audioFile: '' };
+        }
+
+        return track;
+      });
+    });
+  };
+
   return (
     <TrackContext.Provider
       value={{
@@ -155,6 +181,8 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         handleEditTrack,
         handleDeleteTrack,
         handleDeleteMultiTracks,
+        handleAddAudioTrack,
+        handleDeleteAudioTrack,
       }}
     >
       {children}
