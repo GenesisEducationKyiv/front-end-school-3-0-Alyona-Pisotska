@@ -67,15 +67,21 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     }
   }, [fetchedTrackList]);
 
+  useEffect(() => {
+    setPage(INITIAL_PAGE);
+  }, [debouncedSearchText]);
+
   const totalPages = useMemo(() => {
     return paginationData?.totalPages ?? 1;
   }, [paginationData?.totalPages]);
 
   const handleChangeOrder = useCallback((newOrder: Order) => {
+    setPage(INITIAL_PAGE);
     setOrderBy(newOrder);
   }, []);
 
   const handleChangeSort = useCallback((newSort: TrackListSort) => {
+    setPage(INITIAL_PAGE);
     setSortBy(newSort);
   }, []);
 

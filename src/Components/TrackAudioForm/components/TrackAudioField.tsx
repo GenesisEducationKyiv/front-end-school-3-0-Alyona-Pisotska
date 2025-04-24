@@ -21,7 +21,7 @@ type ControlField = ControllerRenderProps<{ audioFile: '' | File }, 'audioFile'>
 const TrackAudioField = ({ control, initialAudioUrl }: TrackAudioFieldProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileName, setFileName] = useState<string>(initialAudioUrl ? FILE_NAME.uploading : FILE_NAME.empty);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(initialAudioUrl || null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const onChooseFile = (e: React.ChangeEvent<HTMLInputElement>, field: ControlField) => {
     const file = e.target.files?.[0];
@@ -77,7 +77,7 @@ const TrackAudioField = ({ control, initialAudioUrl }: TrackAudioFieldProps) => 
 
                 <span className='text-muted-foreground max-w-[200px] truncate text-sm'>{fileName}</span>
 
-                {previewUrl && (
+                {(previewUrl || initialAudioUrl) && (
                   <Button
                     type='button'
                     variant='ghost'
