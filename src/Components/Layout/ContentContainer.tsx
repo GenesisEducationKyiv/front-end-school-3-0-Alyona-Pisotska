@@ -5,7 +5,7 @@ const ContentContainer = () => {
   const { page, totalPages, handleChangePage } = useTrackContext();
 
   return (
-    <div className='h-full rounded-[4px] bg-white p-6 shadow-2xl'>
+    <div className='h-full flex-grow rounded-[4px] bg-white p-6 shadow-2xl'>
       <PageTitle />
 
       <section className='flex flex-col gap-6'>
