@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Layout />
-      <Toaster richColors />
+      <Toaster position='bottom-left' richColors />
     </>
   );
 }

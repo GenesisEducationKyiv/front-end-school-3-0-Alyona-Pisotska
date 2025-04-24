@@ -11,6 +11,7 @@ type Track = {
   genre: string[];
   slug: string;
   coverImage: string;
+  audioFile?: string;
 };
 
 type PaginationMeta = {
