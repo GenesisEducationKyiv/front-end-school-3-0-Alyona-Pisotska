@@ -2,6 +2,10 @@
 
 This project is a web application for managing music tracks, built as a test task.
 
+## Githab
+
+https://github.com/Alyona-Pisotska/music_app
+
 ## Prerequisites
 
 - Node.js version v20.13.1 is recommended.
