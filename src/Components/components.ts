@@ -1,5 +1,5 @@
 export { Layout } from './Layout/Layout.tsx';
-export { Search } from './Search/Search.tsx';
+export { SearchInput, ArtistSearch, GeneralSearch } from './Search/search.ts';
 export { CreateTrackButton } from './CreateTrackButton/CreateTrackButton.tsx';
 export { TrackToolbar } from './TrackToolbar/TrackToolbar.tsx';
 export { TracksTable } from './TracksTable/TracksTable.tsx';
@@ -13,6 +13,7 @@ export { TrackInfoDialog } from './TrackInfoDialog/TrackInfoDialog.tsx';
 export { TrackAudioForm } from './TrackAudioForm/TrackAudioForm.tsx';
 export { GenreSelect } from './GenreSelect/GenreSelect.tsx';
 export { TableLoader } from './TableLoader/TableLoader.tsx';
+export { AdvancedSearchSection } from './AdvancedSearchSection/AdvancedSearchSection.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';

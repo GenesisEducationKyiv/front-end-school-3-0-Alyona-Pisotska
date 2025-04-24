@@ -37,6 +37,7 @@ type TTrackContext = {
   handleDeleteMultiTracks: (ids: Track['id'][]) => Promise<void>;
   handleAddAudioTrack: (id: Track['id'], audioFile: Track['audioFile']) => void;
   handleDeleteAudioTrack: (id: Track['id']) => void;
+  handleChangeSearchArtist: (value: string) => void;
 };
 
 const TrackContext = createContext<TTrackContext | null>(null);
@@ -46,6 +47,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const [orderBy, setOrderBy] = useState<Order>(ORDER_BY.asc);
   const [sortBy, setSortBy] = useState<TrackListSort>(TRACK_TABLE_CELL_IDS.artist);
   const [page, setPage] = useState(INITIAL_PAGE);
+  const [searchArtist, setSearchArtist] = useState('');
 
   const { debouncedSearchText } = useSearchTextContext();
   const { selectedGenre } = useGenreContext();
@@ -65,6 +67,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     order: orderBy,
     search: debouncedSearchText,
     genre: selectedGenre,
+    artist: searchArtist,
   });
 
   useEffect(() => {
@@ -75,7 +78,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
   useEffect(() => {
     setPage(INITIAL_PAGE);
-  }, [debouncedSearchText, selectedGenre]);
+  }, [debouncedSearchText, selectedGenre, searchArtist]);
 
   const totalPages = useMemo(() => {
     return paginationData?.totalPages ?? 1;
@@ -170,6 +173,10 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     });
   };
 
+  const handleChangeSearchArtist = (value: string) => {
+    setSearchArtist(value);
+  };
+
   return (
     <TrackContext.Provider
       value={{
@@ -187,6 +194,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         handleDeleteMultiTracks,
         handleAddAudioTrack,
         handleDeleteAudioTrack,
+        handleChangeSearchArtist,
       }}
     >
       {children}
