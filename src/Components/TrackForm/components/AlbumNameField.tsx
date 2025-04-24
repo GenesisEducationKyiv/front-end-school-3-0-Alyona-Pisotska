@@ -10,6 +10,7 @@ type AlbumNameFieldProps = {
 const AlbumNameField = ({ control }: AlbumNameFieldProps) => {
   return (
     <FormField
+      data-testid='input-album'
       control={control}
       name='album'
       render={({ field }) => (

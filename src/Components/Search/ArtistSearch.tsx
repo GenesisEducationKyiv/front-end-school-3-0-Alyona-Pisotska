@@ -4,7 +4,7 @@ import { SearchInput } from '@/Components/components.ts';
 const ArtistSearch = () => {
   const [searchText, setSearchText] = useState('');
   const debouncedSearchText = useDebounce(searchText, 250);
-  const { handleChangeSearchArtist } = useTrackContext();
+  const { isLoadingTrackList, handleChangeSearchArtist } = useTrackContext();
 
   useEffect(() => {
     handleChangeSearchArtist(debouncedSearchText);
@@ -19,6 +19,9 @@ const ArtistSearch = () => {
       searchText={searchText}
       onChangeSearchText={handleChangeSearchText}
       placeholder='Start typing artist name...'
+      data-testid='filter-artist'
+      aria-disabled={isLoadingTrackList}
+      data-loading={isLoadingTrackList ? 'true' : undefined}
     />
   );
 };

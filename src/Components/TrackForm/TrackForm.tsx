@@ -51,14 +51,16 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4' data-testid='track-form'>
         <TrackTitleField control={control} />
         <ArtistNameField control={control} />
         <AlbumNameField control={control} />
         <GenreSelectField control={control} />
         <CoverImageField control={control} />
 
-        <Button type='submit'>Save</Button>
+        <Button type='submit' data-testid='submit-button'>
+          Save
+        </Button>
       </form>
     </Form>
   );

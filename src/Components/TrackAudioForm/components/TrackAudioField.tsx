@@ -3,7 +3,7 @@ import { useState, useRef } from '@/hooks/hooks.ts';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from '@/Components/components.ts';
 import { ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants.ts';
 
-import type { AudioData } from '@/lib/types/types.ts';
+import type { AudioData, Track } from '@/lib/types/types.ts';
 
 const FILE_NAME = {
   uploading: 'Uploading file',
@@ -13,12 +13,13 @@ const AUDIO_ACCEPT_STRING = ALLOWED_AUDIO_TYPES.join(',');
 
 type TrackAudioFieldProps = {
   control: Control<AudioData>;
+  trackId: Track['id'];
   initialAudioUrl?: string;
 };
 
 type ControlField = ControllerRenderProps<{ audioFile: '' | File }, 'audioFile'>;
 
-const TrackAudioField = ({ control, initialAudioUrl }: TrackAudioFieldProps) => {
+const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileName, setFileName] = useState<string>(initialAudioUrl || FILE_NAME.empty);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -68,6 +69,7 @@ const TrackAudioField = ({ control, initialAudioUrl }: TrackAudioFieldProps) => 
                 }}
                 onChange={(e) => onChooseFile(e, field)}
                 className='hidden'
+                data-testid={`upload-track-${trackId}`}
               />
 
               <div className='flex items-center gap-4'>
@@ -90,13 +92,13 @@ const TrackAudioField = ({ control, initialAudioUrl }: TrackAudioFieldProps) => 
               </div>
 
               {previewUrl && (
-                <audio controls className='mt-2 w-full'>
+                <audio controls className='mt-2 w-full' data-testid={`audio-player-${trackId}`}>
                   <source src={previewUrl} />
                 </audio>
               )}
             </div>
           </FormControl>
-          <FormMessage />
+          <FormMessage data-testid='error-audio-file' />
         </FormItem>
       )}
     />

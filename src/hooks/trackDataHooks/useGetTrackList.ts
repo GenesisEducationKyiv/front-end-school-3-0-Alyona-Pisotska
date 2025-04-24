@@ -1,4 +1,5 @@
-import { useMemo, useQuery } from '@/hooks/hooks.ts';
+import { toast } from 'sonner';
+import { useEffect, useMemo, useQuery } from '@/hooks/hooks.ts';
 import { fetcherGet } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
@@ -15,7 +16,7 @@ const processTrackList = (data: TrackListResponse | undefined) => {
 };
 
 const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackListQueryParams) => {
-  const { isFetching, data } = useQuery<TrackListResponse>({
+  const { isFetching, data, error } = useQuery<TrackListResponse>({
     queryKey: [URL, page, sort, order, search, genre, artist],
     queryFn: () => {
       const params = new URLSearchParams();
@@ -35,6 +36,12 @@ const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackList
   const processedData = useMemo(() => {
     return processTrackList(data);
   }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`Error! ${error.message || 'Something went wrong'}`);
+    }
+  }, [error]);
 
   return {
     trackList: processedData.trackList,
