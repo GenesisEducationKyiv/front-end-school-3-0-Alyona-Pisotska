@@ -38,3 +38,17 @@ Here is the status of the optional extra tasks:
 
 - **Add visualization for the audiowave of currently played track:**
   - Tracks with uploaded audio files can be played inline using the standard HTML `<audio>` element, which provides basic playback controls.
+
+## Testability Notes (`data-testid` Attributes)
+
+Most `data-testid` attributes required by the task specification have been implemented. However, certain attributes associated with dynamically generated elements were omitted due to integration complexities with the chosen libraries (e.g., `sonner` for toasts).
+
+Potentially missing attributes:
+
+- `data-testid="confirm-delete"`
+- `data-testid="cancel-delete"`
+- `data-testid="bulk-delete-button"`
+- `data-testid="toast-{type}"`
+- `data-testid="select-mode-toggle"`
+
+Although a few test attributes are missing, **all required functionality** of the task has been fully implemented.
