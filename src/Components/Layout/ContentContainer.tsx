@@ -1,22 +1,23 @@
 import { useTrackContext } from '@/hooks/hooks.ts';
-import { TrackToolbar, TracksTable, AppPagination, AdvancedSearchSection } from '@/Components/components.ts';
+import { TrackToolbar, TracksTable, AppPagination, AdvancedSearchSection, PageTitle } from '@/Components/components.ts';
 
 const ContentContainer = () => {
   const { page, totalPages, handleChangePage } = useTrackContext();
 
   return (
-    <div className='flex h-full flex-col gap-6 rounded-[4px] bg-white p-6 shadow-2xl'>
-      <TrackToolbar />
+    <div className='h-full rounded-[4px] bg-white p-6 shadow-2xl'>
+      <PageTitle />
 
-      <AdvancedSearchSection />
-
-      <div className='flex-grow'>
-        <TracksTable />
-      </div>
-
-      <div className='self-end'>
-        <AppPagination currentPage={page} totalPages={totalPages} onPageChange={handleChangePage} />
-      </div>
+      <section className='flex flex-col gap-6'>
+        <TrackToolbar />
+        <AdvancedSearchSection />
+        <div className='flex-grow'>
+          <TracksTable />
+        </div>
+        <div className='self-end'>
+          <AppPagination currentPage={page} totalPages={totalPages} onPageChange={handleChangePage} />
+        </div>
+      </section>
     </div>
   );
 };
