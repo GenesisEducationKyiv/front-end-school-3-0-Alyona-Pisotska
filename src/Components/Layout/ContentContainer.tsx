@@ -1,5 +1,5 @@
 import { useTrackContext } from '@/hooks/hooks.ts';
-import { TrackToolbar, TracksTable, AppPagination } from '@/Components/components.ts';
+import { TrackToolbar, TracksTable, AppPagination, GenreSelect } from '@/Components/components.ts';
 
 const ContentContainer = () => {
   const { page, totalPages, handleChangePage } = useTrackContext();
@@ -7,6 +7,10 @@ const ContentContainer = () => {
   return (
     <div className='flex h-full flex-col gap-6 rounded-[4px] bg-white p-6'>
       <TrackToolbar />
+
+      <div>
+        <GenreSelect />
+      </div>
 
       <div className='flex-grow'>
         <TracksTable />

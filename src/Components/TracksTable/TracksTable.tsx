@@ -7,9 +7,9 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Table, TableBody, Loader } from '@/Components/components.ts';
+import { Table, TableBody, TableLoader } from '@/Components/components.ts';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components.ts';
-import { isTrackListSortableColumn } from '@/lib/utils/utils.ts';
+import { cn, isTrackListSortableColumn } from '@/lib/utils/utils.ts';
 import { showTrackActionToast } from './libs/helpers.ts';
 import { ORDER_BY } from '@/lib/constants/constants.ts';
 
@@ -62,15 +62,13 @@ const TracksTable = () => {
     }
   }, [handleChangeOrder, handleChangeSort, sorting]);
 
-  if (isLoadingTrackList) {
-    return <Loader />;
-  }
-
   return (
-    <Table className='w-full border-y'>
+    <Table className={cn(isLoadingTrackList && 'h-full', 'w-full border-y')}>
       <TracksTableHeader headersGroup={headersGroup} />
       <TableBody>
-        {table.getRowModel().rows?.length ? (
+        {isLoadingTrackList ? (
+          <TableLoader colSpan={TABLE_COLUMNS.length} />
+        ) : table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => <TracksTableRow row={row} key={row.id} />)
         ) : (
           <EmptyTable />

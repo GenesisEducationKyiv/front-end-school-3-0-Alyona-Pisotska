@@ -10,6 +10,7 @@ import {
   useEditTrack,
   useDeleteTrack,
   useDeleteMultiTracks,
+  useGenreContext,
 } from '@/hooks/hooks.ts';
 import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
@@ -45,7 +46,9 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const [orderBy, setOrderBy] = useState<Order>(ORDER_BY.asc);
   const [sortBy, setSortBy] = useState<TrackListSort>(TRACK_TABLE_CELL_IDS.artist);
   const [page, setPage] = useState(INITIAL_PAGE);
+
   const { debouncedSearchText } = useSearchTextContext();
+  const { selectedGenre } = useGenreContext();
 
   const { createNewTrack } = useCreateTrack();
   const { editTrack } = useEditTrack();
@@ -61,6 +64,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     sort: sortBy,
     order: orderBy,
     search: debouncedSearchText,
+    genre: selectedGenre,
   });
 
   useEffect(() => {
@@ -71,7 +75,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
   useEffect(() => {
     setPage(INITIAL_PAGE);
-  }, [debouncedSearchText]);
+  }, [debouncedSearchText, selectedGenre]);
 
   const totalPages = useMemo(() => {
     return paginationData?.totalPages ?? 1;

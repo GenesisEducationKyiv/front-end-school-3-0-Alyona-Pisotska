@@ -1,30 +1,16 @@
-import Select, { ActionMeta, MultiValue, SingleValue } from 'react-select';
+import Select from 'react-select';
+
+import type { SelectComponentProps } from '@/lib/types/types.ts';
 
 const FONT_SIZE = '0.875rem';
-
-type Option = {
-  value: string;
-  label: string;
-};
-
-type AppSelectProps<IsMulti extends boolean = false> = {
-  options: Option[];
-  value: IsMulti extends true ? MultiValue<Option> : SingleValue<Option>;
-  onChange: (
-    value: IsMulti extends true ? MultiValue<Option> : SingleValue<Option>,
-    actionMeta: ActionMeta<Option>,
-  ) => void;
-  isMulti?: IsMulti;
-  placeholder?: string;
-};
 
 const AppSelect = <IsMulti extends boolean = false>({
   options,
   value,
   onChange,
-  isMulti = false as IsMulti,
+  isMulti,
   placeholder = 'Select...',
-}: AppSelectProps<IsMulti>) => {
+}: SelectComponentProps<IsMulti>) => {
   return (
     <Select
       options={options}
@@ -34,6 +20,7 @@ const AppSelect = <IsMulti extends boolean = false>({
       closeMenuOnSelect={!isMulti}
       hideSelectedOptions={false}
       placeholder={placeholder}
+      isClearable={true}
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,

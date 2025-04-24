@@ -11,6 +11,8 @@ export { Select } from './Select/Select.tsx';
 export { TrackFormDialogButton } from './TrackFormDialogButton/TrackFormDialogButton.tsx';
 export { TrackInfoDialog } from './TrackInfoDialog/TrackInfoDialog.tsx';
 export { TrackAudioForm } from './TrackAudioForm/TrackAudioForm.tsx';
+export { GenreSelect } from './GenreSelect/GenreSelect.tsx';
+export { TableLoader } from './TableLoader/TableLoader.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';

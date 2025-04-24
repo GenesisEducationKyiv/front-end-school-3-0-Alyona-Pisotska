@@ -31,6 +31,7 @@ type TrackListQueryParams = {
   sort: string;
   order: Order;
   search?: string;
+  genre?: string;
 };
 
 type TrackPayload = Pick<Track, 'title' | 'artist' | 'album' | 'coverImage'> & {
