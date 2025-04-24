@@ -14,9 +14,9 @@ const processTrackList = (data: TrackListResponse | undefined) => {
   };
 };
 
-const useGetTrackList = ({ page, sort, order, search }: TrackListQueryParams) => {
+const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackListQueryParams) => {
   const { isFetching, data } = useQuery<TrackListResponse>({
-    queryKey: [URL, page, sort, order, search],
+    queryKey: [URL, page, sort, order, search, genre, artist],
     queryFn: () => {
       const params = new URLSearchParams();
 
@@ -25,6 +25,8 @@ const useGetTrackList = ({ page, sort, order, search }: TrackListQueryParams) =>
       params.append('sort', sort);
       params.append('order', order);
       search?.length && params.append('search', search);
+      genre?.length && params.append('genre', genre);
+      artist?.length && params.append('artist', artist);
 
       return fetcherGet<TrackListResponse>(URL, { params });
     },
