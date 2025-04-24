@@ -1,12 +1,15 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import TracksPage from '@/Pages/Tracks/Tracks.tsx';
+import { APP_ROUTES } from './lib/constants/constants.ts';
+
 import './index.css';
-import { Layout, Toaster } from '@/Components/components.ts';
 
 function App() {
   return (
-    <>
-      <Layout />
-      <Toaster position='bottom-left' richColors />
-    </>
+    <Routes>
+      <Route path={APP_ROUTES.tracks} element={<TracksPage />} />
+      <Route path='*' element={<Navigate to={APP_ROUTES.tracks} />} />
+    </Routes>
   );
 }
 
