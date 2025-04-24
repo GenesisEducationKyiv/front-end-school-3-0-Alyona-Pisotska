@@ -4,7 +4,7 @@ const TracksPage = () => {
   return (
     <>
       <Layout />
-      <Toaster position='bottom-left' richColors />
+      <Toaster position='bottom-left' data-testid='toast-container' richColors />
     </>
   );
 };

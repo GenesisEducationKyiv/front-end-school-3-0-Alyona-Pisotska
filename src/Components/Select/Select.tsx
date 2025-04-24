@@ -10,6 +10,7 @@ const AppSelect = <IsMulti extends boolean = false>({
   onChange,
   isMulti,
   placeholder = 'Select...',
+  isDisabled = false,
 }: SelectComponentProps<IsMulti>) => {
   return (
     <Select
@@ -21,6 +22,7 @@ const AppSelect = <IsMulti extends boolean = false>({
       hideSelectedOptions={false}
       placeholder={placeholder}
       isClearable={true}
+      isDisabled={isDisabled}
       styles={{
         control: (baseStyles, state) => ({
           ...baseStyles,

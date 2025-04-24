@@ -14,6 +14,7 @@ type SelectComponentProps<IsMulti extends boolean = false> = {
   ) => void;
   isMulti?: IsMulti;
   placeholder?: string;
+  isDisabled?: boolean;
 };
 
 export type { SelectOption, SelectComponentProps };

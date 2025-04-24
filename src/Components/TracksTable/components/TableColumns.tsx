@@ -23,6 +23,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label='Select all'
+        data-testid='select-all'
       />
     ),
     cell: ({ row }) => (
@@ -30,6 +31,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label='Select row'
+        data-testid={`track-checkbox-${row.original.id}`}
       />
     ),
     enableSorting: false,
@@ -38,31 +40,49 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
     accessorKey: TABLE_CELL_DATA.artist.id,
     header: ({ column }) => {
       return (
-        <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          data-testid='sort-select'
+        >
           {TABLE_CELL_DATA.artist.label}
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => <div className='font-medium'>{row.getValue(TABLE_CELL_DATA.artist.id)}</div>,
+    cell: ({ row }) => (
+      <div className='font-medium' data-testid={`track-item-${row.original.id}-artist`}>
+        {row.getValue(TABLE_CELL_DATA.artist.id)}
+      </div>
+    ),
   },
   {
     accessorKey: TABLE_CELL_DATA.title.id,
     header: ({ column }) => {
       return (
-        <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          data-testid='sort-select'
+        >
           {TABLE_CELL_DATA.title.label}
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => row.getValue(TABLE_CELL_DATA.title.id),
+    cell: ({ row }) => (
+      <div data-testid={`track-item-${row.original.id}-title`}>{row.getValue(TABLE_CELL_DATA.title.id)}</div>
+    ),
   },
   {
     accessorKey: TABLE_CELL_DATA.album.id,
     header: ({ column }) => {
       return (
-        <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant='ghost'
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          data-testid='sort-select'
+        >
           <div className='text-right'>{TABLE_CELL_DATA.album.label}</div>
           <ArrowUpDown />
         </Button>

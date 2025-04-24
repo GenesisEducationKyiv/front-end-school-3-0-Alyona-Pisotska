@@ -63,7 +63,10 @@ const TracksTable = () => {
   }, [handleChangeOrder, handleChangeSort, sorting]);
 
   return (
-    <Table className={cn(isLoadingTrackList && 'h-full', 'w-full border-y')}>
+    <Table
+      className={cn(isLoadingTrackList && 'h-full', 'w-full border-y')}
+      data-loading={isLoadingTrackList ? 'true' : undefined}
+    >
       <TracksTableHeader headersGroup={headersGroup} />
       <TableBody>
         {isLoadingTrackList ? (

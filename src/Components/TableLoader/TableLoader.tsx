@@ -6,7 +6,7 @@ type TableLoaderProps = {
 
 const TableLoader = ({ colSpan }: TableLoaderProps) => {
   return (
-    <TableRow>
+    <TableRow data-testid='loading-tracks'>
       <TableCell colSpan={colSpan}>
         <Loader />
       </TableCell>

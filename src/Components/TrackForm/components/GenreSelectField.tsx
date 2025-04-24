@@ -17,6 +17,7 @@ const GenreSelectField = ({ control }: TrackTitleFieldProps) => {
 
   return (
     <FormField
+      data-testid='genre-selector'
       control={control}
       name='genres'
       render={({ field }) => (
@@ -31,7 +32,7 @@ const GenreSelectField = ({ control }: TrackTitleFieldProps) => {
               placeholder='Select composition genres...'
             />
           </FormControl>
-          <FormMessage />
+          <FormMessage data-testid='error-genre' />
         </FormItem>
       )}
     />

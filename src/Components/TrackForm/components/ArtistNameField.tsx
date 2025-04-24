@@ -10,6 +10,7 @@ type ArtistNameFieldProps = {
 const ArtistNameField = ({ control }: ArtistNameFieldProps) => {
   return (
     <FormField
+      data-testid='input-artist'
       control={control}
       name='artist'
       render={({ field }) => (
@@ -20,7 +21,7 @@ const ArtistNameField = ({ control }: ArtistNameFieldProps) => {
           <FormControl>
             <Input placeholder='Enter artist name...' {...field} />
           </FormControl>
-          <FormMessage />
+          <FormMessage data-testid='error-artist' />
         </FormItem>
       )}
     />

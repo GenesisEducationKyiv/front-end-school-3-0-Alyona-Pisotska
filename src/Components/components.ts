@@ -14,6 +14,7 @@ export { TrackAudioForm } from './TrackAudioForm/TrackAudioForm.tsx';
 export { GenreSelect } from './GenreSelect/GenreSelect.tsx';
 export { TableLoader } from './TableLoader/TableLoader.tsx';
 export { AdvancedSearchSection } from './AdvancedSearchSection/AdvancedSearchSection.tsx';
+export { PageTitle } from './PageTitle/PageTitle.tsx';
 
 /** shad-cn components */
 export { Button, buttonVariants } from './ui/button.tsx';

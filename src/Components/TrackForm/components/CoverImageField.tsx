@@ -18,6 +18,7 @@ const CoverImageField = ({ control }: CoverImageFieldProps) => {
 
   return (
     <FormField
+      data-testid='input-cover-image'
       control={control}
       name='coverImage'
       render={({ field }) => (
@@ -36,7 +37,7 @@ const CoverImageField = ({ control }: CoverImageFieldProps) => {
             />
           </div>
 
-          <FormMessage />
+          <FormMessage data-testid='error-cover-image' />
         </FormItem>
       )}
     />

@@ -45,13 +45,14 @@ const AppPagination = ({ currentPage, totalPages, onPageChange, siblingCount = 1
   };
 
   return (
-    <Pagination>
+    <Pagination data-testid='pagination'>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
             aria-disabled={currentPage === 1}
             className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+            data-testid='pagination-prev'
           />
         </PaginationItem>
 
@@ -74,6 +75,7 @@ const AppPagination = ({ currentPage, totalPages, onPageChange, siblingCount = 1
             onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
             aria-disabled={currentPage === totalPages}
             className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+            data-testid='pagination-next'
           />
         </PaginationItem>
       </PaginationContent>
