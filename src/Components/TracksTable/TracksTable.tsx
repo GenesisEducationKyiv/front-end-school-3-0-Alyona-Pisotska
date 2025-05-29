@@ -40,6 +40,7 @@ const TracksTable = () => {
   const headersGroup = table.getHeaderGroups();
   const selectedRows = table.getFilteredSelectedRowModel().rows;
   const selectedIds = selectedRows.map((row) => row.original.id);
+  const tableRows = table.getRowModel().rows;
 
   const onDeleteTracksClick = useCallback(() => {
     handleDeleteMultiTracks(selectedIds).finally(() => setRowSelection({}));
@@ -71,10 +72,8 @@ const TracksTable = () => {
       <TableBody>
         {isLoadingTrackList ? (
           <TableLoader colSpan={TABLE_COLUMNS.length} />
-        ) : table.getRowModel().rows?.length ? (
-          table.getRowModel().rows.map((row) => <TracksTableRow row={row} key={row.id} />)
         ) : (
-          <EmptyTable />
+          tableRows.map((row) => <TracksTableRow row={row} key={row.id} />) || <EmptyTable />
         )}
       </TableBody>
     </Table>

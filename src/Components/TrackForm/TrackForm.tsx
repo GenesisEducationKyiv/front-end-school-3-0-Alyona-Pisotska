@@ -26,7 +26,7 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
       title: initialValues?.title ?? '',
       artist: initialValues?.artist ?? '',
       album: initialValues?.album ?? '',
-      genres: initialValues?.genre ?? [],
+      genres: initialValues?.genres ?? [],
       coverImage: initialValues?.coverImage ?? '',
     },
   });

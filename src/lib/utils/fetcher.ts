@@ -1,10 +1,32 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { ZodSchema } from 'zod';
+import { Result, ok, err } from 'neverthrow';
 
 const API_BASE = 'http://localhost:8000';
 
-const fetcherGet = async <TResponse>(url: string, config?: AxiosRequestConfig): Promise<TResponse> => {
-  const response = await axios.get<TResponse>(`${API_BASE}${url}`, config);
-  return response.data;
+const fetcherGet = async <T>(
+  url: string,
+  config: AxiosRequestConfig = {},
+  schema: ZodSchema<T>,
+): Promise<Result<T, Error>> => {
+  try {
+    const response = await axios.get(`${API_BASE}${url}`, config);
+    const parsed = schema.safeParse(response.data);
+
+    if (!parsed.success) {
+      return err(new Error(`Invalid response format: ${parsed.error.message}`));
+    }
+
+    return ok(parsed.data);
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const message = e.response?.data?.message || e.message || 'Axios error';
+
+      return err(new Error(message));
+    }
+
+    return err(e instanceof Error ? e : new Error('Unknown error'));
+  }
 };
 
 const fetcherPost = async <TResponse, TBody = unknown>(

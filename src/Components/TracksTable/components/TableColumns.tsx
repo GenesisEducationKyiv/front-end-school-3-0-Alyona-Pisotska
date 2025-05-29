@@ -94,7 +94,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
     accessorKey: TABLE_CELL_DATA.genres.id,
     header: () => <div className='text-right'>{TABLE_CELL_DATA.genres.label}</div>,
     cell: ({ row }) => {
-      const genres: Track['genre'] = row.getValue(TABLE_CELL_DATA.genres.id);
+      const genres: Track['genres'] = row.getValue(TABLE_CELL_DATA.genres.id);
 
       if (!genres.length) {
         return <EmptyDataCell textAlign='right' />;

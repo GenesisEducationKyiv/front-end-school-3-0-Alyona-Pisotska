@@ -8,7 +8,7 @@ type GenreContextProviderProps = {
 };
 
 type TGenreContext = {
-  genreList: Track['genre'];
+  genreList: Track['genres'];
   isLoading: boolean;
   genreOptions: SelectOption[];
   selectedGenre: string;
