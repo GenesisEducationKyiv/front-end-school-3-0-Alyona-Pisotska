@@ -1,5 +1,4 @@
 import { toast } from 'sonner';
-import { AxiosError } from 'axios';
 import { useMutation } from '@/hooks/hooks.ts';
 import { fetcherPut } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
@@ -10,14 +9,20 @@ const URL = API_ENDPOINTS.trackList;
 
 const useEditTrack = () => {
   const { mutateAsync: editTrack } = useMutation({
-    mutationFn: ({ id, payload }: { id: string; payload: TrackPayload }) =>
-      fetcherPut<Track, TrackPayload>(`${URL}/${id}`, payload),
+    mutationFn: async ({ id, payload }: { id: string; payload: TrackPayload }) => {
+      const result = await fetcherPut<Track, TrackPayload>(`${URL}/${id}`, payload);
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+
+      return result.value;
+    },
     onSuccess: () => {
       toast.success('Track is updated');
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(`Error! ${axiosError.response?.data.error || 'Something went wrong'}`);
+      toast.error(`Error! ${error.message}`);
     },
   });
 
