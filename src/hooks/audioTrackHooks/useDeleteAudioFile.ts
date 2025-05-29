@@ -9,7 +9,13 @@ import type { Track } from '@/lib/types/types.ts';
 const useDeleteAudioFile = (trackId: Track['id']) => {
   const { mutateAsync: deleteAudioFile } = useMutation({
     mutationFn: async () => {
-      await fetcherDelete(`${API_ENDPOINTS.trackList}/${trackId}/file`);
+      const result = await fetcherDelete<void>(`${API_ENDPOINTS.trackList}/${trackId}/file`);
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+
+      return result.value;
     },
     onSuccess: () => toast.success('Track audio is deleted'),
     onError: (error) => {

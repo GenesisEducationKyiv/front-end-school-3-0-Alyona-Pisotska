@@ -88,9 +88,32 @@ const fetcherPut = async <TResponse, TBody = unknown>(
   }
 };
 
-const fetcherDelete = async <TResponse>(url: string, config?: AxiosRequestConfig): Promise<TResponse> => {
-  const response = await axios.delete<TResponse>(`${API_BASE}${url}`, config);
-  return response.data;
+const fetcherDelete = async <T>(
+  url: string,
+  config: AxiosRequestConfig = {},
+  schema?: ZodSchema<T>,
+): Promise<Result<T, Error>> => {
+  try {
+    const response = await axios.delete(`${API_BASE}${url}`, config);
+
+    if (!schema) {
+      return ok(response.data as T);
+    }
+
+    const parsed = schema.safeParse(response.data);
+    if (!parsed.success) {
+      return err(new Error(`Invalid response format: ${parsed.error.message}`));
+    }
+
+    return ok(parsed.data);
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const message = e.response?.data?.message || e.message || 'Axios error';
+      return err(new Error(message));
+    }
+
+    return err(e instanceof Error ? e : new Error('Unknown error'));
+  }
 };
 
 export { fetcherGet, fetcherPost, fetcherPut, fetcherDelete };

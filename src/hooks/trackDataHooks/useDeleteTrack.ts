@@ -15,7 +15,13 @@ const useDeleteTrack = () => {
 
   const { mutateAsync: deleteTrack } = useMutation<void, AxiosError, DeleteTrackVariables>({
     mutationFn: async ({ id }) => {
-      await fetcherDelete(`${URL}/${id}`);
+      const result = await fetcherDelete<void>(`${URL}/${id}`);
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+
+      return result.value;
     },
     onSuccess: () => {
       toast.success('Track is deleted');
@@ -29,5 +35,4 @@ const useDeleteTrack = () => {
 
   return { deleteTrack };
 };
-
 export { useDeleteTrack };
