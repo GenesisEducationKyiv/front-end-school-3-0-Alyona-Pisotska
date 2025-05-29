@@ -11,14 +11,20 @@ const useUploadAudioTrack = (trackId: Track['id']) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      return await fetcherPost<Track>(`${API_ENDPOINTS.trackList}/${trackId}/upload`, formData, {
+      const result = await fetcherPost<Track>(`${API_ENDPOINTS.trackList}/${trackId}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+
+      return result.value;
     },
     onSuccess: () => toast.success('Track audio is updated'),
-    onError: (error) => toast.error(`Error. ${error.message}`),
+    onError: (error) => toast.error(`Error! ${error.message}`),
   });
 
   return { uploadAudioTrack };

@@ -32,10 +32,32 @@ const fetcherGet = async <T>(
 const fetcherPost = async <TResponse, TBody = unknown>(
   url: string,
   data?: TBody,
-  config?: AxiosRequestConfig,
-): Promise<TResponse> => {
-  const response = await axios.post<TResponse>(`${API_BASE}${url}`, data, config);
-  return response.data;
+  config: AxiosRequestConfig = {},
+  schema?: ZodSchema<TResponse>,
+): Promise<Result<TResponse, Error>> => {
+  try {
+    const response = await axios.post(`${API_BASE}${url}`, data, config);
+
+    if (schema) {
+      const parsed = schema.safeParse(response.data);
+
+      if (!parsed.success) {
+        return err(new Error(`Invalid response format: ${parsed.error.message}`));
+      }
+
+      return ok(parsed.data);
+    }
+
+    return ok(response.data);
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      const message = e.response?.data?.message || e.message || 'Axios error';
+
+      return err(new Error(message));
+    }
+
+    return err(e instanceof Error ? e : new Error('Unknown error'));
+  }
 };
 
 const fetcherPut = async <TResponse, TBody = unknown>(

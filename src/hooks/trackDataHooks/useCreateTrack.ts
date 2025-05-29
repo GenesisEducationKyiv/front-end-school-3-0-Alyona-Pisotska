@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
 import { toast } from 'sonner';
-import { AxiosError } from 'axios';
+import { Result } from 'neverthrow';
 import { fetcherPost } from '@/lib/utils/utils.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
@@ -14,16 +14,21 @@ const useCreateTrack = () => {
   const queryClient = useQueryClient();
 
   const { mutateAsync: createNewTrack } = useMutation<NewTrack, Error, TrackPayload>({
-    mutationFn: (payload) => {
-      return fetcherPost<NewTrack, TrackPayload>(URL, payload);
+    mutationFn: async (payload) => {
+      const result: Result<NewTrack, Error> = await fetcherPost<NewTrack, TrackPayload>(URL, payload);
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+
+      return result.value;
     },
     onSuccess: () => {
       toast.success('Track is created');
       queryClient.invalidateQueries({ queryKey: [URL] });
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(`Error! ${axiosError.response?.data.error || 'Something went wrong'}`);
+      toast.error(`Error! ${error.message || 'Something went wrong'}`);
     },
   });
 

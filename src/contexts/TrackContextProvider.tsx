@@ -73,7 +73,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   });
 
   useEffect(() => {
-    if (fetchedTrackList) {
+    if (fetchedTrackList.length > 0) {
       setTrackList(fetchedTrackList);
     }
   }, [fetchedTrackList]);
@@ -151,7 +151,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     [deleteMultiTracks],
   );
 
-  const handleAddAudioTrack = (trackId: Track['id'], audioUrl: RequiredAudioFile) => {
+  const handleAddAudioTrack = useCallback((trackId: Track['id'], audioUrl: RequiredAudioFile) => {
     setTrackList((prevState) => {
       return prevState.map((track) => {
         if (track.id === trackId) {
@@ -161,9 +161,9 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         return track;
       });
     });
-  };
+  }, []);
 
-  const handleDeleteAudioTrack = (trackId: Track['id']) => {
+  const handleDeleteAudioTrack = useCallback((trackId: Track['id']) => {
     setTrackList((prevState) => {
       return prevState.map((track) => {
         if (track.id === trackId) {
@@ -173,11 +173,11 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         return track;
       });
     });
-  };
+  }, []);
 
-  const handleChangeSearchArtist = (value: string) => {
+  const handleChangeSearchArtist = useCallback((value: string) => {
     setSearchArtist(value);
-  };
+  }, []);
 
   return (
     <TrackContext.Provider
