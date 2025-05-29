@@ -14,7 +14,7 @@ const AUDIO_ACCEPT_STRING = ALLOWED_AUDIO_TYPES.join(',');
 type TrackAudioFieldProps = {
   control: Control<AudioData>;
   trackId: Track['id'];
-  initialAudioUrl?: string;
+  initialAudioUrl: string | undefined;
 };
 
 type ControlField = ControllerRenderProps<{ audioFile: '' | File }, 'audioFile'>;

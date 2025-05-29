@@ -14,7 +14,7 @@ import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types
 
 type TrackFormProps = {
   onFormSubmission: () => void;
-  initialValues?: Track;
+  initialValues: Track | undefined;
 };
 
 const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {

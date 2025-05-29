@@ -36,7 +36,11 @@ const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
 
     if (formData.audioFile) {
       uploadAudioTrack(formData.audioFile)
-        .then((data) => handleAddAudioTrack(trackData.id, data.audioFile))
+        .then((data) => {
+          if (data?.audioFile) {
+            handleAddAudioTrack(trackData.id, data.audioFile);
+          }
+        })
         .then(() => onFormSubmission());
     } else {
       deleteAudioFile()

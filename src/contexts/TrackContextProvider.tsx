@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import {
   useGetTrackList,
   useState,
@@ -22,6 +22,8 @@ type TrackContextProviderProps = {
   children: React.ReactNode;
 };
 
+type RequiredAudioFile = Exclude<Track['audioFile'], undefined>;
+
 type TTrackContext = {
   tracks: Track[];
   paginationData: PaginationMeta | null;
@@ -35,7 +37,7 @@ type TTrackContext = {
   handleEditTrack: (id: Track['id'], value: TrackPayload) => Promise<void>;
   handleDeleteTrack: (id: Track['id']) => Promise<void>;
   handleDeleteMultiTracks: (ids: Track['id'][]) => Promise<void>;
-  handleAddAudioTrack: (id: Track['id'], audioFile: Track['audioFile']) => void;
+  handleAddAudioTrack: (id: Track['id'], audioFile: RequiredAudioFile) => void;
   handleDeleteAudioTrack: (id: Track['id']) => void;
   handleChangeSearchArtist: (value: string) => void;
 };
@@ -149,7 +151,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     [deleteMultiTracks],
   );
 
-  const handleAddAudioTrack = (trackId: Track['id'], audioUrl: Track['audioFile']) => {
+  const handleAddAudioTrack = (trackId: Track['id'], audioUrl: RequiredAudioFile) => {
     setTrackList((prevState) => {
       return prevState.map((track) => {
         if (track.id === trackId) {
