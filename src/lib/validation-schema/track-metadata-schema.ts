@@ -1,14 +1,22 @@
 import * as z from 'zod';
 import { isValidImageUrl } from '@/lib/utils/utils.ts';
+import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
 
-const trackMetadataSchema = z.object({
+const baseMetadataSchema = trackSchema.pick({
+  title: true,
+  artist: true,
+  album: true,
+  genres: true,
+  coverImage: true,
+});
+
+const trackMetadataSchema = baseMetadataSchema.extend({
   title: z.string().nonempty({ message: 'The field is required' }),
   artist: z.string().nonempty({ message: 'The field is required' }),
-  album: z.string().optional(),
-  genres: z.array(z.string()).optional(),
   coverImage: z.string().optional().refine(isValidImageUrl, {
     message: 'Please enter a valid image URL (jpg, png, etc.)',
   }),
+  genres: z.array(z.string()).optional(),
 });
 
 export { trackMetadataSchema };
