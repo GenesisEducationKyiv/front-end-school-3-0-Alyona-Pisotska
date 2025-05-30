@@ -13,6 +13,10 @@ const trackSchema = z.object({
   updatedAt: z.string().datetime(),
 });
 
+const uploadedTrackSchema = trackSchema.extend({
+  audioFile: z.string(),
+});
+
 const paginationSchema = z.object({
   total: z.number(),
   page: z.number(),
@@ -25,4 +29,4 @@ const trackListResponseSchema = z.object({
   meta: paginationSchema,
 });
 
-export { trackSchema, paginationSchema, trackListResponseSchema };
+export { trackSchema, uploadedTrackSchema, paginationSchema, trackListResponseSchema };

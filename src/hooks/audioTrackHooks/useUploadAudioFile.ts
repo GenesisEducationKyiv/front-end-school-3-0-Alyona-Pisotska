@@ -1,18 +1,19 @@
 import { useMutation } from '@/hooks/hooks.ts';
+import { z } from 'zod';
 import { toast } from 'sonner';
 import { fetcherPost } from '@/lib/api/api.ts';
-import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
+import { uploadedTrackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
-import type { Track } from '@/lib/types/types.ts';
+type TrackWithAudio = z.infer<typeof uploadedTrackSchema>;
 
-const useUploadAudioTrack = (trackId: Track['id']) => {
+const useUploadAudioTrack = (trackId: TrackWithAudio['id']) => {
   const { mutateAsync: uploadAudioTrack } = useMutation({
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const result = await fetcherPost<Track>(
+      const result = await fetcherPost<TrackWithAudio>(
         `${API_ENDPOINTS.trackList}/${trackId}/upload`,
         formData,
         {
@@ -20,7 +21,7 @@ const useUploadAudioTrack = (trackId: Track['id']) => {
             'Content-Type': 'multipart/form-data',
           },
         },
-        trackSchema,
+        uploadedTrackSchema,
       );
 
       if (result.isErr()) {
