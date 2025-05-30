@@ -83,10 +83,6 @@ Combined: `?q=classic&page=3&sortBy=artist&order=desc&genre=rock`
 
 - Users may manually edit the URL to invalid values, which must be handled gracefully (e.g., fall back to defaults).
 
-⚠️ **Security**
-
-- Never store sensitive data (e.g., user IDs, tokens) in the URL.
-
 ## Edge Cases & Technical Notes
 
 - Define clear and consistent names and allowed values for query parameters (e.g., `order` must be either `asc` or `desc`).
@@ -94,6 +90,11 @@ Combined: `?q=classic&page=3&sortBy=artist&order=desc&genre=rock`
 - Handle situations where the number of search results changes and the current page becomes invalid (e.g., automatically navigate to the last available page).
 - Use `encodeURIComponent` and `decodeURIComponent` for query parameter values — especially for search terms — to avoid issues with special characters.
 - Clearly define what state should _not_ be stored in the URL (e.g., selection state for bulk deletion, as it is temporary/session-based).
+
+### ❗️Security
+
+- Never store sensitive information (e.g., user IDs, tokens, or private data) in the URL.
+- All query parameters must be non-sensitive and safe for logging, sharing, and bookmarking.
 
 ## UX Considerations
 
