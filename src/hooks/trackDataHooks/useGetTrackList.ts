@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useEffect, useQuery } from '@/hooks/hooks.ts';
-import { fetcherGet } from '@/lib/utils/utils.ts';
+import { fetcherGet } from '@/lib/api/api.ts';
 import { trackListResponseSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 

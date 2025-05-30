@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
-import { fetcherDelete } from '@/lib/utils/utils.ts';
+import { fetcherDelete } from '@/lib/api/api.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
 import type { Track } from '@/lib/types/types.ts';

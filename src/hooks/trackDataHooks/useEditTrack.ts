@@ -1,7 +1,8 @@
 import { toast } from 'sonner';
 import { useMutation } from '@/hooks/hooks.ts';
-import { fetcherPut } from '@/lib/utils/utils.ts';
+import { fetcherPut } from '@/lib/api/api.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
 
 import type { Track, TrackPayload } from '@/lib/types/types.ts';
 
@@ -9,8 +10,8 @@ const URL = API_ENDPOINTS.trackList;
 
 const useEditTrack = () => {
   const { mutateAsync: editTrack } = useMutation({
-    mutationFn: async ({ id, payload }: { id: string; payload: TrackPayload }) => {
-      const result = await fetcherPut<Track, TrackPayload>(`${URL}/${id}`, payload);
+    mutationFn: async ({ id, payload }: { id: Track['id']; payload: TrackPayload }) => {
+      const result = await fetcherPut<Track, TrackPayload>(`${URL}/${id}`, payload, {}, trackSchema);
 
       if (result.isErr()) {
         throw result.error;

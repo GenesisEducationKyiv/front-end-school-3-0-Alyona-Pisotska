@@ -1,6 +1,6 @@
 import { useMutation } from '@/hooks/hooks.ts';
 import { toast } from 'sonner';
-import { fetcherPost } from '@/lib/utils/utils.ts';
+import { fetcherPost } from '@/lib/api/api.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
 import type { Track } from '@/lib/types/types.ts';
