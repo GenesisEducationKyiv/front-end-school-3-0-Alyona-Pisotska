@@ -22,8 +22,6 @@ type TrackListQueryParams = {
   artist?: string;
 };
 
-type TrackPayload = Pick<Track, 'title' | 'artist' | 'album' | 'coverImage'> & {
-  genres: string[];
-};
+type TrackPayload = Pick<Track, 'title' | 'artist' | 'album' | 'coverImage' | 'genres'>;
 
 export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams, TrackMetadataValues, TrackPayload };

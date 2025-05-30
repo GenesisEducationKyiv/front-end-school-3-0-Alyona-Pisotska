@@ -1,6 +1,7 @@
 import { useMutation } from '@/hooks/hooks.ts';
 import { toast } from 'sonner';
 import { fetcherPost } from '@/lib/api/api.ts';
+import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
 import type { Track } from '@/lib/types/types.ts';
@@ -11,11 +12,16 @@ const useUploadAudioTrack = (trackId: Track['id']) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const result = await fetcherPost<Track>(`${API_ENDPOINTS.trackList}/${trackId}/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      const result = await fetcherPost<Track>(
+        `${API_ENDPOINTS.trackList}/${trackId}/upload`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      });
+        trackSchema,
+      );
 
       if (result.isErr()) {
         throw result.error;

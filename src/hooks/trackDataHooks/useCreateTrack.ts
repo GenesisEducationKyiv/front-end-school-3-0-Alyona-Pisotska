@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
 import { toast } from 'sonner';
 import { Result } from 'neverthrow';
 import { fetcherPost } from '@/lib/api/api.ts';
+import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
 import type { TrackPayload } from '@/lib/types/types.ts';
@@ -15,7 +16,7 @@ const useCreateTrack = () => {
 
   const { mutateAsync: createNewTrack } = useMutation<NewTrack, Error, TrackPayload>({
     mutationFn: async (payload) => {
-      const result: Result<NewTrack, Error> = await fetcherPost<NewTrack, TrackPayload>(URL, payload);
+      const result: Result<NewTrack, Error> = await fetcherPost<NewTrack, TrackPayload>(URL, payload, {}, trackSchema);
 
       if (result.isErr()) {
         throw result.error;
