@@ -4,3 +4,4 @@ export { parseWithSchema } from './parse-with-schema.ts';
 export { handleAxiosError } from './handle-axios-error.ts';
 export { isTrackListSortableColumn } from './is-track-list-sortable-column.ts';
 export { isValidImageUrl } from './is-valid-image-url.ts';
+export { isValidToasterTheme } from './is-valid-toaster-theme.ts';
