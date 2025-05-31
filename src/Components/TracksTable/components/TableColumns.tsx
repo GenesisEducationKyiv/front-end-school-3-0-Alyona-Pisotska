@@ -88,7 +88,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => row.getValue(TABLE_CELL_DATA.album.id) || <EmptyDataCell />,
+    cell: ({ row }) => <>{row.getValue(TABLE_CELL_DATA.album.id)}</> || <EmptyDataCell />,
   },
   {
     accessorKey: TABLE_CELL_DATA.genres.id,
