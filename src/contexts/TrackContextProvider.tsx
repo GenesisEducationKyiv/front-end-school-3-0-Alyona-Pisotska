@@ -75,6 +75,8 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   useEffect(() => {
     if (fetchedTrackList.length > 0) {
       setTrackList(fetchedTrackList);
+    } else {
+      setTrackList([]);
     }
   }, [fetchedTrackList]);
 

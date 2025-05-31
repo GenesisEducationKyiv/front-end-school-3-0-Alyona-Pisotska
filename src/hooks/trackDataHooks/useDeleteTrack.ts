@@ -7,13 +7,13 @@ import type { Track } from '@/lib/types/types.ts';
 
 const URL = API_ENDPOINTS.trackList;
 
-type DeleteTrackVariables = { id: Track['id'] };
+type DeleteTrackPayload = { id: Track['id'] };
 
 const useDeleteTrack = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteTrack } = useMutation<void, Error, DeleteTrackVariables>({
-    mutationFn: async ({ id }) => {
+  const { mutateAsync: deleteTrack } = useMutation<void, Error, DeleteTrackPayload>({
+    mutationFn: async ({ id }: DeleteTrackPayload) => {
       const result = await fetcherDelete<void>(`${URL}/${id}`);
 
       if (result.isErr()) {

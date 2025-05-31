@@ -76,8 +76,10 @@ const TracksTable = () => {
       <TableBody>
         {isLoadingTrackList ? (
           <TableLoader colSpan={TABLE_COLUMNS.length} />
+        ) : tableRows.length ? (
+          tableRows.map((row) => <TracksTableRow row={row} key={row.id} />)
         ) : (
-          tableRows.map((row) => <TracksTableRow row={row} key={row.id} />) || <EmptyTable />
+          <EmptyTable />
         )}
       </TableBody>
     </Table>

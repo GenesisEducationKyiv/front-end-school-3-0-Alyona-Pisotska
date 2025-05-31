@@ -4,18 +4,16 @@ import { fetcherPost } from '@/lib/api/api.ts';
 import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
-import type { TrackPayload } from '@/lib/types/types.ts';
+import type { Track, TrackPayload } from '@/lib/types/types.ts';
 
 const URL = API_ENDPOINTS.trackList;
-
-type NewTrack = TrackPayload;
 
 const useCreateTrack = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: createNewTrack } = useMutation<NewTrack, Error, TrackPayload>({
-    mutationFn: async (payload) => {
-      const result = await fetcherPost<NewTrack, TrackPayload>(URL, payload, {}, trackSchema);
+  const { mutateAsync: createNewTrack } = useMutation<Track, Error, TrackPayload>({
+    mutationFn: async (payload: TrackPayload) => {
+      const result = await fetcherPost<Track, TrackPayload>(URL, payload, {}, trackSchema);
 
       if (result.isErr()) {
         throw result.error;

@@ -9,7 +9,7 @@ import type { z } from 'zod';
 type TrackWithAudio = z.infer<typeof uploadedTrackSchema>;
 
 const useUploadAudioTrack = (trackId: TrackWithAudio['id']) => {
-  const { mutateAsync: uploadAudioTrack } = useMutation({
+  const { mutateAsync: uploadAudioTrack } = useMutation<TrackWithAudio, Error, File>({
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append('file', file);

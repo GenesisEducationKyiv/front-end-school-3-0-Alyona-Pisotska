@@ -4,13 +4,16 @@ import { fetcherGet } from '@/lib/api/api.ts';
 import { trackListResponseSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
+import type { z } from 'zod';
 import type { TrackListQueryParams } from '@/lib/types/types.ts';
 
 const LIMIT = 10;
 const URL = API_ENDPOINTS.trackList;
 
+type TrackListResponse = z.infer<typeof trackListResponseSchema>;
+
 const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackListQueryParams) => {
-  const { isFetching, data, error } = useQuery({
+  const { isFetching, data, error } = useQuery<TrackListResponse, Error>({
     queryKey: [URL, page, sort, order, search, genre, artist],
     queryFn: async () => {
       const params = new URLSearchParams();
@@ -22,7 +25,7 @@ const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackList
       genre?.length && params.append('genre', genre);
       artist?.length && params.append('artist', artist);
 
-      const result = await fetcherGet(URL, { params }, trackListResponseSchema);
+      const result = await fetcherGet<TrackListResponse>(URL, { params }, trackListResponseSchema);
 
       if (result.isErr()) {
         throw result.error;

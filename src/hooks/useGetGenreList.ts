@@ -4,13 +4,17 @@ import { fetcherGet } from '@/lib/api/api.ts';
 import { genreListSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
+import type { z } from 'zod';
+
 const URL = API_ENDPOINTS.genres;
 
+type GenreListResponse = z.infer<typeof genreListSchema>;
+
 const useGetGenreList = () => {
-  const { isFetching, data, error } = useQuery({
+  const { isFetching, data, error } = useQuery<GenreListResponse, Error>({
     queryKey: [URL],
     queryFn: async () => {
-      const result = await fetcherGet(URL, {}, genreListSchema);
+      const result = await fetcherGet<GenreListResponse>(URL, {}, genreListSchema);
 
       if (result.isErr()) {
         throw result.error;
