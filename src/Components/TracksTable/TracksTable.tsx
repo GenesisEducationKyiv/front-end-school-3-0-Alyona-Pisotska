@@ -42,8 +42,12 @@ const TracksTable = () => {
   const selectedIds = selectedRows.map((row) => row.original.id);
   const tableRows = table.getRowModel().rows;
 
-  const onDeleteTracksClick = useCallback(() => {
-    handleDeleteMultiTracks(selectedIds).finally(() => setRowSelection({}));
+  const onDeleteTracksClick = useCallback(async () => {
+    try {
+      await handleDeleteMultiTracks(selectedIds);
+    } finally {
+      setRowSelection({});
+    }
   }, [handleDeleteMultiTracks, selectedIds]);
 
   useEffect(() => {

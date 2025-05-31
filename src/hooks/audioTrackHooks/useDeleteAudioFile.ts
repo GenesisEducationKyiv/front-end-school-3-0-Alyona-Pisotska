@@ -1,5 +1,4 @@
 import { useMutation } from '@/hooks/hooks.ts';
-import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 import { fetcherDelete } from '@/lib/api/api.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
@@ -18,10 +17,7 @@ const useDeleteAudioFile = (trackId: Track['id']) => {
       return result.value;
     },
     onSuccess: () => toast.success('Track audio is deleted'),
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(`Error! ${axiosError.response?.data.error || 'Something went wrong'}`);
-    },
+    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
   });
 
   return { deleteAudioFile };

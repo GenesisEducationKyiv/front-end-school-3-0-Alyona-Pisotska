@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
 import { toast } from 'sonner';
-import { Result } from 'neverthrow';
 import { fetcherPost } from '@/lib/api/api.ts';
 import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
@@ -16,7 +15,7 @@ const useCreateTrack = () => {
 
   const { mutateAsync: createNewTrack } = useMutation<NewTrack, Error, TrackPayload>({
     mutationFn: async (payload) => {
-      const result: Result<NewTrack, Error> = await fetcherPost<NewTrack, TrackPayload>(URL, payload, {}, trackSchema);
+      const result = await fetcherPost<NewTrack, TrackPayload>(URL, payload, {}, trackSchema);
 
       if (result.isErr()) {
         throw result.error;
@@ -26,11 +25,12 @@ const useCreateTrack = () => {
     },
     onSuccess: () => {
       toast.success('Track is created');
-      queryClient.invalidateQueries({ queryKey: [URL] });
+      queryClient.invalidateQueries({ queryKey: [URL] }).catch((error: unknown) => {
+        const err = error instanceof Error ? error : new Error('Unknown error');
+        toast.error(`Failed to refresh track list: ${err.message}`);
+      });
     },
-    onError: (error) => {
-      toast.error(`Error! ${error.message || 'Something went wrong'}`);
-    },
+    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
   });
 
   return { createNewTrack };

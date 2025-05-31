@@ -19,12 +19,8 @@ const useEditTrack = () => {
 
       return result.value;
     },
-    onSuccess: () => {
-      toast.success('Track is updated');
-    },
-    onError: (error) => {
-      toast.error(`Error! ${error.message}`);
-    },
+    onSuccess: () => toast.success('Track is updated'),
+    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
   });
 
   return { editTrack };

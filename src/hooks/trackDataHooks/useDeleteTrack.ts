@@ -1,5 +1,4 @@
 import { toast } from 'sonner';
-import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
 import { fetcherDelete } from '@/lib/api/api.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
@@ -13,7 +12,7 @@ type DeleteTrackVariables = { id: Track['id'] };
 const useDeleteTrack = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteTrack } = useMutation<void, AxiosError, DeleteTrackVariables>({
+  const { mutateAsync: deleteTrack } = useMutation<void, Error, DeleteTrackVariables>({
     mutationFn: async ({ id }) => {
       const result = await fetcherDelete<void>(`${URL}/${id}`);
 
@@ -25,14 +24,15 @@ const useDeleteTrack = () => {
     },
     onSuccess: () => {
       toast.success('Track is deleted');
-      queryClient.invalidateQueries({ queryKey: [URL] });
+      queryClient.invalidateQueries({ queryKey: [URL] }).catch((error: unknown) => {
+        const err = error instanceof Error ? error : new Error('Unknown error');
+        toast.error(`Failed to refresh track list: ${err.message}`);
+      });
     },
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(`Error! ${axiosError.response?.data.error || 'Something went wrong'}`);
-    },
+    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
   });
 
   return { deleteTrack };
 };
+
 export { useDeleteTrack };

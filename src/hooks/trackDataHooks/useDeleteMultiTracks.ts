@@ -11,7 +11,7 @@ type DeleteTracksPayload = {
   ids: Track['id'][];
 };
 
-export const useDeleteMultiTracks = () => {
+const useDeleteMultiTracks = () => {
   const queryClient = useQueryClient();
 
   const { mutateAsync: deleteMultiTracks } = useMutation<void, Error, DeleteTracksPayload>({
@@ -26,12 +26,15 @@ export const useDeleteMultiTracks = () => {
     },
     onSuccess: () => {
       toast.success('Tracks are deleted');
-      queryClient.invalidateQueries({ queryKey: [URL] });
+      queryClient.invalidateQueries({ queryKey: [URL] }).catch((error: unknown) => {
+        const err = error instanceof Error ? error : new Error('Unknown error');
+        toast.error(`Failed to refresh track list: ${err.message}`);
+      });
     },
-    onError: (error) => {
-      toast.error(`Error! ${error.message || 'Something went wrong'}`);
-    },
+    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
   });
 
   return { deleteMultiTracks };
 };
+
+export { useDeleteMultiTracks };

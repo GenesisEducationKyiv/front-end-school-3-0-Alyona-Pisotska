@@ -44,7 +44,7 @@ const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
             actionType={'edit'}
             initialTrackData={track}
           />
-          <DropdownMenuItem data-testid={`delete-track-${track.id}`} onSelect={() => handleDeleteTrack(track.id)}>
+          <DropdownMenuItem data-testid={`delete-track-${track.id}`} onSelect={() => void handleDeleteTrack(track.id)}>
             Delete track
           </DropdownMenuItem>
         </DropdownMenuContent>

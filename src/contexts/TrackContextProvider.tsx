@@ -122,7 +122,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
     try {
       await editTrack({ id: trackId, payload: editTrackData });
-    } catch (error) {
+    } catch {
       if (previousTrack) {
         setTrackList((prevState) => {
           return prevState.map((track) => {

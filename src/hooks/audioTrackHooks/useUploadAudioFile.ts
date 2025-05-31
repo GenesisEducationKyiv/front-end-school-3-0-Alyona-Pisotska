@@ -31,7 +31,7 @@ const useUploadAudioTrack = (trackId: TrackWithAudio['id']) => {
       return result.value;
     },
     onSuccess: () => toast.success('Track audio is updated'),
-    onError: (error) => toast.error(`Error! ${error.message}`),
+    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
   });
 
   return { uploadAudioTrack };
