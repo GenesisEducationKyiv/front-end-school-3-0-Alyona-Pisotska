@@ -1,4 +1,4 @@
-import { flexRender, Row } from '@tanstack/react-table';
+import { flexRender, type Row } from '@tanstack/react-table';
 import { TableCell, TableRow } from '@/Components/components.ts';
 
 import type { Track } from '@/lib/types/types.ts';

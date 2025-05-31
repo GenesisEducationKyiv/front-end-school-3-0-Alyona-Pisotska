@@ -1,4 +1,4 @@
-import { flexRender, HeaderGroup } from '@tanstack/react-table';
+import { flexRender, type HeaderGroup } from '@tanstack/react-table';
 import { TableHead, TableHeader, TableRow } from '@/Components/components.ts';
 
 import type { Track } from '@/lib/types/types.ts';

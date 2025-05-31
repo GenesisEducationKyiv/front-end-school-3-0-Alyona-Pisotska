@@ -1,11 +1,11 @@
 import { useTrackContext, useState, useEffect, useCallback } from '@/hooks/hooks.ts';
 import {
-  SortingState,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type SortingState,
 } from '@tanstack/react-table';
 import { Table, TableBody, TableLoader } from '@/Components/components.ts';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components.ts';

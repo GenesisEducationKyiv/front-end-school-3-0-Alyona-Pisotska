@@ -1,4 +1,4 @@
-import { ActionMeta, MultiValue, SingleValue } from 'react-select';
+import type { ActionMeta, MultiValue, SingleValue } from 'react-select';
 
 type SelectOption = {
   value: string;

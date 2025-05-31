@@ -1,8 +1,8 @@
-import { Control, ControllerRenderProps } from 'react-hook-form';
 import { useState, useRef } from '@/hooks/hooks.ts';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from '@/Components/components.ts';
 import { ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants.ts';
 
+import type { Control, ControllerRenderProps } from 'react-hook-form';
 import type { AudioData, Track } from '@/lib/types/types.ts';
 
 const FILE_NAME = {

@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { ZodSchema } from 'zod';
-import { Result, err } from 'neverthrow';
+import axios, { type AxiosRequestConfig } from 'axios';
+import { type ZodSchema } from 'zod';
+import { type Result, err } from 'neverthrow';
 import { handleAxiosError, parseWithSchema } from '@/lib/utils/utils.ts';
 
 const API_BASE = 'http://localhost:8000';

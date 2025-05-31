@@ -1,4 +1,4 @@
-import { ZodError } from 'zod';
+import type { ZodError } from 'zod';
 
 const formatZodError = (error: ZodError) => {
   const firstError = error.errors[0];

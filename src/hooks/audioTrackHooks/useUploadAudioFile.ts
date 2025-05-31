@@ -1,9 +1,10 @@
 import { useMutation } from '@/hooks/hooks.ts';
-import { z } from 'zod';
 import { toast } from 'sonner';
 import { fetcherPost } from '@/lib/api/api.ts';
 import { uploadedTrackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+
+import type { z } from 'zod';
 
 type TrackWithAudio = z.infer<typeof uploadedTrackSchema>;
 

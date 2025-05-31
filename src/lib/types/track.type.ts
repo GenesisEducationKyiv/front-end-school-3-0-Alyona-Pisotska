@@ -1,11 +1,10 @@
-import { z } from 'zod';
-import {
+import type { z } from 'zod';
+import type {
   trackMetadataSchema,
   paginationSchema,
   trackListResponseSchema,
   trackSchema,
 } from '@/lib/validation-schema/validation-schema.ts';
-
 import type { Order } from './types.ts';
 
 type Track = z.infer<typeof trackSchema>;

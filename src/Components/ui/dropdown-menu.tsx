@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { CheckedState } from '@radix-ui/react-checkbox';
 import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';
-
 import { cn } from '@/lib/utils/utils.ts';
+
+import type { CheckedState } from '@radix-ui/react-checkbox';
 
 type DropdownMenuCheckboxItemProps = {
   className?: string;

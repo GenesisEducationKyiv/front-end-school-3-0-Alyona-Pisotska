@@ -1,9 +1,9 @@
-import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { Button, Checkbox } from '@/Components/components.ts';
 import { EmptyDataCell, TrackActionsDropdownMenu } from './components.ts';
 import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
 
+import type { ColumnDef } from '@tanstack/react-table';
 import type { Track } from '@/lib/types/types.ts';
 
 const TABLE_CELL_DATA = {

@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 
-import { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types.ts';
 
 const SELECTED_TOAST_ID = 'selected-toast';
 
