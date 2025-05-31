@@ -13,7 +13,7 @@ const URL = API_ENDPOINTS.trackList;
 type TrackListResponse = z.infer<typeof trackListResponseSchema>;
 
 const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackListQueryParams) => {
-  const { isFetching, data, error } = useQuery<TrackListResponse, Error>({
+  const { isFetching, data, error } = useQuery({
     queryKey: [URL, page, sort, order, search, genre, artist],
     queryFn: async () => {
       const params = new URLSearchParams();

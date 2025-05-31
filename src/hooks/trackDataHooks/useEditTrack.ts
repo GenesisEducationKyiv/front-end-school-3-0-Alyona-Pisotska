@@ -11,7 +11,7 @@ const URL = API_ENDPOINTS.trackList;
 type EditTrackPayload = { id: Track['id']; payload: TrackPayload };
 
 const useEditTrack = () => {
-  const { mutateAsync: editTrack } = useMutation<Track, Error, EditTrackPayload>({
+  const { mutateAsync: editTrack } = useMutation({
     mutationFn: async ({ id, payload }: EditTrackPayload) => {
       const result = await fetcherPut<Track, TrackPayload>(`${URL}/${id}`, payload, {}, trackSchema);
 

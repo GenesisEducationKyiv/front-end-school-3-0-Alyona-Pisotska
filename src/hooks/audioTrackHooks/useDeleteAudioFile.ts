@@ -6,7 +6,7 @@ import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 import type { Track } from '@/lib/types/types.ts';
 
 const useDeleteAudioFile = (trackId: Track['id']) => {
-  const { mutateAsync: deleteAudioFile } = useMutation<void, Error>({
+  const { mutateAsync: deleteAudioFile } = useMutation({
     mutationFn: async () => {
       const result = await fetcherDelete<void>(`${API_ENDPOINTS.trackList}/${trackId}/file`);
 

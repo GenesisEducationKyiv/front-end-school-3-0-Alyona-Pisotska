@@ -12,7 +12,7 @@ type DeleteTrackPayload = { id: Track['id'] };
 const useDeleteTrack = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteTrack } = useMutation<void, Error, DeleteTrackPayload>({
+  const { mutateAsync: deleteTrack } = useMutation({
     mutationFn: async ({ id }: DeleteTrackPayload) => {
       const result = await fetcherDelete<void>(`${URL}/${id}`);
 

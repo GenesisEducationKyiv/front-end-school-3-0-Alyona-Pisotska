@@ -14,7 +14,7 @@ type DeleteTracksPayload = {
 const useDeleteMultiTracks = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteMultiTracks } = useMutation<void, Error, DeleteTracksPayload>({
+  const { mutateAsync: deleteMultiTracks } = useMutation({
     mutationFn: async (payload: DeleteTracksPayload) => {
       const result = await fetcherPost<void, DeleteTracksPayload>(`${URL}/delete`, payload);
 

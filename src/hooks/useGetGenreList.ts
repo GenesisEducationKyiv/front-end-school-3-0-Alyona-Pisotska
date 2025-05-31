@@ -11,7 +11,7 @@ const URL = API_ENDPOINTS.genres;
 type GenreListResponse = z.infer<typeof genreListSchema>;
 
 const useGetGenreList = () => {
-  const { isFetching, data, error } = useQuery<GenreListResponse, Error>({
+  const { isFetching, data, error } = useQuery({
     queryKey: [URL],
     queryFn: async () => {
       const result = await fetcherGet<GenreListResponse>(URL, {}, genreListSchema);

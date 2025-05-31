@@ -11,7 +11,7 @@ const URL = API_ENDPOINTS.trackList;
 const useCreateTrack = () => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: createNewTrack } = useMutation<Track, Error, TrackPayload>({
+  const { mutateAsync: createNewTrack } = useMutation({
     mutationFn: async (payload: TrackPayload) => {
       const result = await fetcherPost<Track, TrackPayload>(URL, payload, {}, trackSchema);
 
