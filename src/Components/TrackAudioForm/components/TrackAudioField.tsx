@@ -17,7 +17,7 @@ type TrackAudioFieldProps = {
   initialAudioUrl: string | undefined;
 };
 
-type ControlField = ControllerRenderProps<{ audioFile: '' | File }, 'audioFile'>;
+type ControlField = ControllerRenderProps<{ audioFile: File | null }, 'audioFile'>;
 
 const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,7 +36,7 @@ const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldP
       setFileName(FILE_NAME.empty);
       setPreviewUrl(null);
 
-      field.onChange('');
+      field.onChange(null);
     }
   };
 
@@ -48,7 +48,7 @@ const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldP
       fileInputRef.current.value = '';
     }
 
-    field.onChange('');
+    field.onChange(null);
   };
 
   return (

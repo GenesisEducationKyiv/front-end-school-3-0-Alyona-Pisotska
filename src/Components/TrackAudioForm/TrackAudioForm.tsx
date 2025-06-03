@@ -25,14 +25,14 @@ const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
   const watchedFile = watch('audioFile');
 
   const isModified =
-    (trackData.audioFile && watchedFile === '') ||
+    (trackData.audioFile && watchedFile === null) ||
     (!trackData.audioFile && watchedFile instanceof File) ||
     (trackData.audioFile && watchedFile instanceof File) ||
     false;
 
   const onSubmit = async (data: AudioData) => {
     try {
-      const audioFile = data.audioFile ?? '';
+      const audioFile = data.audioFile ?? null;
 
       if (audioFile) {
         const uploaded = await uploadAudioTrack(audioFile);

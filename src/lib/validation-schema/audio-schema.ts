@@ -11,7 +11,7 @@ const audioSchema = z.object({
       .refine((file) => file.size <= MAX_AUDIO_FILE_SIZE, {
         message: 'File size must be 10MB or less.',
       }),
-    z.literal(''),
+    z.null(),
   ]),
 });
 
