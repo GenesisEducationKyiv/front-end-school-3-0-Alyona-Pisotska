@@ -63,6 +63,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     trackList: fetchedTrackList,
     paginationData,
     isLoadingTrackList,
+    isSuccessTrackList,
   } = useGetTrackList({
     page,
     sort: sortBy,
@@ -73,12 +74,10 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   });
 
   useEffect(() => {
-    if (fetchedTrackList.length > 0) {
+    if (!isLoadingTrackList && isSuccessTrackList) {
       setTrackList(fetchedTrackList);
-    } else {
-      setTrackList([]);
     }
-  }, [fetchedTrackList]);
+  }, [isLoadingTrackList, isSuccessTrackList, fetchedTrackList]);
 
   useEffect(() => {
     setPage(INITIAL_PAGE);
