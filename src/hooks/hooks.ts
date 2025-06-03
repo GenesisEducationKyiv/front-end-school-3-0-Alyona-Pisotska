@@ -1,4 +1,5 @@
 export { useDebounce } from './useDebounce.ts';
+export { useAppMutation } from './useAppMutation.ts';
 
 //* request hooks */
 export {
