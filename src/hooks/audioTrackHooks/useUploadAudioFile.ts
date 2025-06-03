@@ -1,5 +1,4 @@
-import { useMutation } from '@/hooks/hooks.ts';
-import { toast } from 'sonner';
+import { useAppMutation } from '@/hooks/hooks.ts';
 import { fetcherPost } from '@/lib/api/api.ts';
 import { uploadedTrackSchema } from '@/lib/validation-schema/validation-schema.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
@@ -9,12 +8,12 @@ import type { z } from 'zod';
 type TrackWithAudio = z.infer<typeof uploadedTrackSchema>;
 
 const useUploadAudioTrack = (trackId: TrackWithAudio['id']) => {
-  const { mutateAsync: uploadAudioTrack } = useMutation({
-    mutationFn: async (file: File) => {
+  const { mutateAsync: uploadAudioTrack } = useAppMutation({
+    mutationFn: (file: File) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const result = await fetcherPost<TrackWithAudio>(
+      return fetcherPost<TrackWithAudio>(
         `${API_ENDPOINTS.trackList}/${trackId}/upload`,
         formData,
         {
@@ -24,15 +23,8 @@ const useUploadAudioTrack = (trackId: TrackWithAudio['id']) => {
         },
         uploadedTrackSchema,
       );
-
-      if (result.isErr()) {
-        throw result.error;
-      }
-
-      return result.value;
     },
-    onSuccess: () => toast.success('Track audio is updated'),
-    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
+    successMessage: 'Track audio is uploaded',
   });
 
   return { uploadAudioTrack };

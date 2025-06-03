@@ -1,5 +1,4 @@
-import { toast } from 'sonner';
-import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
+import { useAppMutation } from '@/hooks/hooks.ts';
 import { fetcherPost } from '@/lib/api/api.ts';
 import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
 
@@ -12,26 +11,12 @@ type DeleteTracksPayload = {
 };
 
 const useDeleteMultiTracks = () => {
-  const queryClient = useQueryClient();
-
-  const { mutateAsync: deleteMultiTracks } = useMutation({
-    mutationFn: async (payload: DeleteTracksPayload) => {
-      const result = await fetcherPost<void, DeleteTracksPayload>(`${URL}/delete`, payload);
-
-      if (result.isErr()) {
-        throw result.error;
-      }
-
-      return result.value;
+  const { mutateAsync: deleteMultiTracks } = useAppMutation({
+    mutationFn: (payload: DeleteTracksPayload) => {
+      return fetcherPost<void, DeleteTracksPayload>(`${URL}/delete`, payload);
     },
-    onSuccess: () => {
-      toast.success('Tracks are deleted');
-      queryClient.invalidateQueries({ queryKey: [URL] }).catch((error: unknown) => {
-        const err = error instanceof Error ? error : new Error('Unknown error');
-        toast.error(`Failed to refresh track list: ${err.message}`);
-      });
-    },
-    onError: (error) => toast.error(`Error! ${error.message || 'Something went wrong'}`),
+    successMessage: 'Tracks are deleted',
+    invalidateQueryKey: [URL],
   });
 
   return { deleteMultiTracks };
