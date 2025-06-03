@@ -73,6 +73,10 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     artist: searchArtist,
   });
 
+  const totalPages = useMemo(() => {
+    return paginationData?.totalPages ?? 1;
+  }, [paginationData?.totalPages]);
+
   useEffect(() => {
     if (!isLoadingTrackList && isSuccessTrackList) {
       setTrackList(fetchedTrackList);
@@ -82,10 +86,6 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   useEffect(() => {
     setPage(INITIAL_PAGE);
   }, [debouncedSearchText, selectedGenre, searchArtist]);
-
-  const totalPages = useMemo(() => {
-    return paginationData?.totalPages ?? 1;
-  }, [paginationData?.totalPages]);
 
   const handleChangeOrder = useCallback((newOrder: Order) => {
     setPage(INITIAL_PAGE);
