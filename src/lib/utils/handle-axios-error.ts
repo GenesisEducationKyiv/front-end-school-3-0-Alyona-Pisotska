@@ -1,17 +1,12 @@
 import axios from 'axios';
+import { z } from 'zod';
 
-type ServerError = {
-  error: string;
-};
+const ServerErrorSchema = z.object({ error: z.string() });
 
 const handleAxiosError = (e: unknown): Error => {
-  if (axios.isAxiosError<ServerError>(e)) {
-    const errorData = e.response?.data;
-
-    const message =
-      typeof errorData === 'object' && errorData !== null && 'error' in errorData
-        ? errorData.error
-        : e.message || 'Axios error';
+  if (axios.isAxiosError(e)) {
+    const parsed = ServerErrorSchema.safeParse(e.response?.data);
+    const message = parsed.success ? parsed.data.error : e.message || 'Axios error';
 
     return new Error(message);
   }
