@@ -12,7 +12,7 @@ type UseAppMutationOptions<TData, TError, TVariables> = {
   onErrorCallback?: (error: TError) => void;
 };
 
-const useAppMutation = <TData = unknown, TError = Error, TVariables = unknown>(
+const useAppMutation = <TData = unknown, TError = Error, TVariables = void>(
   options: UseAppMutationOptions<TData, TError, TVariables>,
 ) => {
   const queryClient = useQueryClient();
