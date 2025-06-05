@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { MAX_AUDIO_FILE_SIZE, ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants.ts';
+import { MAX_AUDIO_FILE_SIZE, ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants';
 
 const audioSchema = z.object({
   audioFile: z.union([

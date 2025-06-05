@@ -1,4 +1,4 @@
-import { Layout, Toaster } from '@/Components/components.ts';
+import { Layout, Toaster } from '@/Components/components';
 
 const TracksPage = () => {
   return (

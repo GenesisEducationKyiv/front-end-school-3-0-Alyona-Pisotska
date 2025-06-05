@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
-import { useEffect, useQuery } from '@/hooks/hooks.ts';
-import { fetcherGet } from '@/lib/api/api.ts';
-import { genreListSchema } from '@/lib/validation-schema/validation-schema.ts';
-import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { useEffect, useQuery } from '@/hooks/hooks';
+import { fetcherGet } from '@/lib/api/api';
+import { genreListSchema } from '@/lib/validation-schema/validation-schema';
+import { API_ENDPOINTS } from '@/lib/constants/constants';
 
 import type { z } from 'zod';
 

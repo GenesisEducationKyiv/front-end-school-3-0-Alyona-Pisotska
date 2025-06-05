@@ -6,7 +6,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-} from '@/Components/components.ts';
+} from '@/Components/components';
 
 type AppPaginationProps = {
   currentPage: number;

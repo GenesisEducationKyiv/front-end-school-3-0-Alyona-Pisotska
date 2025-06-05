@@ -4,8 +4,8 @@ import type {
   paginationSchema,
   trackListResponseSchema,
   trackSchema,
-} from '@/lib/validation-schema/validation-schema.ts';
-import type { Order } from './types.ts';
+} from '@/lib/validation-schema/validation-schema';
+import type { Order } from './types';
 
 type Track = z.infer<typeof trackSchema>;
 type TrackListResponse = z.infer<typeof trackListResponseSchema>;

@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks.ts';
-import { Button, Form } from '@/Components/components.ts';
-import { TrackAudioField } from './components/components.ts';
-import { audioSchema } from '@/lib/validation-schema/validation-schema.ts';
+import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks';
+import { Button, Form } from '@/Components/components';
+import { TrackAudioField } from './components/components';
+import { audioSchema } from '@/lib/validation-schema/validation-schema';
 
-import type { AudioData, Track } from '@/lib/types/types.ts';
+import type { AudioData, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
   onFormSubmission: () => void;

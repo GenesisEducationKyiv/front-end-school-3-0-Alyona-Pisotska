@@ -1,5 +1,5 @@
-import { useContext } from '@/hooks/hooks.ts';
-import { TrackContext } from '@/contexts/contexts.ts';
+import { useContext } from '@/hooks/hooks';
+import { TrackContext } from '@/contexts/contexts';
 
 const useTrackContext = () => {
   const context = useContext(TrackContext);

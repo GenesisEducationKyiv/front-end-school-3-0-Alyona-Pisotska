@@ -1,4 +1,4 @@
-import { useTrackContext, useState, useEffect, useCallback } from '@/hooks/hooks.ts';
+import { useTrackContext, useState, useEffect, useCallback } from '@/hooks/hooks';
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -7,13 +7,13 @@ import {
   useReactTable,
   type SortingState,
 } from '@tanstack/react-table';
-import { Table, TableBody, TableLoader } from '@/Components/components.ts';
-import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components.ts';
-import { cn, isTrackListSortableColumn } from '@/lib/utils/utils.ts';
-import { showTrackActionToast } from './libs/helpers.ts';
-import { ORDER_BY } from '@/lib/constants/constants.ts';
+import { Table, TableBody, TableLoader } from '@/Components/components';
+import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components';
+import { cn, isTrackListSortableColumn } from '@/lib/utils/utils';
+import { showTrackActionToast } from './libs/helpers';
+import { ORDER_BY } from '@/lib/constants/constants';
 
-import type { Track, Order } from '@/lib/types/types.ts';
+import type { Track, Order } from '@/lib/types/types';
 
 const TracksTable = () => {
   const { tracks, isLoadingTrackList, handleChangeOrder, handleChangeSort, handleDeleteMultiTracks } =

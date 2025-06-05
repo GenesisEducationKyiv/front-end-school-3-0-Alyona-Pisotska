@@ -1,7 +1,7 @@
 import React, { createContext, useCallback } from 'react';
-import { useGetGenreList, useMemo, useState } from '@/hooks/hooks.ts';
+import { useGetGenreList, useMemo, useState } from '@/hooks/hooks';
 
-import type { SelectOption, Track } from '@/lib/types/types.ts';
+import type { SelectOption, Track } from '@/lib/types/types';
 
 type GenreContextProviderProps = {
   children: React.ReactNode;

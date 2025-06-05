@@ -1,16 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTrackContext, useForm } from '@/hooks/hooks.ts';
-import { Button, Form } from '@/Components/components.ts';
+import { useTrackContext, useForm } from '@/hooks/hooks';
+import { Button, Form } from '@/Components/components';
 import {
   TrackTitleField,
   ArtistNameField,
   AlbumNameField,
   GenreSelectField,
   CoverImageField,
-} from './components/components.ts';
-import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
+} from './components/components';
+import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema';
 
-import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types.ts';
+import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
   onFormSubmission: () => void;

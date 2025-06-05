@@ -1,9 +1,9 @@
-import { useState, useRef } from '@/hooks/hooks.ts';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from '@/Components/components.ts';
-import { ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants.ts';
+import { useState, useRef } from '@/hooks/hooks';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from '@/Components/components';
+import { ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants';
 
 import type { Control, ControllerRenderProps } from 'react-hook-form';
-import type { AudioData, Track } from '@/lib/types/types.ts';
+import type { AudioData, Track } from '@/lib/types/types';
 
 const FILE_NAME = {
   uploading: 'Uploading file',

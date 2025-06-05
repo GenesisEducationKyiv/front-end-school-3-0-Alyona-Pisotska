@@ -1,5 +1,5 @@
-import { TableCell, TableRow } from '@/Components/components.ts';
-import { TABLE_COLUMNS } from './components.ts';
+import { TableCell, TableRow } from '@/Components/components';
+import { TABLE_COLUMNS } from './components';
 
 const EmptyTable = () => {
   return (

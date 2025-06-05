@@ -1,5 +1,5 @@
-export { useGetTrackList } from './useGetTrackList.ts';
-export { useCreateTrack } from './useCreateTrack.ts';
-export { useEditTrack } from './useEditTrack.ts';
-export { useDeleteTrack } from './useDeleteTrack.ts';
-export { useDeleteMultiTracks } from './useDeleteMultiTracks.ts';
+export { useGetTrackList } from './useGetTrackList';
+export { useCreateTrack } from './useCreateTrack';
+export { useEditTrack } from './useEditTrack';
+export { useDeleteTrack } from './useDeleteTrack';
+export { useDeleteMultiTracks } from './useDeleteMultiTracks';

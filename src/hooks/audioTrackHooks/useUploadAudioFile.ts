@@ -1,7 +1,7 @@
-import { useAppMutation } from '@/hooks/hooks.ts';
-import { fetcherPost } from '@/lib/api/api.ts';
-import { uploadedTrackSchema } from '@/lib/validation-schema/validation-schema.ts';
-import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { useAppMutation } from '@/hooks/hooks';
+import { fetcherPost } from '@/lib/api/api';
+import { uploadedTrackSchema } from '@/lib/validation-schema/validation-schema';
+import { API_ENDPOINTS } from '@/lib/constants/constants';
 
 import type { z } from 'zod';
 

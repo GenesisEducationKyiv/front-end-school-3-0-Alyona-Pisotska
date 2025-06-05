@@ -1,4 +1,4 @@
-import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
+import { trackSchema } from '@/lib/validation-schema/validation-schema';
 
 const genreListSchema = trackSchema.shape.genres;
 

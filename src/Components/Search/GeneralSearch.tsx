@@ -1,5 +1,5 @@
-import { useSearchTextContext, useTrackContext } from '@/hooks/hooks.ts';
-import { SearchInput } from '@/Components/components.ts';
+import { useSearchTextContext, useTrackContext } from '@/hooks/hooks';
+import { SearchInput } from '@/Components/components';
 
 const GeneralSearch = () => {
   const { searchText, handleChangeSearchText } = useSearchTextContext();

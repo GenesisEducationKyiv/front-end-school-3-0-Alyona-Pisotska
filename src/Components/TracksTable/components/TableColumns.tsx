@@ -1,10 +1,10 @@
 import { ArrowUpDown } from 'lucide-react';
-import { Button, Checkbox } from '@/Components/components.ts';
-import { EmptyDataCell, TrackActionsDropdownMenu } from './components.ts';
-import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
+import { Button, Checkbox } from '@/Components/components';
+import { EmptyDataCell, TrackActionsDropdownMenu } from './components';
+import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants';
 
 import type { ColumnDef } from '@tanstack/react-table';
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 const TABLE_CELL_DATA = {
   select: { id: TRACK_TABLE_CELL_IDS.select, label: '' },

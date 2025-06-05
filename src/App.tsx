@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import TracksPage from '@/Pages/Tracks/Tracks.tsx';
-import { APP_ROUTES } from './lib/constants/constants.ts';
+import TracksPage from '@/Pages/Tracks/Tracks';
+import { APP_ROUTES } from './lib/constants/constants';
 
 import './index.css';
 

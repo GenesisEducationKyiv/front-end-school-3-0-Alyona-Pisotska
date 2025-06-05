@@ -1,8 +1,8 @@
-import { useEffect, useState, useWatch } from '@/hooks/hooks.ts';
-import { FormItem, FormLabel, FormControl, FormMessage, FormField, Input } from '@/Components/components.ts';
+import { useEffect, useState, useWatch } from '@/hooks/hooks';
+import { FormItem, FormLabel, FormControl, FormMessage, FormField, Input } from '@/Components/components';
 
 import type { Control } from 'react-hook-form';
-import type { TrackMetadataValues } from '@/lib/types/types.ts';
+import type { TrackMetadataValues } from '@/lib/types/types';
 
 type CoverImageFieldProps = {
   control: Control<TrackMetadataValues>;

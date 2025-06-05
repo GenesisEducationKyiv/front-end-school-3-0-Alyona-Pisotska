@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import {
   useGetTrackList,
   useState,
@@ -11,10 +11,10 @@ import {
   useDeleteTrack,
   useDeleteMultiTracks,
   useGenreContext,
-} from '@/hooks/hooks.ts';
-import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
+} from '@/hooks/hooks';
+import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants';
 
-import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types.ts';
+import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types';
 
 const INITIAL_PAGE = 1;
 

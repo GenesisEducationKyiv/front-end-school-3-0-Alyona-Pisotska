@@ -1,7 +1,7 @@
 import { flexRender, type Row } from '@tanstack/react-table';
-import { TableCell, TableRow } from '@/Components/components.ts';
+import { TableCell, TableRow } from '@/Components/components';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 type TracksTableRowProps = {
   row: Row<Track>;

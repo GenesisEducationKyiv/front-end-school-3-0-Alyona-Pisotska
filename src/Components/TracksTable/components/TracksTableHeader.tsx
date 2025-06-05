@@ -1,7 +1,7 @@
 import { flexRender, type HeaderGroup } from '@tanstack/react-table';
-import { TableHead, TableHeader, TableRow } from '@/Components/components.ts';
+import { TableHead, TableHeader, TableRow } from '@/Components/components';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 type TracksTableHeaderProps = {
   headersGroup: HeaderGroup<Track>[];

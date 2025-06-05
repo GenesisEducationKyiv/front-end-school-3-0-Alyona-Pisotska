@@ -1,1 +1,1 @@
-export { fetcherGet, fetcherPost, fetcherPut, fetcherDelete } from './fetcher.ts';
+export { fetcherGet, fetcherPost, fetcherPut, fetcherDelete } from './fetcher';

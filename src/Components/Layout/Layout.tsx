@@ -1,4 +1,4 @@
-import { ContentContainer } from '@/Components/Layout/ContentContainer.tsx';
+import { ContentContainer } from '@/Components/Layout/ContentContainer';
 
 const Layout = () => {
   return (

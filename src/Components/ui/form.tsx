@@ -10,8 +10,8 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-import { Label } from '@/Components/components.ts';
-import { cn } from '@/lib/utils/utils.ts';
+import { Label } from '@/Components/components';
+import { cn } from '@/lib/utils/utils';
 
 import type * as LabelPrimitive from '@radix-ui/react-label';
 

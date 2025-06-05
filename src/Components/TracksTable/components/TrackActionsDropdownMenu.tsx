@@ -1,5 +1,5 @@
 import { MoreVertical } from 'lucide-react';
-import { useTrackContext } from '@/hooks/hooks.ts';
+import { useTrackContext } from '@/hooks/hooks';
 import {
   Button,
   DropdownMenu,
@@ -8,9 +8,9 @@ import {
   DropdownMenuTrigger,
   TrackFormDialogButton,
   TrackInfoDialog,
-} from '@/Components/components.ts';
+} from '@/Components/components';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 type TrackActionsDropdownMenuProps = {
   track: Track;

@@ -1,6 +1,6 @@
 import * as z from 'zod';
-import { isValidImageUrl } from '@/lib/utils/utils.ts';
-import { trackSchema } from '@/lib/validation-schema/validation-schema.ts';
+import { isValidImageUrl } from '@/lib/utils/utils';
+import { trackSchema } from '@/lib/validation-schema/validation-schema';
 
 const baseMetadataSchema = trackSchema.pick({
   title: true,

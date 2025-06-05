@@ -1,5 +1,5 @@
-import { useContext } from '@/hooks/hooks.ts';
-import { SearchTextContext } from '@/contexts/contexts.ts';
+import { useContext } from '@/hooks/hooks';
+import { SearchTextContext } from '@/contexts/contexts';
 
 const useSearchTextContext = () => {
   const context = useContext(SearchTextContext);

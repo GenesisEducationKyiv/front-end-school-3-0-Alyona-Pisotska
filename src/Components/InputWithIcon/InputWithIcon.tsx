@@ -1,5 +1,5 @@
-import { Input } from '@/Components/components.ts';
-import { cn } from '@/lib/utils/utils.ts';
+import { Input } from '@/Components/components';
+import { cn } from '@/lib/utils/utils';
 
 import type { LucideIcon } from 'lucide-react';
 

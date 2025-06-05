@@ -1,8 +1,8 @@
-import { useEffect, useGenreContext, useState, useTrackContext } from '@/hooks/hooks.ts';
-import { Select } from '@/Components/components.ts';
+import { useEffect, useGenreContext, useState, useTrackContext } from '@/hooks/hooks';
+import { Select } from '@/Components/components';
 
 import type { SingleValue } from 'react-select';
-import type { SelectOption } from '@/lib/types/types.ts';
+import type { SelectOption } from '@/lib/types/types';
 
 const GenreSelect = () => {
   const [selectedGenre, setSelectedGenre] = useState<SelectOption | null>(null);

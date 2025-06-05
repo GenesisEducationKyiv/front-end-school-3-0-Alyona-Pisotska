@@ -1,8 +1,8 @@
-import { useAppMutation } from '@/hooks/hooks.ts';
-import { fetcherDelete } from '@/lib/api/api.ts';
-import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { useAppMutation } from '@/hooks/hooks';
+import { fetcherDelete } from '@/lib/api/api';
+import { API_ENDPOINTS } from '@/lib/constants/constants';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 const URL = API_ENDPOINTS.trackList;
 

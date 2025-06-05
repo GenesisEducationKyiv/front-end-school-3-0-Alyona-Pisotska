@@ -1,6 +1,6 @@
 import type { ZodSchema } from 'zod';
 import { type Result, ok, err } from 'neverthrow';
-import { formatZodError } from '@/lib/utils/utils.ts';
+import { formatZodError } from '@/lib/utils/utils';
 
 const parseWithSchema = <T>(data: unknown, schema?: ZodSchema<T>): Result<T, Error> => {
   if (!schema) {
