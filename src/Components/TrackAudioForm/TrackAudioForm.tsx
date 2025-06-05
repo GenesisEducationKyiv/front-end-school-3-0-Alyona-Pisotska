@@ -49,9 +49,13 @@ const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
     }
   };
 
+  const handleFormSubmit = handleSubmit((dto) => {
+    void onSubmit(dto);
+  });
+
   return (
     <Form {...form}>
-      <form onSubmit={(e) => void handleSubmit(onSubmit)(e)} className='space-y-4'>
+      <form onSubmit={(e) => void handleFormSubmit(e)} className='space-y-4'>
         <TrackAudioField control={control} trackId={trackData.id} initialAudioUrl={trackData?.audioFile} />
 
         <Button type='submit' disabled={!isModified}>
