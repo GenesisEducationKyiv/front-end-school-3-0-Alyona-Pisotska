@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { O } from '@mobily/ts-belt';
 import {
   useGetTrackList,
   useState,
@@ -11,8 +12,9 @@ import {
   useDeleteTrack,
   useDeleteMultiTracks,
   useGenreContext,
+  useQueryParamsContext,
 } from '@/hooks/hooks';
-import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants';
+import { ORDER_BY, TRACK_TABLE_CELL_IDS, QUERY_PARAM_KEYS } from '@/lib/constants/constants';
 
 import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types';
 
@@ -45,11 +47,15 @@ type TTrackContext = {
 const TrackContext = createContext<TTrackContext | null>(null);
 
 const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
+  const { getIntParam, set } = useQueryParamsContext();
+
   const [trackList, setTrackList] = useState<Track[]>([]);
   const [orderBy, setOrderBy] = useState<Order>(ORDER_BY.asc);
   const [sortBy, setSortBy] = useState<TrackListSort>(TRACK_TABLE_CELL_IDS.artist);
-  const [page, setPage] = useState(INITIAL_PAGE);
   const [searchArtist, setSearchArtist] = useState('');
+
+  const rawPage = getIntParam(QUERY_PARAM_KEYS.page);
+  const page = O.getWithDefault(rawPage, INITIAL_PAGE);
 
   const { debouncedSearchText } = useSearchTextContext();
   const { selectedGenre } = useGenreContext();
@@ -73,6 +79,10 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     artist: searchArtist,
   });
 
+  const resetPageToDefault = useCallback(() => {
+    set(QUERY_PARAM_KEYS.page, INITIAL_PAGE);
+  }, [set]);
+
   const totalPages = useMemo(() => {
     return paginationData?.totalPages ?? 1;
   }, [paginationData?.totalPages]);
@@ -84,22 +94,39 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   }, [isLoadingTrackList, isSuccessTrackList, fetchedTrackList]);
 
   useEffect(() => {
-    setPage(INITIAL_PAGE);
-  }, [debouncedSearchText, selectedGenre, searchArtist]);
+    if (O.isNone(rawPage)) {
+      set(QUERY_PARAM_KEYS.page, INITIAL_PAGE, { replace: true });
+    }
+  }, [rawPage, set]);
 
-  const handleChangeOrder = useCallback((newOrder: Order) => {
-    setPage(INITIAL_PAGE);
-    setOrderBy(newOrder);
-  }, []);
+  useEffect(() => {
+    if (debouncedSearchText || selectedGenre || searchArtist) {
+      set(QUERY_PARAM_KEYS.page, INITIAL_PAGE);
+    }
+  }, [debouncedSearchText, selectedGenre, searchArtist, set]);
 
-  const handleChangeSort = useCallback((newSort: TrackListSort) => {
-    setPage(INITIAL_PAGE);
-    setSortBy(newSort);
-  }, []);
+  const handleChangeOrder = useCallback(
+    (newOrder: Order) => {
+      resetPageToDefault();
+      setOrderBy(newOrder);
+    },
+    [resetPageToDefault],
+  );
 
-  const handleChangePage = useCallback((newPage: number) => {
-    setPage(newPage);
-  }, []);
+  const handleChangeSort = useCallback(
+    (newSort: TrackListSort) => {
+      resetPageToDefault();
+      setSortBy(newSort);
+    },
+    [resetPageToDefault],
+  );
+
+  const handleChangePage = useCallback(
+    (newPage: number) => {
+      set(QUERY_PARAM_KEYS.page, newPage);
+    },
+    [set],
+  );
 
   const handleAddTrack = useCallback(
     async (newTrack: TrackPayload) => {
