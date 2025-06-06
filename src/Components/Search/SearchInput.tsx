@@ -1,4 +1,4 @@
-import { Button, InputWithIcon } from '@/Components/components.ts';
+import { Button, InputWithIcon } from '@/Components/components';
 
 import { Search as SearchIcon, X } from 'lucide-react';
 

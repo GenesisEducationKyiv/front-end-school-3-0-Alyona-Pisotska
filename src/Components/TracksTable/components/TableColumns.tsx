@@ -1,10 +1,10 @@
-import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
-import { Button, Checkbox } from '@/Components/components.ts';
-import { EmptyDataCell, TrackActionsDropdownMenu } from './components.ts';
-import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
+import { Button, Checkbox } from '@/Components/components';
+import { EmptyDataCell, TrackActionsDropdownMenu } from './components';
+import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { ColumnDef } from '@tanstack/react-table';
+import type { Track } from '@/lib/types/types';
 
 const TABLE_CELL_DATA = {
   select: { id: TRACK_TABLE_CELL_IDS.select, label: '' },
@@ -88,13 +88,13 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => row.getValue(TABLE_CELL_DATA.album.id) || <EmptyDataCell />,
+    cell: ({ row }) => <>{row.getValue(TABLE_CELL_DATA.album.id)}</> || <EmptyDataCell />,
   },
   {
     accessorKey: TABLE_CELL_DATA.genres.id,
     header: () => <div className='text-right'>{TABLE_CELL_DATA.genres.label}</div>,
     cell: ({ row }) => {
-      const genres: Track['genre'] = row.getValue(TABLE_CELL_DATA.genres.id);
+      const genres: Track['genres'] = row.getValue(TABLE_CELL_DATA.genres.id);
 
       if (!genres.length) {
         return <EmptyDataCell textAlign='right' />;

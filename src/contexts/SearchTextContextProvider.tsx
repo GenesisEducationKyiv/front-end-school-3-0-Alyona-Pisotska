@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { useState, useDebounce } from '@/hooks/hooks.ts';
+import { useState, useDebounce } from '@/hooks/hooks';
 
 type SearchTextContextProviderProps = {
   children: React.ReactNode;

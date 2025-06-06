@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks.ts';
-import { Button, Form } from '@/Components/components.ts';
-import { TrackAudioField } from './components/components.ts';
-import { audioSchema } from '@/lib/validation-schema/validation-schema.ts';
+import { toast } from 'sonner';
+import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks';
+import { Button, Form } from '@/Components/components';
+import { TrackAudioField } from './components/components';
+import { audioSchema } from '@/lib/validation-schema/validation-schema';
 
-import type { AudioData, Track } from '@/lib/types/types.ts';
+import type { AudioData, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
   onFormSubmission: () => void;
@@ -24,30 +25,37 @@ const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
   const watchedFile = watch('audioFile');
 
   const isModified =
-    (trackData.audioFile && watchedFile === '') ||
+    (trackData.audioFile && watchedFile === null) ||
     (!trackData.audioFile && watchedFile instanceof File) ||
     (trackData.audioFile && watchedFile instanceof File) ||
     false;
 
-  const onSubmit = (data: AudioData) => {
-    const formData = {
-      audioFile: data?.audioFile ?? '',
-    };
+  const onSubmit = async (data: AudioData) => {
+    try {
+      const audioFile = data.audioFile ?? null;
 
-    if (formData.audioFile) {
-      uploadAudioTrack(formData.audioFile)
-        .then((data) => handleAddAudioTrack(trackData.id, data.audioFile))
-        .then(() => onFormSubmission());
-    } else {
-      deleteAudioFile()
-        .then(() => handleDeleteAudioTrack(trackData.id))
-        .then(() => onFormSubmission());
+      if (audioFile) {
+        const uploaded = await uploadAudioTrack(audioFile);
+        handleAddAudioTrack(trackData.id, uploaded.audioFile);
+      } else {
+        await deleteAudioFile();
+        handleDeleteAudioTrack(trackData.id);
+      }
+
+      onFormSubmission();
+    } catch (error: unknown) {
+      const err = error instanceof Error ? error : new Error('Something went wrong');
+      toast.error(`Error! ${err.message}`);
     }
   };
 
+  const handleFormSubmit = handleSubmit((dto) => {
+    void onSubmit(dto);
+  });
+
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+      <form onSubmit={(e) => void handleFormSubmit(e)} className='space-y-4'>
         <TrackAudioField control={control} trackId={trackData.id} initialAudioUrl={trackData?.audioFile} />
 
         <Button type='submit' disabled={!isModified}>

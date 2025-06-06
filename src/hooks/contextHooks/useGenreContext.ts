@@ -1,5 +1,5 @@
-import { useContext } from '@/hooks/hooks.ts';
-import { GenreContext } from '@/contexts/contexts.ts';
+import { useContext } from '@/hooks/hooks';
+import { GenreContext } from '@/contexts/contexts';
 
 const useGenreContext = () => {
   const context = useContext(GenreContext);

@@ -1,4 +1,4 @@
-import { CreateTrackButton, GeneralSearch } from '@/Components/components.ts';
+import { CreateTrackButton, GeneralSearch } from '@/Components/components';
 
 const TrackToolbar = () => {
   return (

@@ -1,4 +1,4 @@
-import { ArtistSearch, GenreSelect } from '@/Components/components.ts';
+import { ArtistSearch, GenreSelect } from '@/Components/components';
 
 const AdvancedSearchSection = () => {
   return (

@@ -1,9 +1,9 @@
-import { Control, ControllerRenderProps } from 'react-hook-form';
-import { useState, useRef } from '@/hooks/hooks.ts';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from '@/Components/components.ts';
-import { ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants.ts';
+import { useState, useRef } from '@/hooks/hooks';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage, Button } from '@/Components/components';
+import { ALLOWED_AUDIO_TYPES } from '@/lib/constants/constants';
 
-import type { AudioData, Track } from '@/lib/types/types.ts';
+import type { Control, ControllerRenderProps } from 'react-hook-form';
+import type { AudioData, Track } from '@/lib/types/types';
 
 const FILE_NAME = {
   uploading: 'Uploading file',
@@ -14,10 +14,10 @@ const AUDIO_ACCEPT_STRING = ALLOWED_AUDIO_TYPES.join(',');
 type TrackAudioFieldProps = {
   control: Control<AudioData>;
   trackId: Track['id'];
-  initialAudioUrl?: string;
+  initialAudioUrl: string | undefined;
 };
 
-type ControlField = ControllerRenderProps<{ audioFile: '' | File }, 'audioFile'>;
+type ControlField = ControllerRenderProps<{ audioFile: File | null }, 'audioFile'>;
 
 const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -36,7 +36,7 @@ const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldP
       setFileName(FILE_NAME.empty);
       setPreviewUrl(null);
 
-      field.onChange('');
+      field.onChange(null);
     }
   };
 
@@ -48,7 +48,7 @@ const TrackAudioField = ({ control, trackId, initialAudioUrl }: TrackAudioFieldP
       fileInputRef.current.value = '';
     }
 
-    field.onChange('');
+    field.onChange(null);
   };
 
   return (

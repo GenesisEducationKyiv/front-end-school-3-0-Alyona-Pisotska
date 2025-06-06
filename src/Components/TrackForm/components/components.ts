@@ -1,5 +1,5 @@
-export { TrackTitleField } from './TrackTitleField.tsx';
-export { ArtistNameField } from './ArtistNameField.tsx';
-export { AlbumNameField } from './AlbumNameField.tsx';
-export { GenreSelectField } from './GenreSelectField.tsx';
-export { CoverImageField } from './CoverImageField.tsx';
+export { TrackTitleField } from './TrackTitleField';
+export { ArtistNameField } from './ArtistNameField';
+export { AlbumNameField } from './AlbumNameField';
+export { GenreSelectField } from './GenreSelectField';
+export { CoverImageField } from './CoverImageField';

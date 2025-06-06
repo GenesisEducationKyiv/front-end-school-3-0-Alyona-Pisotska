@@ -1,5 +1,5 @@
 import { flushSync } from 'react-dom';
-import { useState } from '@/hooks/hooks.ts';
+import { useState } from '@/hooks/hooks';
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,9 @@ import {
   DialogTitle,
   DialogTrigger,
   TrackAudioForm,
-} from '@/Components/components.ts';
+} from '@/Components/components';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 type TrackInfoDialogProps = {
   triggerComponent: React.ReactNode;

@@ -1,21 +1,15 @@
-import { useMutation } from '@/hooks/hooks.ts';
-import { AxiosError } from 'axios';
-import { toast } from 'sonner';
-import { fetcherDelete } from '@/lib/utils/utils.ts';
-import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { useAppMutation } from '@/hooks/hooks';
+import { fetcherDelete } from '@/lib/api/api';
+import { API_ENDPOINTS } from '@/lib/constants/constants';
 
-import type { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 const useDeleteAudioFile = (trackId: Track['id']) => {
-  const { mutateAsync: deleteAudioFile } = useMutation({
-    mutationFn: async () => {
-      await fetcherDelete(`${API_ENDPOINTS.trackList}/${trackId}/file`);
+  const { mutateAsync: deleteAudioFile } = useAppMutation({
+    mutationFn: () => {
+      return fetcherDelete<void>(`${API_ENDPOINTS.trackList}/${trackId}/file`);
     },
-    onSuccess: () => toast.success('Track audio is deleted'),
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(`Error! ${axiosError.response?.data.error || 'Something went wrong'}`);
-    },
+    successMessage: 'Track audio is deleted',
   });
 
   return { deleteAudioFile };

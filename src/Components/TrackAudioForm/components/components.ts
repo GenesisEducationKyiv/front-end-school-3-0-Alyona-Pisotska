@@ -1,1 +1,1 @@
-export { TrackAudioField } from './TrackAudioField.tsx';
+export { TrackAudioField } from './TrackAudioField';

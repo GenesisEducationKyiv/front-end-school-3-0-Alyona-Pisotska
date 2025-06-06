@@ -1,5 +1,6 @@
-export { useDebounce } from './useDebounce.ts';
-export { useQueryParams } from './useQueryParams.ts';
+export { useDebounce } from './useDebounce';
+export { useAppMutation } from './useAppMutation';
+export { useQueryParams } from './useQueryParams';
 
 //* request hooks */
 export {
@@ -8,9 +9,9 @@ export {
   useEditTrack,
   useDeleteTrack,
   useDeleteMultiTracks,
-} from './trackDataHooks/trackDataHooks.ts';
-export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audioTrackHooks.ts';
-export { useGetGenreList } from './useGetGenreList.ts';
+} from './trackDataHooks/trackDataHooks';
+export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audioTrackHooks';
+export { useGetGenreList } from './useGetGenreList';
 
 //* contexts hooks */
 export {
@@ -18,7 +19,7 @@ export {
   useSearchTextContext,
   useGenreContext,
   useQueryParamsContext,
-} from './contextHooks/contextHooks.ts';
+} from './contextHooks/contextHooks';
 
 //* react hooks */
 export { useMemo, useState, useEffect, useCallback, useContext, useRef } from 'react';
