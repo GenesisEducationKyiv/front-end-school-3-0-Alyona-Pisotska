@@ -1,5 +1,5 @@
-import { useContext } from '@/hooks/hooks.ts';
-import { QueryParamsContext } from '@/contexts/contexts.ts';
+import { useContext } from '@/hooks/hooks';
+import { QueryParamsContext } from '@/contexts/contexts';
 
 const useQueryParamsContext = () => {
   const context = useContext(QueryParamsContext);

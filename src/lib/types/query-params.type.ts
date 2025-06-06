@@ -1,4 +1,4 @@
-import { QUERY_PARAM_KEYS } from '@/lib/constants/constants';
+import type { QUERY_PARAM_KEYS } from '@/lib/constants/constants';
 
 type QueryParamKey = (typeof QUERY_PARAM_KEYS)[keyof typeof QUERY_PARAM_KEYS];
 
