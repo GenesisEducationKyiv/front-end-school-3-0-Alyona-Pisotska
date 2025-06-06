@@ -1,11 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
+import { O, pipe } from '@mobily/ts-belt';
 
 import type { QueryParamsHookType } from '@/lib/types/types';
 
 const useQueryParams = (): QueryParamsHookType => {
   const [params, setParams] = useSearchParams();
 
-  const get: QueryParamsHookType['get'] = (key) => params.get(key);
+  const get: QueryParamsHookType['get'] = (key) => O.fromNullable(params.get(key));
   const getAll: QueryParamsHookType['getAll'] = (key) => params.getAll(key);
   const getAllParams: QueryParamsHookType['getAllParams'] = (): URLSearchParams => new URLSearchParams(params);
 
@@ -47,22 +48,33 @@ const useQueryParams = (): QueryParamsHookType => {
   };
 
   const getIntParam: QueryParamsHookType['getIntParam'] = (key) => {
-    const value = params.get(key);
+    return pipe(
+      params.get(key),
+      O.fromNullable,
+      O.flatMap((s) => {
+        const parsed = parseInt(s, 10);
 
-    return value ? parseInt(value, 10) : null;
+        return Number.isFinite(parsed) ? O.Some(parsed) : O.None;
+      }),
+    );
   };
 
   const getBooleanParam: QueryParamsHookType['getBooleanParam'] = (key) => {
-    const value = params.get(key);
+    return pipe(
+      params.get(key),
+      O.fromNullable,
+      O.flatMap((s) => {
+        if (s === 'true') {
+          return O.Some(true);
+        }
 
-    if (value === 'true') {
-      return true;
-    }
-    if (value === 'false') {
-      return false;
-    }
+        if (s === 'false') {
+          return O.Some(false);
+        }
 
-    return null;
+        return O.None;
+      }),
+    );
   };
 
   return {
