@@ -1,26 +1,27 @@
 import { toast } from 'sonner';
-import { useEffect, useMemo, useQuery } from '@/hooks/hooks.ts';
-import { fetcherGet } from '@/lib/utils/utils.ts';
-import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { useEffect, useQuery } from '@/hooks/hooks';
+import { fetcherGet } from '@/lib/api/api';
+import { trackListResponseSchema } from '@/lib/validation-schema/validation-schema';
+import { API_ENDPOINTS } from '@/lib/constants/constants';
 
-import type { TrackListResponse, TrackListQueryParams } from '@/lib/types/types.ts';
+import type { z } from 'zod';
+import type { TrackListQueryParams } from '@/lib/types/types';
 
 const LIMIT = 10;
 const URL = API_ENDPOINTS.trackList;
 
-const processTrackList = (data: TrackListResponse | undefined) => {
-  return {
-    trackList: data?.data || [],
-    paginationData: data?.meta || null,
-  };
-};
+type TrackListResponse = z.infer<typeof trackListResponseSchema>;
 
 const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackListQueryParams) => {
-  const { isFetching, data, error } = useQuery<TrackListResponse>({
+  const {
+    isFetching,
+    isSuccess,
+    data: responseData,
+    error,
+  } = useQuery({
     queryKey: [URL, page, sort, order, search, genre, artist],
-    queryFn: () => {
+    queryFn: async () => {
       const params = new URLSearchParams();
-
       params.append('page', page.toString());
       params.append('limit', LIMIT.toString());
       params.append('sort', sort);
@@ -29,13 +30,15 @@ const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackList
       genre?.length && params.append('genre', genre);
       artist?.length && params.append('artist', artist);
 
-      return fetcherGet<TrackListResponse>(URL, { params });
+      const result = await fetcherGet<TrackListResponse>(URL, { params }, trackListResponseSchema);
+
+      if (result.isErr()) {
+        throw result.error;
+      }
+
+      return result.value;
     },
   });
-
-  const processedData = useMemo(() => {
-    return processTrackList(data);
-  }, [data]);
 
   useEffect(() => {
     if (error) {
@@ -44,9 +47,10 @@ const useGetTrackList = ({ page, sort, order, search, genre, artist }: TrackList
   }, [error]);
 
   return {
-    trackList: processedData.trackList,
-    paginationData: processedData.paginationData,
+    trackList: responseData?.data ?? [],
+    paginationData: responseData?.meta ?? null,
     isLoadingTrackList: isFetching,
+    isSuccessTrackList: isSuccess,
   };
 };
 

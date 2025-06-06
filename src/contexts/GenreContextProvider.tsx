@@ -1,14 +1,14 @@
 import React, { createContext, useCallback } from 'react';
-import { useGetGenreList, useMemo, useState } from '@/hooks/hooks.ts';
+import { useGetGenreList, useMemo, useState } from '@/hooks/hooks';
 
-import type { SelectOption, Track } from '@/lib/types/types.ts';
+import type { SelectOption, Track } from '@/lib/types/types';
 
 type GenreContextProviderProps = {
   children: React.ReactNode;
 };
 
 type TGenreContext = {
-  genreList: Track['genre'];
+  genreList: Track['genres'];
   isLoading: boolean;
   genreOptions: SelectOption[];
   selectedGenre: string;

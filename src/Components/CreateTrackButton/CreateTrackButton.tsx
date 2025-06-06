@@ -1,5 +1,5 @@
-import { Button, TrackFormDialogButton } from '@/Components/components.ts';
 import { useTrackContext } from '@/hooks/hooks';
+import { Button, TrackFormDialogButton } from '@/Components/components';
 
 const CreateTrackButton = () => {
   const { isLoadingTrackList } = useTrackContext();

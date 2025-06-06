@@ -1,30 +1,16 @@
-import { z } from 'zod';
-import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
+import type { z } from 'zod';
+import type {
+  trackMetadataSchema,
+  paginationSchema,
+  trackListResponseSchema,
+  trackSchema,
+} from '@/lib/validation-schema/validation-schema';
+import type { Order } from './types';
 
-import type { Order } from './types.ts';
-
-type Track = {
-  id: string;
-  title: string;
-  artist: string;
-  album: string;
-  genre: string[];
-  slug: string;
-  coverImage: string;
-  audioFile?: string;
-};
-
-type PaginationMeta = {
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-};
-
-type TrackListResponse = {
-  data: Track[];
-  meta: PaginationMeta;
-};
+type Track = z.infer<typeof trackSchema>;
+type TrackListResponse = z.infer<typeof trackListResponseSchema>;
+type PaginationMeta = z.infer<typeof paginationSchema>;
+type TrackMetadataValues = z.infer<typeof trackMetadataSchema>;
 
 type TrackListQueryParams = {
   page: number;
@@ -35,10 +21,6 @@ type TrackListQueryParams = {
   artist?: string;
 };
 
-type TrackPayload = Pick<Track, 'title' | 'artist' | 'album' | 'coverImage'> & {
-  genres: string[];
-};
-
-type TrackMetadataValues = z.infer<typeof trackMetadataSchema>;
+type TrackPayload = Pick<Track, 'title' | 'artist' | 'album' | 'coverImage' | 'genres'>;
 
 export type { Track, PaginationMeta, TrackListResponse, TrackListQueryParams, TrackMetadataValues, TrackPayload };

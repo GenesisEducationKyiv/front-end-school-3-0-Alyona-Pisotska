@@ -1,4 +1,4 @@
-import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
+import { TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants';
 
 const TRACK_LIST_SORT_BY = [TRACK_TABLE_CELL_IDS.title, TRACK_TABLE_CELL_IDS.artist, TRACK_TABLE_CELL_IDS.album];
 

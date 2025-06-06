@@ -1,30 +1,19 @@
-import { useMutation, useQueryClient } from '@/hooks/hooks.ts';
-import { toast } from 'sonner';
-import { AxiosError } from 'axios';
-import { fetcherPost } from '@/lib/utils/utils.ts';
-import { API_ENDPOINTS } from '@/lib/constants/constants.ts';
+import { useAppMutation } from '@/hooks/hooks';
+import { fetcherPost } from '@/lib/api/api';
+import { trackSchema } from '@/lib/validation-schema/validation-schema';
+import { API_ENDPOINTS } from '@/lib/constants/constants';
 
-import type { TrackPayload } from '@/lib/types/types.ts';
+import type { Track, TrackPayload } from '@/lib/types/types';
 
 const URL = API_ENDPOINTS.trackList;
 
-type NewTrack = TrackPayload;
-
 const useCreateTrack = () => {
-  const queryClient = useQueryClient();
-
-  const { mutateAsync: createNewTrack } = useMutation<NewTrack, Error, TrackPayload>({
-    mutationFn: (payload) => {
-      return fetcherPost<NewTrack, TrackPayload>(URL, payload);
+  const { mutateAsync: createNewTrack } = useAppMutation({
+    mutationFn: (payload: TrackPayload) => {
+      return fetcherPost<Track, TrackPayload>(URL, payload, {}, trackSchema);
     },
-    onSuccess: () => {
-      toast.success('Track is created');
-      queryClient.invalidateQueries({ queryKey: [URL] });
-    },
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ error: string }>;
-      toast.error(`Error! ${axiosError.response?.data.error || 'Something went wrong'}`);
-    },
+    successMessage: 'Track is created',
+    invalidateQueryKey: [URL],
   });
 
   return { createNewTrack };

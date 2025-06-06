@@ -1,3 +1,3 @@
-export { SearchInput } from './SearchInput.tsx';
-export { ArtistSearch } from './ArtistSearch.tsx';
-export { GeneralSearch } from './GeneralSearch.tsx';
+export { SearchInput } from './SearchInput';
+export { ArtistSearch } from './ArtistSearch';
+export { GeneralSearch } from './GeneralSearch';

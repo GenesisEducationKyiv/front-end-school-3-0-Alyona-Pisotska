@@ -1,5 +1,5 @@
-import { useTrackContext } from '@/hooks/hooks.ts';
-import { TrackToolbar, TracksTable, AppPagination, AdvancedSearchSection, PageTitle } from '@/Components/components.ts';
+import { useTrackContext } from '@/hooks/hooks';
+import { TrackToolbar, TracksTable, AppPagination, AdvancedSearchSection, PageTitle } from '@/Components/components';
 
 const ContentContainer = () => {
   const { page, totalPages, handleChangePage } = useTrackContext();

@@ -1,10 +1,10 @@
 import { toast } from 'sonner';
 
-import { Track } from '@/lib/types/types.ts';
+import type { Track } from '@/lib/types/types';
 
 const SELECTED_TOAST_ID = 'selected-toast';
 
-const showTrackActionToast = (selectedIds: Track['id'][], action: () => void) => {
+const showTrackActionToast = (selectedIds: Track['id'][], action: () => Promise<void>) => {
   if (!selectedIds.length) {
     toast.dismiss(SELECTED_TOAST_ID);
     return;
@@ -15,7 +15,9 @@ const showTrackActionToast = (selectedIds: Track['id'][], action: () => void) =>
     duration: Infinity,
     action: {
       label: 'Delete track',
-      onClick: action,
+      onClick: () => {
+        void action();
+      },
     },
   });
 };

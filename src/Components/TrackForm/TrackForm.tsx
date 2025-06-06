@@ -1,20 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTrackContext, useForm } from '@/hooks/hooks.ts';
-import { Button, Form } from '@/Components/components.ts';
+import { useTrackContext, useForm } from '@/hooks/hooks';
+import { Button, Form } from '@/Components/components';
 import {
   TrackTitleField,
   ArtistNameField,
   AlbumNameField,
   GenreSelectField,
   CoverImageField,
-} from './components/components.ts';
-import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema.ts';
+} from './components/components';
+import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema';
 
-import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types.ts';
+import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
   onFormSubmission: () => void;
-  initialValues?: Track;
+  initialValues: Track | undefined;
 };
 
 const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
@@ -26,14 +26,14 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
       title: initialValues?.title ?? '',
       artist: initialValues?.artist ?? '',
       album: initialValues?.album ?? '',
-      genres: initialValues?.genre ?? [],
+      genres: initialValues?.genres ?? [],
       coverImage: initialValues?.coverImage ?? '',
     },
   });
 
   const { handleSubmit, control } = form;
 
-  const onSubmit = (data: TrackMetadataValues) => {
+  const onSubmit = async (data: TrackMetadataValues) => {
     const trackData: TrackPayload = {
       title: data.title,
       artist: data.artist,
@@ -43,15 +43,21 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
     };
 
     if (initialValues) {
-      handleEditTrack(initialValues.id, trackData).then(() => onFormSubmission());
+      await handleEditTrack(initialValues.id, trackData);
     } else {
-      handleAddTrack(trackData).then(() => onFormSubmission());
+      await handleAddTrack(trackData);
     }
+
+    onFormSubmission();
   };
+
+  const handleFormSubmit = handleSubmit((dto) => {
+    void onSubmit(dto);
+  });
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4' data-testid='track-form'>
+      <form onSubmit={(e) => void handleFormSubmit(e)} className='space-y-4' data-testid='track-form'>
         <TrackTitleField control={control} />
         <ArtistNameField control={control} />
         <AlbumNameField control={control} />

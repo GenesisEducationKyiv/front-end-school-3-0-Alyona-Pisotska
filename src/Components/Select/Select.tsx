@@ -1,6 +1,6 @@
 import Select from 'react-select';
 
-import type { SelectComponentProps } from '@/lib/types/types.ts';
+import type { SelectComponentProps } from '@/lib/types/types';
 
 const FONT_SIZE = '0.875rem';
 

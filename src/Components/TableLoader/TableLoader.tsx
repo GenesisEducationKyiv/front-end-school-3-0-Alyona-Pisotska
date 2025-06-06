@@ -1,4 +1,4 @@
-import { Loader, TableCell, TableRow } from '@/Components/components.ts';
+import { Loader, TableCell, TableRow } from '@/Components/components';
 
 type TableLoaderProps = {
   colSpan: number;

@@ -11,16 +11,18 @@ import {
   useDeleteTrack,
   useDeleteMultiTracks,
   useGenreContext,
-} from '@/hooks/hooks.ts';
-import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants.ts';
+} from '@/hooks/hooks';
+import { ORDER_BY, TRACK_TABLE_CELL_IDS } from '@/lib/constants/constants';
 
-import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types.ts';
+import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types';
 
 const INITIAL_PAGE = 1;
 
 type TrackContextProviderProps = {
   children: React.ReactNode;
 };
+
+type RequiredAudioFile = Exclude<Track['audioFile'], undefined>;
 
 type TTrackContext = {
   tracks: Track[];
@@ -35,7 +37,7 @@ type TTrackContext = {
   handleEditTrack: (id: Track['id'], value: TrackPayload) => Promise<void>;
   handleDeleteTrack: (id: Track['id']) => Promise<void>;
   handleDeleteMultiTracks: (ids: Track['id'][]) => Promise<void>;
-  handleAddAudioTrack: (id: Track['id'], audioFile: Track['audioFile']) => void;
+  handleAddAudioTrack: (id: Track['id'], audioFile: RequiredAudioFile) => void;
   handleDeleteAudioTrack: (id: Track['id']) => void;
   handleChangeSearchArtist: (value: string) => void;
 };
@@ -61,6 +63,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     trackList: fetchedTrackList,
     paginationData,
     isLoadingTrackList,
+    isSuccessTrackList,
   } = useGetTrackList({
     page,
     sort: sortBy,
@@ -70,19 +73,19 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     artist: searchArtist,
   });
 
+  const totalPages = useMemo(() => {
+    return paginationData?.totalPages ?? 1;
+  }, [paginationData?.totalPages]);
+
   useEffect(() => {
-    if (fetchedTrackList) {
+    if (!isLoadingTrackList && isSuccessTrackList) {
       setTrackList(fetchedTrackList);
     }
-  }, [fetchedTrackList]);
+  }, [isLoadingTrackList, isSuccessTrackList, fetchedTrackList]);
 
   useEffect(() => {
     setPage(INITIAL_PAGE);
   }, [debouncedSearchText, selectedGenre, searchArtist]);
-
-  const totalPages = useMemo(() => {
-    return paginationData?.totalPages ?? 1;
-  }, [paginationData?.totalPages]);
 
   const handleChangeOrder = useCallback((newOrder: Order) => {
     setPage(INITIAL_PAGE);
@@ -120,7 +123,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
     try {
       await editTrack({ id: trackId, payload: editTrackData });
-    } catch (error) {
+    } catch {
       if (previousTrack) {
         setTrackList((prevState) => {
           return prevState.map((track) => {
@@ -149,7 +152,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     [deleteMultiTracks],
   );
 
-  const handleAddAudioTrack = (trackId: Track['id'], audioUrl: Track['audioFile']) => {
+  const handleAddAudioTrack = useCallback((trackId: Track['id'], audioUrl: RequiredAudioFile) => {
     setTrackList((prevState) => {
       return prevState.map((track) => {
         if (track.id === trackId) {
@@ -159,9 +162,9 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         return track;
       });
     });
-  };
+  }, []);
 
-  const handleDeleteAudioTrack = (trackId: Track['id']) => {
+  const handleDeleteAudioTrack = useCallback((trackId: Track['id']) => {
     setTrackList((prevState) => {
       return prevState.map((track) => {
         if (track.id === trackId) {
@@ -171,11 +174,11 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         return track;
       });
     });
-  };
+  }, []);
 
-  const handleChangeSearchArtist = (value: string) => {
+  const handleChangeSearchArtist = useCallback((value: string) => {
     setSearchArtist(value);
-  };
+  }, []);
 
   return (
     <TrackContext.Provider

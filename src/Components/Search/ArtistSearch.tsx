@@ -1,5 +1,5 @@
-import { useDebounce, useEffect, useTrackContext, useState } from '@/hooks/hooks.ts';
-import { SearchInput } from '@/Components/components.ts';
+import { useDebounce, useEffect, useTrackContext, useState } from '@/hooks/hooks';
+import { SearchInput } from '@/Components/components';
 
 const ArtistSearch = () => {
   const [searchText, setSearchText] = useState('');

@@ -1,7 +1,7 @@
-import { Control } from 'react-hook-form';
-import { Input, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/Components/components.ts';
+import { Input, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/Components/components';
 
-import type { TrackMetadataValues } from '@/lib/types/types.ts';
+import type { Control } from 'react-hook-form';
+import type { TrackMetadataValues } from '@/lib/types/types';
 
 type ArtistNameFieldProps = {
   control: Control<TrackMetadataValues>;

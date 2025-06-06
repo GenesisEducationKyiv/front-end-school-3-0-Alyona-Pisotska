@@ -5,8 +5,8 @@ export type {
   TrackListQueryParams,
   TrackMetadataValues,
   TrackPayload,
-} from './track.type.ts';
-export type { Order } from './order.type.ts';
-export type { TrackListSort } from './track-list-sort.type.ts';
-export type { AudioData } from './audio.type.ts';
-export type { SelectOption, SelectComponentProps } from './select-component.type.ts';
+} from './track.type';
+export type { Order } from './order.type';
+export type { TrackListSort } from './track-list-sort.type';
+export type { AudioData } from './audio.type';
+export type { SelectOption, SelectComponentProps } from './select-component.type';
