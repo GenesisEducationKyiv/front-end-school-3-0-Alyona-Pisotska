@@ -20,6 +20,7 @@ import {
   isTrackListSortableColumn,
   isValidOrder,
   isValidQueryParam,
+  setParamWithResetPage,
 } from '@/lib/utils/utils';
 import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/constants';
 
@@ -54,6 +55,13 @@ const TrackContext = createContext<TTrackContext | null>(null);
 
 const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const { get, getIntParam, set, setMany } = useQueryParamsContext();
+  const { debouncedSearchText } = useSearchTextContext();
+  const { selectedGenre } = useGenreContext();
+
+  const { createNewTrack } = useCreateTrack();
+  const { editTrack } = useEditTrack();
+  const { deleteTrack } = useDeleteTrack();
+  const { deleteMultiTracks } = useDeleteMultiTracks();
 
   const [trackList, setTrackList] = useState<Track[]>([]);
 
@@ -70,19 +78,11 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     INITIAL_QUERY_PARAMS_VALUE.sortBy,
   );
   const searchArtist = O.getWithDefault(rawSearchArtist, INITIAL_QUERY_PARAMS_VALUE.search);
+  const debouncedSearchArtist = useDebounce(searchArtist, 250);
 
   const isValidPageParamInUrl = isValidQueryParam(rawPage, (page) => page >= INITIAL_QUERY_PARAMS_VALUE.page);
   const isValidOrderParamInUrl = isValidQueryParam(rawOrderBy, isValidOrder);
   const isValidSortParamInUrl = isValidQueryParam(rawSortBy, isTrackListSortableColumn);
-
-  const debouncedSearchArtist = useDebounce(searchArtist, 250);
-  const { debouncedSearchText } = useSearchTextContext();
-  const { selectedGenre } = useGenreContext();
-
-  const { createNewTrack } = useCreateTrack();
-  const { editTrack } = useEditTrack();
-  const { deleteTrack } = useDeleteTrack();
-  const { deleteMultiTracks } = useDeleteMultiTracks();
 
   const {
     trackList: fetchedTrackList,
@@ -126,38 +126,23 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     }
   }, [isValidSortParamInUrl, set]);
 
-  useEffect(() => {
-    if (debouncedSearchText || selectedGenre) {
-      set(QUERY_PARAM_KEYS.page, INITIAL_QUERY_PARAMS_VALUE.page);
-    }
-  }, [debouncedSearchText, selectedGenre, set]);
-
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
-      setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
-        [QUERY_PARAM_KEYS.orderBy]: newOrder,
-      });
+      setParamWithResetPage(QUERY_PARAM_KEYS.orderBy, newOrder, setMany);
     },
     [setMany],
   );
 
   const handleChangeSort = useCallback(
     (newSort: TrackListSort) => {
-      setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
-        [QUERY_PARAM_KEYS.sortBy]: newSort,
-      });
+      setParamWithResetPage(QUERY_PARAM_KEYS.sortBy, newSort, setMany);
     },
     [setMany],
   );
 
   const handleChangeSearchArtist = useCallback(
     (value: string) => {
-      setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
-        [QUERY_PARAM_KEYS.searchArtist]: value,
-      });
+      setParamWithResetPage(QUERY_PARAM_KEYS.searchArtist, value, setMany);
     },
     [setMany],
   );

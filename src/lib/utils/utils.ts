@@ -8,3 +8,4 @@ export { isValidToasterTheme } from './is-valid-toaster-theme';
 export { isValidOrder } from './is-valid-order';
 export { isValidQueryParam } from './is-valid-query-param';
 export { getValidatedOrDefaultQueryParam } from './get-validated-or-default-query-param';
+export { setParamWithResetPage } from './set-param-with-reset-page';
