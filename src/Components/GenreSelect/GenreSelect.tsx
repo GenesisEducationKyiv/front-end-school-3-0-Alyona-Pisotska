@@ -1,4 +1,5 @@
 import { useGenreContext, useTrackContext } from '@/hooks/hooks';
+import { O, pipe } from '@mobily/ts-belt';
 import { Select } from '@/Components/components';
 
 import type { SingleValue } from 'react-select';
@@ -8,9 +9,11 @@ const GenreSelect = () => {
   const { selectedGenre, genreOptions, handleChangeSelectedGenre } = useGenreContext();
   const { isLoadingTrackList } = useTrackContext();
 
-  const selectedGenreOption: SelectOption | null = selectedGenre
-    ? { value: selectedGenre, label: selectedGenre }
-    : null;
+  const selectedGenreOption: SelectOption | null = pipe(
+    O.fromNullable(selectedGenre),
+    O.map((genre) => ({ value: genre, label: genre })),
+    O.toNullable,
+  );
 
   const handleChangeSelectedValues = (newValue: SingleValue<SelectOption>) => {
     handleChangeSelectedGenre(newValue?.value ?? '');

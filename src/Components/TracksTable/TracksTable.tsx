@@ -6,6 +6,7 @@ import {
   getSortedRowModel,
   useReactTable,
   type SortingState,
+  type ColumnSort,
 } from '@tanstack/react-table';
 import { Table, TableBody, TableLoader } from '@/Components/components';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components';
@@ -22,19 +23,23 @@ const TracksTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
+  const handleChangeTrackContextData = (sortingData: ColumnSort) => {
+    const { desc, id } = sortingData;
+    const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
+
+    handleChangeOrder(orderBy);
+
+    if (isTrackListSortableColumn(id)) {
+      handleChangeSort(id);
+    }
+  };
+
   const handleSortingChange = (updater: SortingState | ((old: SortingState) => SortingState)) => {
     const newSortingState = typeof updater === 'function' ? updater([]) : updater;
 
     setSorting(newSortingState);
     if (newSortingState && newSortingState.length > 0) {
-      const { desc, id } = newSortingState[0];
-      const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
-
-      handleChangeOrder(orderBy);
-
-      if (isTrackListSortableColumn(id)) {
-        handleChangeSort(id);
-      }
+      handleChangeTrackContextData(newSortingState[0]);
     }
   };
 
