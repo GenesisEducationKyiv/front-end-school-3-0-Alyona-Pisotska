@@ -14,11 +14,19 @@ import {
   useGenreContext,
   useQueryParamsContext,
 } from '@/hooks/hooks';
+import {
+  getValidatedOrDefaultQueryParam,
+  isTrackListSortableColumn,
+  isValidOrder,
+  isValidQueryParam,
+} from '@/lib/utils/utils';
 import { ORDER_BY, TRACK_TABLE_CELL_IDS, QUERY_PARAM_KEYS } from '@/lib/constants/constants';
 
 import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types';
 
 const INITIAL_PAGE = 1;
+const DEFAULT_ORDER_BY = ORDER_BY.asc as Order;
+const DEFAULT_SORT_BY = TRACK_TABLE_CELL_IDS.artist as TrackListSort;
 
 type TrackContextProviderProps = {
   children: React.ReactNode;
@@ -47,15 +55,22 @@ type TTrackContext = {
 const TrackContext = createContext<TTrackContext | null>(null);
 
 const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
-  const { getIntParam, set } = useQueryParamsContext();
+  const { get, getIntParam, set, setMany } = useQueryParamsContext();
 
   const [trackList, setTrackList] = useState<Track[]>([]);
-  const [orderBy, setOrderBy] = useState<Order>(ORDER_BY.asc);
-  const [sortBy, setSortBy] = useState<TrackListSort>(TRACK_TABLE_CELL_IDS.artist);
   const [searchArtist, setSearchArtist] = useState('');
 
   const rawPage = getIntParam(QUERY_PARAM_KEYS.page);
+  const rawOrderBy = get(QUERY_PARAM_KEYS.orderBy);
+  const rawSortBy = get(QUERY_PARAM_KEYS.sortBy);
+
   const page = O.getWithDefault(rawPage, INITIAL_PAGE);
+  const orderBy = getValidatedOrDefaultQueryParam(rawOrderBy, isValidOrder, DEFAULT_ORDER_BY);
+  const sortBy = getValidatedOrDefaultQueryParam(rawSortBy, isTrackListSortableColumn, DEFAULT_SORT_BY);
+
+  const isValidPageParamInUrl = isValidQueryParam(rawPage, (page) => page >= INITIAL_PAGE);
+  const isValidOrderParamInUrl = isValidQueryParam(rawOrderBy, isValidOrder);
+  const isValidSortParamInUrl = isValidQueryParam(rawSortBy, isTrackListSortableColumn);
 
   const { debouncedSearchText } = useSearchTextContext();
   const { selectedGenre } = useGenreContext();
@@ -79,10 +94,6 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     artist: searchArtist,
   });
 
-  const resetPageToDefault = useCallback(() => {
-    set(QUERY_PARAM_KEYS.page, INITIAL_PAGE);
-  }, [set]);
-
   const totalPages = useMemo(() => {
     return paginationData?.totalPages ?? 1;
   }, [paginationData?.totalPages]);
@@ -94,10 +105,22 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   }, [isLoadingTrackList, isSuccessTrackList, fetchedTrackList]);
 
   useEffect(() => {
-    if (O.isNone(rawPage)) {
+    if (!isValidPageParamInUrl) {
       set(QUERY_PARAM_KEYS.page, INITIAL_PAGE, { replace: true });
     }
-  }, [rawPage, set]);
+  }, [isValidPageParamInUrl, set]);
+
+  useEffect(() => {
+    if (!isValidOrderParamInUrl) {
+      set(QUERY_PARAM_KEYS.orderBy, DEFAULT_ORDER_BY, { replace: true });
+    }
+  }, [isValidOrderParamInUrl, set]);
+
+  useEffect(() => {
+    if (!isValidSortParamInUrl) {
+      set(QUERY_PARAM_KEYS.sortBy, DEFAULT_SORT_BY, { replace: true });
+    }
+  }, [isValidSortParamInUrl, set]);
 
   useEffect(() => {
     if (debouncedSearchText || selectedGenre || searchArtist) {
@@ -107,18 +130,22 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
-      resetPageToDefault();
-      setOrderBy(newOrder);
+      setMany({
+        [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
+        [QUERY_PARAM_KEYS.orderBy]: newOrder,
+      });
     },
-    [resetPageToDefault],
+    [setMany],
   );
 
   const handleChangeSort = useCallback(
     (newSort: TrackListSort) => {
-      resetPageToDefault();
-      setSortBy(newSort);
+      setMany({
+        [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
+        [QUERY_PARAM_KEYS.sortBy]: newSort,
+      });
     },
-    [resetPageToDefault],
+    [setMany],
   );
 
   const handleChangePage = useCallback(

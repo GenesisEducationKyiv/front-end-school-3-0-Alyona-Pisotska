@@ -22,10 +22,26 @@ const TracksTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
+  const handleSortingChange = (updater: SortingState | ((old: SortingState) => SortingState)) => {
+    const newSortingState = typeof updater === 'function' ? updater([]) : updater;
+
+    setSorting(newSortingState);
+    if (newSortingState && newSortingState.length > 0) {
+      const { desc, id } = newSortingState[0];
+      const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
+
+      handleChangeOrder(orderBy);
+
+      if (isTrackListSortableColumn(id)) {
+        handleChangeSort(id);
+      }
+    }
+  };
+
   const table = useReactTable<Track>({
     data: tracks,
     columns: TABLE_COLUMNS,
-    onSortingChange: setSorting,
+    onSortingChange: handleSortingChange,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -53,19 +69,6 @@ const TracksTable = () => {
   useEffect(() => {
     showTrackActionToast(selectedIds, onDeleteTracksClick);
   }, [selectedIds, onDeleteTracksClick]);
-
-  useEffect(() => {
-    if (sorting.length) {
-      const { desc, id } = sorting[0];
-      const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
-
-      handleChangeOrder(orderBy);
-
-      if (isTrackListSortableColumn(id)) {
-        handleChangeSort(id);
-      }
-    }
-  }, [handleChangeOrder, handleChangeSort, sorting]);
 
   return (
     <Table
