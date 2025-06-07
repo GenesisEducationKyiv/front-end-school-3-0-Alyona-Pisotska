@@ -3,6 +3,7 @@ const QUERY_PARAM_KEYS = {
   page: 'page',
   orderBy: 'orderBy',
   sortBy: 'sortBy',
+  searchArtist: 'searchArtist',
 } as const;
 
 export { QUERY_PARAM_KEYS };

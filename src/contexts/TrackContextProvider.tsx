@@ -13,6 +13,7 @@ import {
   useDeleteMultiTracks,
   useGenreContext,
   useQueryParamsContext,
+  useDebounce,
 } from '@/hooks/hooks';
 import {
   getValidatedOrDefaultQueryParam,
@@ -25,6 +26,7 @@ import { ORDER_BY, TRACK_TABLE_CELL_IDS, QUERY_PARAM_KEYS } from '@/lib/constant
 import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types';
 
 const INITIAL_PAGE = 1;
+const INITIAL_SEARCH_ARTIST = '';
 const DEFAULT_ORDER_BY = ORDER_BY.asc as Order;
 const DEFAULT_SORT_BY = TRACK_TABLE_CELL_IDS.artist as TrackListSort;
 
@@ -40,6 +42,7 @@ type TTrackContext = {
   isLoadingTrackList: boolean;
   page: number;
   totalPages: number;
+  searchArtist: string;
   handleChangeOrder: (value: Order) => void;
   handleChangeSort: (value: TrackListSort) => void;
   handleChangePage: (value: number) => void;
@@ -58,20 +61,22 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const { get, getIntParam, set, setMany } = useQueryParamsContext();
 
   const [trackList, setTrackList] = useState<Track[]>([]);
-  const [searchArtist, setSearchArtist] = useState('');
 
   const rawPage = getIntParam(QUERY_PARAM_KEYS.page);
   const rawOrderBy = get(QUERY_PARAM_KEYS.orderBy);
   const rawSortBy = get(QUERY_PARAM_KEYS.sortBy);
+  const rawSearchArtist = get(QUERY_PARAM_KEYS.searchArtist);
 
   const page = O.getWithDefault(rawPage, INITIAL_PAGE);
   const orderBy = getValidatedOrDefaultQueryParam(rawOrderBy, isValidOrder, DEFAULT_ORDER_BY);
   const sortBy = getValidatedOrDefaultQueryParam(rawSortBy, isTrackListSortableColumn, DEFAULT_SORT_BY);
+  const searchArtist = O.getWithDefault(rawSearchArtist, INITIAL_SEARCH_ARTIST);
 
   const isValidPageParamInUrl = isValidQueryParam(rawPage, (page) => page >= INITIAL_PAGE);
   const isValidOrderParamInUrl = isValidQueryParam(rawOrderBy, isValidOrder);
   const isValidSortParamInUrl = isValidQueryParam(rawSortBy, isTrackListSortableColumn);
 
+  const debouncedSearchArtist = useDebounce(searchArtist, 250);
   const { debouncedSearchText } = useSearchTextContext();
   const { selectedGenre } = useGenreContext();
 
@@ -91,7 +96,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     order: orderBy,
     search: debouncedSearchText,
     genre: selectedGenre,
-    artist: searchArtist,
+    artist: debouncedSearchArtist,
   });
 
   const totalPages = useMemo(() => {
@@ -123,10 +128,10 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   }, [isValidSortParamInUrl, set]);
 
   useEffect(() => {
-    if (debouncedSearchText || selectedGenre || searchArtist) {
+    if (debouncedSearchText || selectedGenre) {
       set(QUERY_PARAM_KEYS.page, INITIAL_PAGE);
     }
-  }, [debouncedSearchText, selectedGenre, searchArtist, set]);
+  }, [debouncedSearchText, selectedGenre, set]);
 
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
@@ -143,6 +148,16 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
       setMany({
         [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
         [QUERY_PARAM_KEYS.sortBy]: newSort,
+      });
+    },
+    [setMany],
+  );
+
+  const handleChangeSearchArtist = useCallback(
+    (value: string) => {
+      setMany({
+        [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
+        [QUERY_PARAM_KEYS.searchArtist]: value,
       });
     },
     [setMany],
@@ -230,10 +245,6 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     });
   }, []);
 
-  const handleChangeSearchArtist = useCallback((value: string) => {
-    setSearchArtist(value);
-  }, []);
-
   return (
     <TrackContext.Provider
       value={{
@@ -244,6 +255,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
         handleChangeSort,
         page,
         totalPages,
+        searchArtist,
         handleChangePage,
         handleAddTrack,
         handleEditTrack,
