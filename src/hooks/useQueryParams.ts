@@ -1,5 +1,4 @@
-import { useCallback } from '@/hooks/hooks';
-import { useSearchParams } from 'react-router-dom';
+import { useCallback, useSearchParams } from '@/hooks/hooks';
 import { O, pipe } from '@mobily/ts-belt';
 
 import type { QueryParamsHookType } from '@/lib/types/types';

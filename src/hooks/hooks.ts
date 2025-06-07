@@ -30,3 +30,6 @@ export { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 //* react form */
 export { useForm, useWatch } from 'react-hook-form';
+
+//* react-router-dom */
+export { useSearchParams } from 'react-router-dom';
