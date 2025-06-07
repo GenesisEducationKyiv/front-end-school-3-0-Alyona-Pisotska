@@ -1,5 +1,8 @@
-import React, { createContext } from 'react';
-import { useState, useDebounce } from '@/hooks/hooks';
+import { createContext } from 'react';
+import { useCallback, useDebounce, useQueryParamsContext } from '@/hooks/hooks';
+import { O } from '@mobily/ts-belt';
+import { setParamWithResetPage } from '@/lib/utils/utils';
+import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/constants';
 
 type SearchTextContextProviderProps = {
   children: React.ReactNode;
@@ -14,12 +17,19 @@ type TSearchTextContext = {
 const SearchTextContext = createContext<TSearchTextContext | null>(null);
 
 const SearchTextContextProvider = ({ children }: SearchTextContextProviderProps) => {
-  const [searchText, setSearchText] = useState('');
+  const { get, setMany } = useQueryParamsContext();
+
+  const rawSearchText = get(QUERY_PARAM_KEYS.search);
+  const searchText = O.getWithDefault(rawSearchText, INITIAL_QUERY_PARAMS_VALUE.search);
+
   const debouncedSearchText = useDebounce(searchText, 250);
 
-  const handleChangeSearchText = (newSearchText: string) => {
-    setSearchText(newSearchText);
-  };
+  const handleChangeSearchText = useCallback(
+    (newSearchText: string) => {
+      setParamWithResetPage(QUERY_PARAM_KEYS.search, newSearchText, setMany);
+    },
+    [setMany],
+  );
 
   return (
     <SearchTextContext.Provider

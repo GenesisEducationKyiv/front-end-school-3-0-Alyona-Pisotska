@@ -3,8 +3,12 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
-import { TrackContextProvider, SearchTextContextProvider, GenreContextProvider } from '@/contexts/contexts';
-
+import {
+  TrackContextProvider,
+  SearchTextContextProvider,
+  GenreContextProvider,
+  QueryParamsProvider,
+} from '@/contexts/contexts';
 import './index.css';
 
 const queryClient = new QueryClient();
@@ -18,13 +22,15 @@ createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <SearchTextContextProvider>
-          <GenreContextProvider>
-            <TrackContextProvider>
-              <App />
-            </TrackContextProvider>
-          </GenreContextProvider>
-        </SearchTextContextProvider>
+        <QueryParamsProvider>
+          <SearchTextContextProvider>
+            <GenreContextProvider>
+              <TrackContextProvider>
+                <App />
+              </TrackContextProvider>
+            </GenreContextProvider>
+          </SearchTextContextProvider>
+        </QueryParamsProvider>
       </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>,
