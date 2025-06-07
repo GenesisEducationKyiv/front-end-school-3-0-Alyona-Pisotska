@@ -21,14 +21,9 @@ import {
   isValidOrder,
   isValidQueryParam,
 } from '@/lib/utils/utils';
-import { ORDER_BY, TRACK_TABLE_CELL_IDS, QUERY_PARAM_KEYS } from '@/lib/constants/constants';
+import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/constants';
 
 import type { Track, PaginationMeta, Order, TrackListSort, TrackPayload } from '@/lib/types/types';
-
-const INITIAL_PAGE = 1;
-const INITIAL_SEARCH_ARTIST = '';
-const DEFAULT_ORDER_BY = ORDER_BY.asc as Order;
-const DEFAULT_SORT_BY = TRACK_TABLE_CELL_IDS.artist as TrackListSort;
 
 type TrackContextProviderProps = {
   children: React.ReactNode;
@@ -67,12 +62,16 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const rawSortBy = get(QUERY_PARAM_KEYS.sortBy);
   const rawSearchArtist = get(QUERY_PARAM_KEYS.searchArtist);
 
-  const page = O.getWithDefault(rawPage, INITIAL_PAGE);
-  const orderBy = getValidatedOrDefaultQueryParam(rawOrderBy, isValidOrder, DEFAULT_ORDER_BY);
-  const sortBy = getValidatedOrDefaultQueryParam(rawSortBy, isTrackListSortableColumn, DEFAULT_SORT_BY);
-  const searchArtist = O.getWithDefault(rawSearchArtist, INITIAL_SEARCH_ARTIST);
+  const page = O.getWithDefault(rawPage, INITIAL_QUERY_PARAMS_VALUE.page);
+  const orderBy = getValidatedOrDefaultQueryParam(rawOrderBy, isValidOrder, INITIAL_QUERY_PARAMS_VALUE.orderBy);
+  const sortBy = getValidatedOrDefaultQueryParam(
+    rawSortBy,
+    isTrackListSortableColumn,
+    INITIAL_QUERY_PARAMS_VALUE.sortBy,
+  );
+  const searchArtist = O.getWithDefault(rawSearchArtist, INITIAL_QUERY_PARAMS_VALUE.search);
 
-  const isValidPageParamInUrl = isValidQueryParam(rawPage, (page) => page >= INITIAL_PAGE);
+  const isValidPageParamInUrl = isValidQueryParam(rawPage, (page) => page >= INITIAL_QUERY_PARAMS_VALUE.page);
   const isValidOrderParamInUrl = isValidQueryParam(rawOrderBy, isValidOrder);
   const isValidSortParamInUrl = isValidQueryParam(rawSortBy, isTrackListSortableColumn);
 
@@ -111,32 +110,32 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
 
   useEffect(() => {
     if (!isValidPageParamInUrl) {
-      set(QUERY_PARAM_KEYS.page, INITIAL_PAGE, { replace: true });
+      set(QUERY_PARAM_KEYS.page, INITIAL_QUERY_PARAMS_VALUE.page, { replace: true });
     }
   }, [isValidPageParamInUrl, set]);
 
   useEffect(() => {
     if (!isValidOrderParamInUrl) {
-      set(QUERY_PARAM_KEYS.orderBy, DEFAULT_ORDER_BY, { replace: true });
+      set(QUERY_PARAM_KEYS.orderBy, INITIAL_QUERY_PARAMS_VALUE.orderBy, { replace: true });
     }
   }, [isValidOrderParamInUrl, set]);
 
   useEffect(() => {
     if (!isValidSortParamInUrl) {
-      set(QUERY_PARAM_KEYS.sortBy, DEFAULT_SORT_BY, { replace: true });
+      set(QUERY_PARAM_KEYS.sortBy, INITIAL_QUERY_PARAMS_VALUE.sortBy, { replace: true });
     }
   }, [isValidSortParamInUrl, set]);
 
   useEffect(() => {
     if (debouncedSearchText || selectedGenre) {
-      set(QUERY_PARAM_KEYS.page, INITIAL_PAGE);
+      set(QUERY_PARAM_KEYS.page, INITIAL_QUERY_PARAMS_VALUE.page);
     }
   }, [debouncedSearchText, selectedGenre, set]);
 
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
       setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
+        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
         [QUERY_PARAM_KEYS.orderBy]: newOrder,
       });
     },
@@ -146,7 +145,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const handleChangeSort = useCallback(
     (newSort: TrackListSort) => {
       setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
+        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
         [QUERY_PARAM_KEYS.sortBy]: newSort,
       });
     },
@@ -156,7 +155,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const handleChangeSearchArtist = useCallback(
     (value: string) => {
       setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_PAGE,
+        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
         [QUERY_PARAM_KEYS.searchArtist]: value,
       });
     },
