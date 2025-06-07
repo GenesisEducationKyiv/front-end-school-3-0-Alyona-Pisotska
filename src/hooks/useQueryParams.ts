@@ -1,3 +1,4 @@
+import { useCallback } from '@/hooks/hooks';
 import { useSearchParams } from 'react-router-dom';
 import { O, pipe } from '@mobily/ts-belt';
 
@@ -6,76 +7,115 @@ import type { QueryParamsHookType } from '@/lib/types/types';
 const useQueryParams = (): QueryParamsHookType => {
   const [params, setParams] = useSearchParams();
 
-  const get: QueryParamsHookType['get'] = (key) => O.fromNullable(params.get(key));
-  const getAll: QueryParamsHookType['getAll'] = (key) => params.getAll(key);
-  const getAllParams: QueryParamsHookType['getAllParams'] = (): URLSearchParams => new URLSearchParams(params);
+  const get: QueryParamsHookType['get'] = useCallback(
+    (key) => {
+      return O.fromNullable(params.get(key));
+    },
+    [params],
+  );
 
-  const set: QueryParamsHookType['set'] = (key, value, options) => {
-    const next = new URLSearchParams(params);
+  const getAll: QueryParamsHookType['getAll'] = useCallback(
+    (key) => {
+      return params.getAll(key);
+    },
+    [params],
+  );
 
-    if (value === null || value === '') {
-      next.delete(key);
-    } else {
-      next.set(key, String(value));
-    }
+  const getAllParams: QueryParamsHookType['getAllParams'] = useCallback(() => {
+    return new URLSearchParams(params);
+  }, [params]);
 
-    setParams(next, { replace: options?.replace ?? false });
-  };
+  const set: QueryParamsHookType['set'] = useCallback(
+    (key, value, options) => {
+      setParams(
+        (prev) => {
+          if (value === null || value === undefined) {
+            prev.delete(key);
+          } else {
+            prev.set(key, String(value));
+          }
 
-  const setMany: QueryParamsHookType['setMany'] = (updates, options) => {
-    const next = new URLSearchParams(params);
+          return prev;
+        },
+        { replace: options?.replace ?? false },
+      );
+    },
+    [setParams],
+  );
 
-    for (const [key, value] of Object.entries(updates)) {
-      if (value === null || value === '') {
-        next.delete(key);
-      } else {
-        next.set(key, String(value));
-      }
-    }
+  const setMany: QueryParamsHookType['setMany'] = useCallback(
+    (updates, options) => {
+      setParams(
+        (prev) => {
+          for (const [key, value] of Object.entries(updates)) {
+            if (value === null || value === undefined) {
+              prev.delete(key);
+            } else {
+              prev.set(key, String(value));
+            }
+          }
 
-    setParams(next, { replace: options?.replace ?? false });
-  };
+          return prev;
+        },
+        { replace: options?.replace ?? false },
+      );
+    },
+    [setParams],
+  );
 
-  const remove: QueryParamsHookType['remove'] = (key, options) => {
-    const next = new URLSearchParams(params);
+  const remove: QueryParamsHookType['remove'] = useCallback(
+    (key, options) => {
+      setParams(
+        (prev) => {
+          prev.delete(key);
 
-    next.delete(key);
-    setParams(next, { replace: options?.replace ?? false });
-  };
+          return prev;
+        },
+        { replace: options?.replace ?? false },
+      );
+    },
+    [setParams],
+  );
 
-  const clear: QueryParamsHookType['clear'] = (options) => {
-    setParams(new URLSearchParams(), { replace: options?.replace ?? true });
-  };
+  const clear: QueryParamsHookType['clear'] = useCallback(
+    (options) => {
+      setParams(new URLSearchParams(), { replace: options?.replace ?? true });
+    },
+    [setParams],
+  );
 
-  const getIntParam: QueryParamsHookType['getIntParam'] = (key) => {
-    return pipe(
-      params.get(key),
-      O.fromNullable,
-      O.flatMap((s) => {
-        const parsed = parseInt(s, 10);
+  const getIntParam: QueryParamsHookType['getIntParam'] = useCallback(
+    (key) =>
+      pipe(
+        get(key),
+        O.fromNullable,
+        O.flatMap((s) => {
+          const parsed = parseInt(s, 10);
+          return Number.isFinite(parsed) ? O.Some(parsed) : O.None;
+        }),
+      ),
+    [get],
+  );
 
-        return Number.isFinite(parsed) ? O.Some(parsed) : O.None;
-      }),
-    );
-  };
+  const getBooleanParam: QueryParamsHookType['getBooleanParam'] = useCallback(
+    (key) =>
+      pipe(
+        get(key),
+        O.fromNullable,
+        O.flatMap((s) => {
+          if (s === 'true') {
+            return O.Some(true);
+          }
 
-  const getBooleanParam: QueryParamsHookType['getBooleanParam'] = (key) => {
-    return pipe(
-      params.get(key),
-      O.fromNullable,
-      O.flatMap((s) => {
-        if (s === 'true') {
-          return O.Some(true);
-        }
+          if (s === 'false') {
+            return O.Some(false);
+          }
 
-        if (s === 'false') {
-          return O.Some(false);
-        }
-
-        return O.None;
-      }),
-    );
-  };
+          return O.None;
+        }),
+      ),
+    [get],
+  );
 
   return {
     get,
