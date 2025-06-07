@@ -1,6 +1,7 @@
 import React, { createContext, useCallback } from 'react';
 import { useGetGenreList, useMemo, useQueryParamsContext } from '@/hooks/hooks';
 import { O } from '@mobily/ts-belt';
+import { setParamWithResetPage } from '@/lib/utils/utils';
 import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/constants';
 
 import type { SelectOption, Track } from '@/lib/types/types';
@@ -32,10 +33,7 @@ const GenreContextProvider = ({ children }: GenreContextProviderProps) => {
 
   const handleChangeSelectedGenre = useCallback(
     (genre: string) => {
-      setMany({
-        [QUERY_PARAM_KEYS.page]: INITIAL_QUERY_PARAMS_VALUE.page,
-        [QUERY_PARAM_KEYS.genre]: genre,
-      });
+      setParamWithResetPage(QUERY_PARAM_KEYS.genre, genre, setMany);
     },
     [setMany],
   );
