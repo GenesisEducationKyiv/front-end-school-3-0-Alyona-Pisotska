@@ -1,6 +1,7 @@
 export { useDebounce } from './useDebounce';
 export { useAppMutation } from './useAppMutation';
 export { useQueryParams } from './useQueryParams';
+export { useResetInvalidQueryParam } from './useResetInvalidQueryParam';
 
 //* request hooks */
 export {

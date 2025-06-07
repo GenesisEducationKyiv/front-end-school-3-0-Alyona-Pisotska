@@ -14,6 +14,7 @@ import {
   useGenreContext,
   useQueryParamsContext,
   useDebounce,
+  useResetInvalidQueryParam,
 } from '@/hooks/hooks';
 import {
   getValidatedOrDefaultQueryParam,
@@ -108,23 +109,9 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     }
   }, [isLoadingTrackList, isSuccessTrackList, fetchedTrackList]);
 
-  useEffect(() => {
-    if (!isValidPageParamInUrl) {
-      set(QUERY_PARAM_KEYS.page, INITIAL_QUERY_PARAMS_VALUE.page, { replace: true });
-    }
-  }, [isValidPageParamInUrl, set]);
-
-  useEffect(() => {
-    if (!isValidOrderParamInUrl) {
-      set(QUERY_PARAM_KEYS.orderBy, INITIAL_QUERY_PARAMS_VALUE.orderBy, { replace: true });
-    }
-  }, [isValidOrderParamInUrl, set]);
-
-  useEffect(() => {
-    if (!isValidSortParamInUrl) {
-      set(QUERY_PARAM_KEYS.sortBy, INITIAL_QUERY_PARAMS_VALUE.sortBy, { replace: true });
-    }
-  }, [isValidSortParamInUrl, set]);
+  useResetInvalidQueryParam(isValidPageParamInUrl, QUERY_PARAM_KEYS.page, INITIAL_QUERY_PARAMS_VALUE.page);
+  useResetInvalidQueryParam(isValidOrderParamInUrl, QUERY_PARAM_KEYS.orderBy, INITIAL_QUERY_PARAMS_VALUE.orderBy);
+  useResetInvalidQueryParam(isValidSortParamInUrl, QUERY_PARAM_KEYS.sortBy, INITIAL_QUERY_PARAMS_VALUE.sortBy);
 
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
