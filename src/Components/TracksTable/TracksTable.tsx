@@ -1,4 +1,4 @@
-import { useTrackContext, useState, useEffect, useCallback } from '@/hooks/hooks';
+import { useTrackContext, useState, useEffect, useCallback, useMemo } from '@/hooks/hooks';
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -23,30 +23,30 @@ const TracksTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
-  const handleChangeTrackContextData = (sortingData: ColumnSort) => {
-    const { desc, id } = sortingData;
-    const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
+  const handleChangeTrackContextData = useCallback(
+    (sortingData: ColumnSort) => {
+      const { desc, id } = sortingData;
+      const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
 
-    handleChangeOrder(orderBy);
+      handleChangeOrder(orderBy);
 
-    if (isTrackListSortableColumn(id)) {
-      handleChangeSort(id);
+      if (isTrackListSortableColumn(id)) {
+        handleChangeSort(id);
+      }
+    },
+    [handleChangeOrder, handleChangeSort],
+  );
+
+  useEffect(() => {
+    if (sorting.length > 0) {
+      handleChangeTrackContextData(sorting[0]);
     }
-  };
-
-  const handleSortingChange = (updater: SortingState | ((old: SortingState) => SortingState)) => {
-    const newSortingState = typeof updater === 'function' ? updater([]) : updater;
-
-    setSorting(newSortingState);
-    if (newSortingState && newSortingState.length > 0) {
-      handleChangeTrackContextData(newSortingState[0]);
-    }
-  };
+  }, [sorting, handleChangeTrackContextData]);
 
   const table = useReactTable<Track>({
     data: tracks,
     columns: TABLE_COLUMNS,
-    onSortingChange: handleSortingChange,
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -59,9 +59,12 @@ const TracksTable = () => {
   });
 
   const headersGroup = table.getHeaderGroups();
-  const selectedRows = table.getFilteredSelectedRowModel().rows;
-  const selectedIds = selectedRows.map((row) => row.original.id);
   const tableRows = table.getRowModel().rows;
+  const selectedRows = table.getFilteredSelectedRowModel().rows;
+
+  const selectedIds = useMemo(() => {
+    return selectedRows.map((row) => row.original.id);
+  }, [selectedRows]);
 
   const onDeleteTracksClick = useCallback(async () => {
     try {
