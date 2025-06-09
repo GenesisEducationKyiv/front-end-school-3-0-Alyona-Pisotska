@@ -5,13 +5,12 @@ import {
   useGenreContext,
   useQueryParamsContext,
   useDebounce,
-  useResetInvalidQueryParam,
+  useValidatedQueryParam,
 } from '@/hooks/hooks';
 import {
   getValidatedOrDefaultQueryParam,
   isTrackListSortableColumn,
   isValidOrder,
-  isValidQueryParam,
   setParamWithResetPage,
 } from '@/lib/utils/utils';
 import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/constants';
@@ -36,9 +35,27 @@ const useTrackQueryParams = (): TTrackQueryParams => {
   const { debouncedSearchText } = useSearchTextContext();
   const { selectedGenre } = useGenreContext();
 
-  const rawPage = getIntParam(QUERY_PARAM_KEYS.page);
-  const rawOrderBy = get(QUERY_PARAM_KEYS.orderBy);
-  const rawSortBy = get(QUERY_PARAM_KEYS.sortBy);
+  const rawPage = useValidatedQueryParam({
+    option: getIntParam(QUERY_PARAM_KEYS.page),
+    validator: (page) => page >= INITIAL_QUERY_PARAMS_VALUE.page,
+    key: QUERY_PARAM_KEYS.page,
+    defaultValue: INITIAL_QUERY_PARAMS_VALUE.page,
+  });
+
+  const rawOrderBy = useValidatedQueryParam({
+    option: get(QUERY_PARAM_KEYS.orderBy),
+    validator: isValidOrder,
+    key: QUERY_PARAM_KEYS.orderBy,
+    defaultValue: INITIAL_QUERY_PARAMS_VALUE.orderBy,
+  });
+
+  const rawSortBy = useValidatedQueryParam({
+    option: get(QUERY_PARAM_KEYS.sortBy),
+    validator: isTrackListSortableColumn,
+    key: QUERY_PARAM_KEYS.sortBy,
+    defaultValue: INITIAL_QUERY_PARAMS_VALUE.sortBy,
+  });
+
   const rawSearchArtist = get(QUERY_PARAM_KEYS.searchArtist);
 
   const page = O.getWithDefault(rawPage, INITIAL_QUERY_PARAMS_VALUE.page);
@@ -50,14 +67,6 @@ const useTrackQueryParams = (): TTrackQueryParams => {
   );
   const searchArtist = O.getWithDefault(rawSearchArtist, INITIAL_QUERY_PARAMS_VALUE.search);
   const debouncedSearchArtist = useDebounce(searchArtist, 250);
-
-  const isValidPageParamInUrl = isValidQueryParam(rawPage, (page) => page >= INITIAL_QUERY_PARAMS_VALUE.page);
-  const isValidOrderParamInUrl = isValidQueryParam(rawOrderBy, isValidOrder);
-  const isValidSortParamInUrl = isValidQueryParam(rawSortBy, isTrackListSortableColumn);
-
-  useResetInvalidQueryParam(isValidPageParamInUrl, QUERY_PARAM_KEYS.page, INITIAL_QUERY_PARAMS_VALUE.page);
-  useResetInvalidQueryParam(isValidOrderParamInUrl, QUERY_PARAM_KEYS.orderBy, INITIAL_QUERY_PARAMS_VALUE.orderBy);
-  useResetInvalidQueryParam(isValidSortParamInUrl, QUERY_PARAM_KEYS.sortBy, INITIAL_QUERY_PARAMS_VALUE.sortBy);
 
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
