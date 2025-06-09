@@ -1,7 +1,15 @@
 import { useCallback, useSearchParams } from '@/hooks/hooks';
 import { O, pipe } from '@mobily/ts-belt';
 
-import type { QueryParamsHookType } from '@/lib/types/types';
+import type { QueryParamKey, QueryParamsHookType, QueryParamValue } from '@/lib/types/types';
+
+const updateParams = (prev: URLSearchParams, key: QueryParamKey, value: QueryParamValue): void => {
+  if (value === null || value === undefined) {
+    prev.delete(key);
+  } else {
+    prev.set(key, String(value));
+  }
+};
 
 const useQueryParams = (): QueryParamsHookType => {
   const [params, setParams] = useSearchParams();
@@ -28,11 +36,7 @@ const useQueryParams = (): QueryParamsHookType => {
     (key, value, options) => {
       setParams(
         (prev) => {
-          if (value === null || value === undefined) {
-            prev.delete(key);
-          } else {
-            prev.set(key, String(value));
-          }
+          updateParams(prev, key, value);
 
           return prev;
         },
@@ -46,14 +50,9 @@ const useQueryParams = (): QueryParamsHookType => {
     (updates, options) => {
       setParams(
         (prev) => {
-          for (const [key, value] of Object.entries(updates)) {
-            if (value === null || value === undefined) {
-              prev.delete(key);
-            } else {
-              prev.set(key, String(value));
-            }
+          for (const [key, value] of Object.entries(updates) as [QueryParamKey, QueryParamValue][]) {
+            updateParams(prev, key, value);
           }
-
           return prev;
         },
         { replace: options?.replace ?? false },
