@@ -19,6 +19,7 @@ const TrackContext = createContext<TTrackContext | null>(null);
 const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
   const {
     search,
+    debouncedSearchArtist,
     searchArtist,
     selectedGenre,
     page,
@@ -47,7 +48,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     sort: sortBy,
     order: orderBy,
     genre: selectedGenre,
-    artist: searchArtist,
+    artist: debouncedSearchArtist,
   });
 
   return (

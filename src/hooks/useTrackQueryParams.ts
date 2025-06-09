@@ -19,6 +19,7 @@ import type { Order, TrackListSort } from '@/lib/types/types';
 
 type TTrackQueryParams = {
   search: string;
+  debouncedSearchArtist: string;
   searchArtist: string;
   selectedGenre: string;
   page: number;
@@ -98,7 +99,8 @@ const useTrackQueryParams = (): TTrackQueryParams => {
 
   return {
     search: debouncedSearchText,
-    searchArtist: debouncedSearchArtist,
+    debouncedSearchArtist: debouncedSearchArtist,
+    searchArtist,
     selectedGenre,
     page,
     orderBy,
