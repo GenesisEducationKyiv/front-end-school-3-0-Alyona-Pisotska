@@ -1,4 +1,4 @@
-import { useTrackContext, useState, useEffect, useCallback } from '@/hooks/hooks';
+import { useTrackContext, useState, useEffect, useCallback, useMemo } from '@/hooks/hooks';
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -6,6 +6,7 @@ import {
   getSortedRowModel,
   useReactTable,
   type SortingState,
+  type ColumnSort,
 } from '@tanstack/react-table';
 import { Table, TableBody, TableLoader } from '@/Components/components';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components';
@@ -21,6 +22,26 @@ const TracksTable = () => {
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
+
+  const handleChangeTrackContextData = useCallback(
+    (sortingData: ColumnSort) => {
+      const { desc, id } = sortingData;
+      const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
+
+      handleChangeOrder(orderBy);
+
+      if (isTrackListSortableColumn(id)) {
+        handleChangeSort(id);
+      }
+    },
+    [handleChangeOrder, handleChangeSort],
+  );
+
+  useEffect(() => {
+    if (sorting.length > 0) {
+      handleChangeTrackContextData(sorting[0]);
+    }
+  }, [sorting, handleChangeTrackContextData]);
 
   const table = useReactTable<Track>({
     data: tracks,
@@ -38,9 +59,12 @@ const TracksTable = () => {
   });
 
   const headersGroup = table.getHeaderGroups();
-  const selectedRows = table.getFilteredSelectedRowModel().rows;
-  const selectedIds = selectedRows.map((row) => row.original.id);
   const tableRows = table.getRowModel().rows;
+  const selectedRows = table.getFilteredSelectedRowModel().rows;
+
+  const selectedIds = useMemo(() => {
+    return selectedRows.map((row) => row.original.id);
+  }, [selectedRows]);
 
   const onDeleteTracksClick = useCallback(async () => {
     try {
@@ -53,19 +77,6 @@ const TracksTable = () => {
   useEffect(() => {
     showTrackActionToast(selectedIds, onDeleteTracksClick);
   }, [selectedIds, onDeleteTracksClick]);
-
-  useEffect(() => {
-    if (sorting.length) {
-      const { desc, id } = sorting[0];
-      const orderBy: Order = desc ? ORDER_BY.desc : ORDER_BY.asc;
-
-      handleChangeOrder(orderBy);
-
-      if (isTrackListSortableColumn(id)) {
-        handleChangeSort(id);
-      }
-    }
-  }, [handleChangeOrder, handleChangeSort, sorting]);
 
   return (
     <Table
