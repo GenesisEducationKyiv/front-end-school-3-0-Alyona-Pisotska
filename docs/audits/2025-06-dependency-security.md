@@ -107,7 +107,7 @@ Our current strategy is built upon a multi-layered approach that reduces the lik
 
   - Thorough Input Validation: All input data must always be validated on both the client-side and server-side to prevent injections and other manipulations.
   - Output Escaping and Sanitization: Any data displayed on the page must be properly escaped and sanitized to prevent the execution of malicious HTML or JavaScript.
-  - DOM Isolation: Utilizing modern front-end frameworks that isolate DOM access can reduce the risk of page element manipulations.-
+  - DOM Isolation: Utilizing modern front-end frameworks that isolate DOM access can reduce the risk of page element manipulations.
 
 #### 🧩 Additional Recommendations for Enhanced Security
 
