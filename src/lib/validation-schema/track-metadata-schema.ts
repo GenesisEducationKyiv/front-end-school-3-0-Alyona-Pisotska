@@ -13,9 +13,11 @@ const baseMetadataSchema = trackSchema.pick({
 const trackMetadataSchema = baseMetadataSchema.extend({
   title: z.string().nonempty({ message: 'The field is required' }),
   artist: z.string().nonempty({ message: 'The field is required' }),
-  coverImage: z.string().optional().refine(isValidImageUrl, {
-    message: 'Please enter a valid image URL (jpg, png, etc.)',
-  }),
+  coverImage: z
+    .string()
+    .transform((val) => val?.trim() || undefined)
+    .optional()
+    .refine((val) => !val || isValidImageUrl(val), { message: 'Please enter a valid image URL (jpg, png, etc.)' }),
   genres: z.array(z.string()).optional(),
 });
 
