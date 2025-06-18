@@ -1,0 +1,22 @@
+# Ignore artifacts:
+build
+dist
+public
+coverage
+
+# Ignore dependencies:
+node_modules
+
+# Ignore lock files:
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore Git directory:
+.git
+
+# Ignore environment files:
+.env*
+
+.idea
+.vscode

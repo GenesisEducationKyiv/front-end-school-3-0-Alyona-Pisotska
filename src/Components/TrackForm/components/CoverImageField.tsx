@@ -1,0 +1,47 @@
+import { useEffect, useState, useWatch } from '@/hooks/hooks';
+import { FormItem, FormLabel, FormControl, FormMessage, FormField, Input } from '@/Components/components';
+
+import type { Control } from 'react-hook-form';
+import type { TrackMetadataValues } from '@/lib/types/types';
+
+type CoverImageFieldProps = {
+  control: Control<TrackMetadataValues>;
+};
+
+const CoverImageField = ({ control }: CoverImageFieldProps) => {
+  const [imageError, setImageError] = useState(false);
+  const coverImageUrl = useWatch({ control, name: 'coverImage' });
+
+  useEffect(() => {
+    setImageError(false);
+  }, [coverImageUrl]);
+
+  return (
+    <FormField
+      data-testid='input-cover-image'
+      control={control}
+      name='coverImage'
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Cover image link</FormLabel>
+          <FormControl>
+            <Input placeholder='Enter cover image link...' {...field} />
+          </FormControl>
+
+          <div className='border-accent mt-2 h-[150px] overflow-hidden rounded border border-dashed'>
+            <img
+              src={field.value && !imageError ? field.value : '/no-image.png'}
+              onError={() => setImageError(true)}
+              alt='Cover Preview'
+              className='h-full w-full rounded object-cover'
+            />
+          </div>
+
+          <FormMessage data-testid='error-cover-image' />
+        </FormItem>
+      )}
+    />
+  );
+};
+
+export { CoverImageField };
