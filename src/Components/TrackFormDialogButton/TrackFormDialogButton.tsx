@@ -25,7 +25,7 @@ const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData 
     <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
-      <DialogContent className='sm:max-w-[600px]'>
+      <DialogContent className='sm:max-w-[600px]' data-testid='track-form-dialog'>
         <DialogHeader>
           <DialogTitle>{actionType === 'add' ? 'Create a new track' : 'Edit a track'}</DialogTitle>
           <DialogDescription>

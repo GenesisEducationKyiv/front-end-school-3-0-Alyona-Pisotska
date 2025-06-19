@@ -43,7 +43,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         <Button
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          data-testid='sort-select'
+          data-testid='sort-select-artist'
         >
           {TABLE_CELL_DATA.artist.label}
           <ArrowUpDown />
@@ -63,7 +63,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         <Button
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          data-testid='sort-select'
+          data-testid='sort-select-title'
         >
           {TABLE_CELL_DATA.title.label}
           <ArrowUpDown />
@@ -81,7 +81,7 @@ const TABLE_COLUMNS: ColumnDef<Track>[] = [
         <Button
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-          data-testid='sort-select'
+          data-testid='sort-select-album'
         >
           <div className='text-right'>{TABLE_CELL_DATA.album.label}</div>
           <ArrowUpDown />

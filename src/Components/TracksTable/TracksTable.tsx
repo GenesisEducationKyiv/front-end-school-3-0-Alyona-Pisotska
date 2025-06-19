@@ -82,6 +82,7 @@ const TracksTable = () => {
     <Table
       className={cn(isLoadingTrackList && 'h-full', 'w-full border-y')}
       data-loading={isLoadingTrackList ? 'true' : undefined}
+      data-testid='tracks-table'
     >
       <TracksTableHeader headersGroup={headersGroup} />
       <TableBody>
