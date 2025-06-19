@@ -22,14 +22,14 @@ const SearchInput = ({
         placeholder={placeholder}
         value={searchText}
         onChange={(e) => onChangeSearchText(e.target.value)}
-        aria-label='Search input'
+        data-testid='search-input'
       />
       {hasValue && (
         <Button
           onClick={() => onChangeSearchText('')}
           variant='ghost'
           className='text-muted-foreground hover:text-foreground absolute top-1/2 right-1 -translate-y-1/2'
-          aria-label='Clear search'
+          data-testid='clear-search-button'
         >
           <X className='h-4 w-4' />
         </Button>

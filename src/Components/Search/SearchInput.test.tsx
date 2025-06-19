@@ -14,7 +14,7 @@ describe('SearchInput', () => {
   test('renders with custom placeholder and initial value', () => {
     render(<SearchInput searchText='Hello' onChangeSearchText={onChangeMock} placeholder='Custom placeholder' />);
 
-    const input = screen.getByRole('textbox', { name: /search input/i });
+    const input = screen.getByTestId('search-input');
 
     expect(input).toBeInTheDocument();
     expect(input).toHaveValue('Hello');
@@ -33,7 +33,7 @@ describe('SearchInput', () => {
 
     render(<Wrapper />);
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByTestId('search-input');
     await user.type(input, 'New search');
 
     expect(onChangeMock).toHaveBeenLastCalledWith('New search');
@@ -43,7 +43,7 @@ describe('SearchInput', () => {
   test('shows a clear button when there is text and clears input on click', async () => {
     render(<SearchInput searchText='some text' onChangeSearchText={onChangeMock} />);
 
-    const clearButton = screen.getByRole('button', { name: /clear search/i });
+    const clearButton = screen.getByTestId('clear-search-button');
     expect(clearButton).toBeInTheDocument();
 
     await user.click(clearButton);
