@@ -13,9 +13,13 @@
     "format": "prettier --write --no-error-on-unmatched-pattern 'src/**/*.{js,jsx,ts,tsx,css,md}' *.json *.md",
     "preview": "vite preview",
     "test": "vitest",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "test:playwright": "npm run test:playwright:e2e && npm run test:playwright:component",
+    "test:playwright:e2e": "playwright test",
+    "test:playwright:component": "playwright test --config playwright-ct.config.ts"
   },
   "dependencies": {
+    "@playwright/experimental-ct-react": "^1.53.1",
     "@hookform/resolvers": "^5.0.1",
     "@mobily/ts-belt": "^3.13.1",
     "@radix-ui/react-checkbox": "^1.2.2",

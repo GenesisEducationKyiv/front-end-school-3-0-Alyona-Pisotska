@@ -28,7 +28,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "playwright"],
   "references": [
     {
       "path": "./tsconfig.node.json"
