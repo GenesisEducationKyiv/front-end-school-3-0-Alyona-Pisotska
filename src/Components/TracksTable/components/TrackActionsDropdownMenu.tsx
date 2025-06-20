@@ -1,5 +1,5 @@
 import { MoreVertical } from 'lucide-react';
-import { useTrackContext } from '@/hooks/hooks';
+import { useState, useTrackContext } from '@/hooks/hooks';
 import {
   Button,
   DropdownMenu,
@@ -17,11 +17,17 @@ type TrackActionsDropdownMenuProps = {
 };
 
 const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
+  const [open, setOpen] = useState(false);
   const { handleDeleteTrack } = useTrackContext();
+
+  const handleCloseDropdown = (event: Event) => {
+    event.preventDefault();
+    setOpen(false);
+  };
 
   return (
     <div className='flex justify-end'>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' className='h-8 w-8 p-0'>
             <span className='sr-only'>Open menu</span>
@@ -31,15 +37,13 @@ const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
         <DropdownMenuContent align='end'>
           <TrackInfoDialog
             triggerComponent={
-              <DropdownMenuItem onSelect={(event) => event.preventDefault()}>Track audio</DropdownMenuItem>
+              <DropdownMenuItem onSelect={(event) => handleCloseDropdown(event)}>Track audio</DropdownMenuItem>
             }
             trackData={track}
           />
           <TrackFormDialogButton
             triggerComponent={
-              <DropdownMenuItem onSelect={(event) => event.preventDefault()} data-testid={`edit-track-${track.id}`}>
-                Edit track
-              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={(event) => handleCloseDropdown(event)}>Edit track</DropdownMenuItem>
             }
             actionType={'edit'}
             initialTrackData={track}
