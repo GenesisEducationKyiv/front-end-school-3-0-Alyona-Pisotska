@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
-import { SearchTextContextProvider, GenreContextProvider, QueryParamsProvider } from '@/contexts/contexts';
+import { SearchTextContextProvider, QueryParamsProvider } from '@/contexts/contexts';
 
 import './index.css';
 
@@ -20,9 +20,7 @@ createRoot(rootElement).render(
       <QueryClientProvider client={queryClient}>
         <QueryParamsProvider>
           <SearchTextContextProvider>
-            <GenreContextProvider>
-              <App />
-            </GenreContextProvider>
+            <App />
           </SearchTextContextProvider>
         </QueryParamsProvider>
       </QueryClientProvider>
