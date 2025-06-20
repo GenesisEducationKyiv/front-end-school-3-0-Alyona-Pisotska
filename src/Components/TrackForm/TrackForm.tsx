@@ -8,17 +8,18 @@ import {
   GenreSelectField,
   CoverImageField,
 } from './components/components';
+import { useModalStore } from '@/stores/stores';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema';
 
 import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
-  onFormSubmission: () => void;
   initialValues: Track | undefined;
 };
 
-const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
+const TrackForm = ({ initialValues }: TrackFormProps) => {
   const { handleAddTrack, handleEditTrack } = useTrackContext();
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
@@ -48,7 +49,7 @@ const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
       await handleAddTrack(trackData);
     }
 
-    onFormSubmission();
+    closeModal();
   };
 
   const handleFormSubmit = handleSubmit((dto) => {

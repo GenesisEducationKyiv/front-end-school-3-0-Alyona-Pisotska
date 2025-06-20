@@ -1,5 +1,3 @@
-import { flushSync } from 'react-dom';
-import { useState } from '@/hooks/hooks';
 import {
   Dialog,
   DialogContent,
@@ -9,6 +7,7 @@ import {
   DialogTrigger,
   TrackForm,
 } from '@/Components/components';
+import { useModalStore } from '@/stores/stores';
 
 import type { Track } from '@/lib/types/types';
 
@@ -19,10 +18,11 @@ type TrackFormDialogButtonProps = {
 };
 
 const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData }: TrackFormDialogButtonProps) => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const isModalOpen = useModalStore((state) => state.isModalOpen);
+  const openModal = useModalStore((state) => state.openModal);
 
   return (
-    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+    <Dialog open={isModalOpen} onOpenChange={openModal}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent className='sm:max-w-[600px]'>
@@ -34,14 +34,7 @@ const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData 
         </DialogHeader>
 
         <div className='p-4'>
-          <TrackForm
-            initialValues={initialTrackData}
-            onFormSubmission={() => {
-              flushSync(() => {
-                setIsFormOpen(false);
-              });
-            }}
-          />
+          <TrackForm initialValues={initialTrackData} />
         </div>
       </DialogContent>
     </Dialog>
