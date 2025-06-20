@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
-import { SearchTextContextProvider, QueryParamsProvider } from '@/contexts/contexts';
+import { SearchTextContextProvider } from '@/contexts/contexts';
 
 import './index.css';
 
@@ -18,11 +18,9 @@ createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <QueryParamsProvider>
-          <SearchTextContextProvider>
-            <App />
-          </SearchTextContextProvider>
-        </QueryParamsProvider>
+        <SearchTextContextProvider>
+          <App />
+        </SearchTextContextProvider>
       </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>,

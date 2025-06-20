@@ -17,7 +17,7 @@ export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audio
 export { useGetGenreList, useGenreData, useGetSelectedGenre } from './genreDataHooks/genreDataHooks';
 
 //* contexts hooks */
-export { useTrackContext, useSearchTextContext, useQueryParamsContext } from './contextHooks/contextHooks';
+export { useTrackContext, useSearchTextContext } from './contextHooks/contextHooks';
 
 //* react hooks */
 export { useMemo, useState, useEffect, useCallback, useContext, useRef } from 'react';
