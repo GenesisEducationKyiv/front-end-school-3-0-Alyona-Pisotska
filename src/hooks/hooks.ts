@@ -14,7 +14,7 @@ export {
   useTrackListState,
 } from './trackDataHooks/trackDataHooks';
 export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audioTrackHooks';
-export { useGetGenreList } from './useGetGenreList';
+export { useGetGenreList, useGenreData, useGetSelectedGenre } from './genreDataHooks/genreDataHooks';
 
 //* contexts hooks */
 export {

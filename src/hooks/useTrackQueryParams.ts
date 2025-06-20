@@ -2,10 +2,10 @@ import { O } from '@mobily/ts-belt';
 import {
   useCallback,
   useSearchTextContext,
-  useGenreContext,
   useQueryParamsContext,
   useDebounce,
   useValidatedQueryParam,
+  useGenreData,
 } from '@/hooks/hooks';
 import {
   getValidatedOrDefaultQueryParam,
@@ -34,7 +34,7 @@ type TTrackQueryParams = {
 const useTrackQueryParams = (): TTrackQueryParams => {
   const { get, getIntParam, set, setMany } = useQueryParamsContext();
   const { debouncedSearchText } = useSearchTextContext();
-  const { selectedGenre } = useGenreContext();
+  const { selectedGenre } = useGenreData();
 
   const rawPage = useValidatedQueryParam({
     option: getIntParam(QUERY_PARAM_KEYS.page),
