@@ -1,8 +1,8 @@
-import { useSearchTextContext, useTrackContext } from '@/hooks/hooks';
+import { useSearch, useTrackContext } from '@/hooks/hooks';
 import { SearchInput } from '@/Components/components';
 
 const GeneralSearch = () => {
-  const { searchText, handleChangeSearchText } = useSearchTextContext();
+  const { searchText, handleChangeSearchText } = useSearch();
   const { isLoadingTrackList } = useTrackContext();
 
   return (

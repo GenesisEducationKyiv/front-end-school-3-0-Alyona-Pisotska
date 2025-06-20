@@ -1,4 +1,5 @@
 export { useDebounce } from './useDebounce';
+export { useSearch } from './useSearch';
 export { useAppMutation } from './useAppMutation';
 export { useQueryParams } from './useQueryParams';
 export { useTrackQueryParams } from './useTrackQueryParams';
@@ -17,7 +18,7 @@ export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audio
 export { useGetGenreList, useGenreData, useGetSelectedGenre } from './genreDataHooks/genreDataHooks';
 
 //* contexts hooks */
-export { useTrackContext, useSearchTextContext } from './contextHooks/contextHooks';
+export { useTrackContext } from './contextHooks/contextHooks';
 
 //* react hooks */
 export { useMemo, useState, useEffect, useCallback, useContext, useRef } from 'react';
