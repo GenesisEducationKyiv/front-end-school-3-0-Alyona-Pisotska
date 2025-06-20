@@ -8,7 +8,7 @@ import {
   GenreSelectField,
   CoverImageField,
 } from './components/components';
-import { useModalStore } from '@/stores/stores';
+import { useDialogStore } from '@/stores/stores';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema';
 
 import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types';
@@ -19,7 +19,7 @@ type TrackFormProps = {
 
 const TrackForm = ({ initialValues }: TrackFormProps) => {
   const { handleAddTrack, handleEditTrack } = useTrackContext();
-  const closeModal = useModalStore((state) => state.closeModal);
+  const setDialog = useDialogStore((state) => state.setDialog);
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
@@ -49,7 +49,7 @@ const TrackForm = ({ initialValues }: TrackFormProps) => {
       await handleAddTrack(trackData);
     }
 
-    closeModal();
+    setDialog(false);
   };
 
   const handleFormSubmit = handleSubmit((dto) => {

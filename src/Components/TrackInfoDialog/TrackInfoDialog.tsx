@@ -7,7 +7,7 @@ import {
   DialogTrigger,
   TrackAudioForm,
 } from '@/Components/components';
-import { useModalStore } from '@/stores/stores';
+import { useDialogStore } from '@/stores/stores';
 
 import type { Track } from '@/lib/types/types';
 
@@ -17,11 +17,11 @@ type TrackInfoDialogProps = {
 };
 
 const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
-  const isModalOpen = useModalStore((state) => state.isModalOpen);
-  const openModal = useModalStore((state) => state.openModal);
+  const isDialogOpen = useDialogStore((state) => state.isDialogOpen);
+  const setDialog = useDialogStore((state) => state.setDialog);
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={openModal}>
+    <Dialog open={isDialogOpen} onOpenChange={setDialog}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent className='sm:max-w-[600px]'>
