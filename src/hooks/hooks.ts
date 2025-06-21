@@ -1,9 +1,16 @@
 export { useDebounce } from './useDebounce';
-export { useSearch } from './useSearch';
 export { useAppMutation } from './useAppMutation';
 export { useQueryParams } from './useQueryParams';
-export { useTrackQueryParams } from './useTrackQueryParams';
 export { useValidatedQueryParam } from './useValidatedQueryParam';
+
+//* query params hooks */
+export {
+  usePageQueryParam,
+  useSortQueryParams,
+  useSearchArtistQueryParam,
+  useSelectGenreQueryParam,
+  useSearchQueryParam,
+} from './queryParamsHooks/queryParamsHooks';
 
 //* request hooks */
 export {
@@ -15,7 +22,7 @@ export {
   useTrackListState,
 } from './trackDataHooks/trackDataHooks';
 export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audioTrackHooks';
-export { useGetGenreList, useGenreData, useGetSelectedGenre } from './genreDataHooks/genreDataHooks';
+export { useGetGenreList, useGenreData } from './genreDataHooks/genreDataHooks';
 
 //* contexts hooks */
 export { useTrackContext } from './contextHooks/contextHooks';

@@ -5,7 +5,7 @@ import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/co
 
 const DEFAULT_DEBOUNCE = 250;
 
-const useSearch = (debounce = DEFAULT_DEBOUNCE) => {
+const useSearchQueryParam = (debounce = DEFAULT_DEBOUNCE) => {
   const { get, setMany } = useQueryParams();
 
   const rawSearchText = get(QUERY_PARAM_KEYS.search);
@@ -27,4 +27,4 @@ const useSearch = (debounce = DEFAULT_DEBOUNCE) => {
   };
 };
 
-export { useSearch };
+export { useSearchQueryParam };

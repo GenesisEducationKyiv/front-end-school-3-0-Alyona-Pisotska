@@ -1,35 +1,39 @@
 import { createContext } from 'react';
-import { useTrackQueryParams, useTrackListState } from '@/hooks/hooks';
+import {
+  useTrackListState,
+  usePageQueryParam,
+  useSortQueryParams,
+  useSearchArtistQueryParam,
+  useSelectGenreQueryParam,
+  useSearchQueryParam,
+} from '@/hooks/hooks';
+
+import type { Order, TrackListSort } from '@/lib/types/types';
 
 type TrackContextProviderProps = {
   children: React.ReactNode;
 };
 
 type TrackState = ReturnType<typeof useTrackListState>;
-type TrackParams = ReturnType<typeof useTrackQueryParams>;
+type TrackParams = {
+  searchArtist: string;
+  page: number;
+  handleChangeOrder: (value: Order) => void;
+  handleChangeSort: (value: TrackListSort) => void;
+  handleChangePage: (value: number) => void;
+  handleChangeSearchArtist: (value: string) => void;
+};
 
-type TTrackContext = TrackState &
-  Pick<
-    TrackParams,
-    'page' | 'searchArtist' | 'handleChangeOrder' | 'handleChangeSort' | 'handleChangePage' | 'handleChangeSearchArtist'
-  >;
+type TTrackContext = TrackState & TrackParams;
 
 const TrackContext = createContext<TTrackContext | null>(null);
 
 const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
-  const {
-    search,
-    debouncedSearchArtist,
-    searchArtist,
-    selectedGenre,
-    page,
-    orderBy,
-    sortBy,
-    handleChangeOrder,
-    handleChangeSort,
-    handleChangeSearchArtist,
-    handleChangePage,
-  } = useTrackQueryParams();
+  const { page, handleChangePage } = usePageQueryParam();
+  const { sortBy, orderBy, handleChangeSort, handleChangeOrder } = useSortQueryParams();
+  const { searchArtist, debouncedSearchArtist, handleChangeSearchArtist } = useSearchArtistQueryParam();
+  const { selectedGenre } = useSelectGenreQueryParam();
+  const { debouncedSearchText } = useSearchQueryParam();
 
   const {
     tracks,
@@ -44,7 +48,7 @@ const TrackContextProvider = ({ children }: TrackContextProviderProps) => {
     handleDeleteAudioTrack,
   } = useTrackListState({
     page,
-    search,
+    search: debouncedSearchText,
     sort: sortBy,
     order: orderBy,
     genre: selectedGenre,

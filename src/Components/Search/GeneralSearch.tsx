@@ -1,8 +1,8 @@
-import { useSearch, useTrackContext } from '@/hooks/hooks';
+import { useSearchQueryParam, useTrackContext } from '@/hooks/hooks';
 import { SearchInput } from '@/Components/components';
 
 const GeneralSearch = () => {
-  const { searchText, handleChangeSearchText } = useSearch();
+  const { searchText, handleChangeSearchText } = useSearchQueryParam();
   const { isLoadingTrackList } = useTrackContext();
 
   return (
