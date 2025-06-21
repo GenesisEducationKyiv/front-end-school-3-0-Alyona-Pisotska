@@ -1,18 +1,21 @@
-import { useState, useEffect, useCallback, useMemo, useSortQueryParams, useTrackActions } from '@/hooks/hooks';
+import { useState, useEffect, useCallback, useMemo, useSortQueryParams } from '@/hooks/hooks';
 import {
   getCoreRowModel,
-  getFilteredRowModel,
   getPaginationRowModel,
-  getSortedRowModel,
   useReactTable,
   type SortingState,
   type ColumnSort,
 } from '@tanstack/react-table';
 import { Table, TableBody, TableLoader } from '@/Components/components';
-import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components';
+import {
+  EmptyTable,
+  TABLE_COLUMNS,
+  TrackSelectionToast,
+  TracksTableHeader,
+  TracksTableRow,
+} from './components/components';
 import { useTrackStore } from '@/stores/stores';
 import { cn, isTrackListSortableColumn } from '@/lib/utils/utils';
-import { showTrackActionToast } from './libs/helpers';
 import { ORDER_BY } from '@/lib/constants/constants';
 
 import type { Track, Order } from '@/lib/types/types';
@@ -20,16 +23,16 @@ import type { Track, Order } from '@/lib/types/types';
 const TracksTable = () => {
   const tracksMap = useTrackStore((state) => state.tracks);
   const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
-  const { handleDeleteMultiTracks } = useTrackActions();
+  const selectedTrackIds = useTrackStore((state) => state.selectedTrackIds);
+  const setSelectedIds = useTrackStore((state) => state.setSelectedIds);
+
+  const { handleChangeSort, handleChangeOrder } = useSortQueryParams();
 
   const tracks = useMemo(() => {
     return Object.values(tracksMap);
   }, [tracksMap]);
 
-  const { handleChangeSort, handleChangeOrder } = useSortQueryParams();
-
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = useState({});
 
   const handleChangeTrackContextData = useCallback(
     (sortingData: ColumnSort) => {
@@ -57,51 +60,42 @@ const TracksTable = () => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: (updater) => {
+      const newState =
+        typeof updater === 'function' ? updater(Object.fromEntries(selectedTrackIds.map((id) => [id, true]))) : updater;
+      const newIds = Object.keys(newState).filter((id) => newState[id]);
+
+      setSelectedIds(newIds);
+    },
     state: {
       sorting,
-      rowSelection,
+      rowSelection: Object.fromEntries(selectedTrackIds.map((id) => [id, true])),
     },
+    getRowId: (row) => row.id,
   });
 
   const headersGroup = table.getHeaderGroups();
   const tableRows = table.getRowModel().rows;
-  const selectedRows = table.getFilteredSelectedRowModel().rows;
-
-  const selectedIds = useMemo(() => {
-    return selectedRows.map((row) => row.original.id);
-  }, [selectedRows]);
-
-  const onDeleteTracksClick = useCallback(async () => {
-    try {
-      await handleDeleteMultiTracks(selectedIds);
-    } finally {
-      setRowSelection({});
-    }
-  }, [handleDeleteMultiTracks, selectedIds]);
-
-  useEffect(() => {
-    showTrackActionToast(selectedIds, onDeleteTracksClick);
-  }, [selectedIds, onDeleteTracksClick]);
 
   return (
-    <Table
-      className={cn(isLoadingTracks && 'h-full', 'w-full border-y')}
-      data-loading={isLoadingTracks ? 'true' : undefined}
-    >
-      <TracksTableHeader headersGroup={headersGroup} />
-      <TableBody>
-        {isLoadingTracks ? (
-          <TableLoader colSpan={TABLE_COLUMNS.length} />
-        ) : tableRows.length ? (
-          tableRows.map((row) => <TracksTableRow row={row} key={row.id} />)
-        ) : (
-          <EmptyTable />
-        )}
-      </TableBody>
-    </Table>
+    <>
+      <Table
+        className={cn(isLoadingTracks && 'h-full', 'w-full border-y')}
+        data-loading={isLoadingTracks ? 'true' : undefined}
+      >
+        <TracksTableHeader headersGroup={headersGroup} />
+        <TableBody>
+          {isLoadingTracks ? (
+            <TableLoader colSpan={TABLE_COLUMNS.length} />
+          ) : tableRows.length ? (
+            tableRows.map((row) => <TracksTableRow row={row} key={row.id} />)
+          ) : (
+            <EmptyTable />
+          )}
+        </TableBody>
+      </Table>
+      <TrackSelectionToast />
+    </>
   );
 };
 

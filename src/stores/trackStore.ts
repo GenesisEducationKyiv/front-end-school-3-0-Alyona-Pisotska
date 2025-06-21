@@ -9,6 +9,7 @@ type TrackStore = {
   tracks: TracksMap;
   isLoadingTracks: boolean;
   totalPages: number;
+  selectedTrackIds: Track['id'][];
   initializeTracks: (tracks: Track[]) => void;
   setIsLoading: (loading: boolean) => void;
   setTotalPages: (totalPages: number) => void;
@@ -17,12 +18,15 @@ type TrackStore = {
   resetTrack: (trackId: Track['id'], previous: Track) => void;
   addTrackAudio: (trackId: Track['id'], audioUrl: RequiredAudioFile) => void;
   deleteTrackAudio: (trackId: Track['id']) => void;
+  setSelectedIds: (ids: Track['id'][]) => void;
+  clearSelectedIds: () => void;
 };
 
 const useTrackStore = create<TrackStore>((set, get) => ({
   tracks: {},
   isLoadingTracks: false,
   totalPages: 1,
+  selectedTrackIds: [],
 
   initializeTracks: (tracks) => {
     const tracksMap = tracks.reduce((acc, track) => {
@@ -42,7 +46,7 @@ const useTrackStore = create<TrackStore>((set, get) => ({
     set((state) => {
       const existingTrack = state.tracks[trackId];
       if (!existingTrack) {
-        return state; // Якщо треку не існує, нічого не робимо
+        return state;
       }
       return {
         tracks: {
@@ -87,6 +91,9 @@ const useTrackStore = create<TrackStore>((set, get) => ({
         },
       };
     }),
+
+  setSelectedIds: (ids) => set({ selectedTrackIds: ids }),
+  clearSelectedIds: () => set({ selectedTrackIds: [] }),
 }));
 
 export { useTrackStore };
