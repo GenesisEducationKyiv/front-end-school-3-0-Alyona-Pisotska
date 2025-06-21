@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks';
+import { useForm, useUploadAudioTrack, useDeleteAudioFile } from '@/hooks/hooks';
 import { Button, Form } from '@/Components/components';
 import { TrackAudioField } from './components/components';
-import { useDialogStore } from '@/stores/stores';
+import { useDialogStore, useTrackStore } from '@/stores/stores';
 import { audioSchema } from '@/lib/validation-schema/validation-schema';
 
 import type { AudioData, Track } from '@/lib/types/types';
@@ -13,9 +13,11 @@ type TrackFormProps = {
 };
 
 const TrackAudioForm = ({ trackData }: TrackFormProps) => {
-  const { handleAddAudioTrack, handleDeleteAudioTrack } = useTrackContext();
   const { uploadAudioTrack } = useUploadAudioTrack(trackData.id);
   const { deleteAudioFile } = useDeleteAudioFile(trackData.id);
+
+  const addTrackAudio = useTrackStore((state) => state.addAudioFile);
+  const deleteTrackAudio = useTrackStore((state) => state.deleteAudioFile);
 
   const setDialog = useDialogStore((state) => state.setDialog);
 
@@ -38,10 +40,10 @@ const TrackAudioForm = ({ trackData }: TrackFormProps) => {
 
       if (audioFile) {
         const uploaded = await uploadAudioTrack(audioFile);
-        handleAddAudioTrack(trackData.id, uploaded.audioFile);
+        addTrackAudio(trackData.id, uploaded.audioFile);
       } else {
         await deleteAudioFile();
-        handleDeleteAudioTrack(trackData.id);
+        deleteTrackAudio(trackData.id);
       }
 
       setDialog('track-audio-dialog', false);

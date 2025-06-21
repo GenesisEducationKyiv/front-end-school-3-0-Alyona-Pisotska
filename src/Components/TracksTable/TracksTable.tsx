@@ -1,4 +1,4 @@
-import { useTrackContext, useState, useEffect, useCallback, useMemo } from '@/hooks/hooks';
+import { useState, useEffect, useCallback, useMemo, useSortQueryParams, useTrackActions } from '@/hooks/hooks';
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { Table, TableBody, TableLoader } from '@/Components/components';
 import { EmptyTable, TABLE_COLUMNS, TracksTableHeader, TracksTableRow } from './components/components';
+import { useTrackStore } from '@/stores/stores';
 import { cn, isTrackListSortableColumn } from '@/lib/utils/utils';
 import { showTrackActionToast } from './libs/helpers';
 import { ORDER_BY } from '@/lib/constants/constants';
@@ -17,8 +18,11 @@ import { ORDER_BY } from '@/lib/constants/constants';
 import type { Track, Order } from '@/lib/types/types';
 
 const TracksTable = () => {
-  const { tracks, isLoadingTrackList, handleChangeOrder, handleChangeSort, handleDeleteMultiTracks } =
-    useTrackContext();
+  const tracks = useTrackStore((state) => state.tracks);
+  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
+  const { handleDeleteMultiTracks } = useTrackActions();
+
+  const { handleChangeSort, handleChangeOrder } = useSortQueryParams();
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -80,12 +84,12 @@ const TracksTable = () => {
 
   return (
     <Table
-      className={cn(isLoadingTrackList && 'h-full', 'w-full border-y')}
-      data-loading={isLoadingTrackList ? 'true' : undefined}
+      className={cn(isLoadingTracks && 'h-full', 'w-full border-y')}
+      data-loading={isLoadingTracks ? 'true' : undefined}
     >
       <TracksTableHeader headersGroup={headersGroup} />
       <TableBody>
-        {isLoadingTrackList ? (
+        {isLoadingTracks ? (
           <TableLoader colSpan={TABLE_COLUMNS.length} />
         ) : tableRows.length ? (
           tableRows.map((row) => <TracksTableRow row={row} key={row.id} />)

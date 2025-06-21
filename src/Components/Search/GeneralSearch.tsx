@@ -1,17 +1,18 @@
-import { useSearchQueryParam, useTrackContext } from '@/hooks/hooks';
+import { useSearchQueryParam } from '@/hooks/hooks';
 import { SearchInput } from '@/Components/components';
+import { useTrackStore } from '@/stores/stores';
 
 const GeneralSearch = () => {
   const { searchText, handleChangeSearchText } = useSearchQueryParam();
-  const { isLoadingTrackList } = useTrackContext();
+  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
 
   return (
     <SearchInput
       searchText={searchText}
       onChangeSearchText={handleChangeSearchText}
       data-testid='search-input'
-      aria-disabled={isLoadingTrackList}
-      data-loading={isLoadingTrackList ? 'true' : undefined}
+      aria-disabled={isLoadingTracks}
+      data-loading={isLoadingTracks ? 'true' : undefined}
     />
   );
 };
