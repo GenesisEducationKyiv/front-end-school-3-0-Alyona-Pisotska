@@ -3,23 +3,22 @@ import { toast } from 'sonner';
 import { useForm, useUploadAudioTrack, useDeleteAudioFile } from '@/hooks/hooks';
 import { Button, Form } from '@/Components/components';
 import { TrackAudioField } from './components/components';
-import { useDialogStore, useTrackStore } from '@/stores/stores';
+import { useTrackStore } from '@/stores/stores';
 import { audioSchema } from '@/lib/validation-schema/validation-schema';
 
 import type { AudioData, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
+  onFormSubmission: () => void;
   trackData: Track;
 };
 
-const TrackAudioForm = ({ trackData }: TrackFormProps) => {
+const TrackAudioForm = ({ onFormSubmission, trackData }: TrackFormProps) => {
   const { uploadAudioTrack } = useUploadAudioTrack(trackData.id);
   const { deleteAudioFile } = useDeleteAudioFile(trackData.id);
 
   const addTrackAudio = useTrackStore((state) => state.addTrackAudio);
   const deleteTrackAudio = useTrackStore((state) => state.deleteTrackAudio);
-
-  const setDialog = useDialogStore((state) => state.setDialog);
 
   const form = useForm<AudioData>({
     resolver: zodResolver(audioSchema),
@@ -46,7 +45,7 @@ const TrackAudioForm = ({ trackData }: TrackFormProps) => {
         deleteTrackAudio(trackData.id);
       }
 
-      setDialog('track-audio-dialog', false);
+      onFormSubmission();
     } catch (error: unknown) {
       const err = error instanceof Error ? error : new Error('Something went wrong');
       toast.error(`Error! ${err.message}`);

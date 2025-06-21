@@ -1,3 +1,4 @@
+import { flushSync } from 'react-dom';
 import {
   Dialog,
   DialogContent,
@@ -36,7 +37,16 @@ const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData 
         </DialogHeader>
 
         <div className='p-4'>
-          <TrackForm initialValues={initialTrackData} />
+          <TrackForm
+            initialValues={initialTrackData}
+            onFormSubmission={() => {
+              flushSync(() => {
+                const dialogId: DialogIds = initialTrackData ? 'edit-track-dialog' : 'create-track-dialog';
+
+                setDialog(dialogId, false);
+              });
+            }}
+          />
         </div>
       </DialogContent>
     </Dialog>

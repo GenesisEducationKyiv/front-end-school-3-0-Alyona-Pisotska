@@ -1,3 +1,4 @@
+import { flushSync } from 'react-dom';
 import {
   Dialog,
   DialogContent,
@@ -33,7 +34,14 @@ const TrackAudioDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps)
         </DialogHeader>
 
         <div className='p-4'>
-          <TrackAudioForm trackData={trackData} />
+          <TrackAudioForm
+            trackData={trackData}
+            onFormSubmission={() => {
+              flushSync(() => {
+                setDialog('track-audio-dialog', false);
+              });
+            }}
+          />
         </div>
       </DialogContent>
     </Dialog>

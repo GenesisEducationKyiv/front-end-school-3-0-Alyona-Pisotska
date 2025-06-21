@@ -8,19 +8,17 @@ import {
   GenreSelectField,
   CoverImageField,
 } from './components/components';
-import { useDialogStore } from '@/stores/stores';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema';
 
-import type { TrackPayload, TrackMetadataValues, Track, DialogIds } from '@/lib/types/types';
+import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types';
 
 type TrackFormProps = {
+  onFormSubmission: () => void;
   initialValues: Track | undefined;
 };
 
-const TrackForm = ({ initialValues }: TrackFormProps) => {
+const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
   const { handleAddTrack, handleEditTrack } = useTrackActions();
-  const dialogId: DialogIds = initialValues ? 'edit-track-dialog' : 'create-track-dialog';
-  const setDialog = useDialogStore((state) => state.setDialog);
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),
@@ -50,7 +48,7 @@ const TrackForm = ({ initialValues }: TrackFormProps) => {
       await handleAddTrack(trackData);
     }
 
-    setDialog(dialogId, false);
+    onFormSubmission();
   };
 
   const handleFormSubmit = handleSubmit((dto) => {
