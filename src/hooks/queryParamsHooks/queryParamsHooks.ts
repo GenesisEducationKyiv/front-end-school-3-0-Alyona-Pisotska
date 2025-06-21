@@ -1,3 +1,4 @@
+export { useQueryParams } from './useQueryParams';
 export { usePageQueryParam } from './usePageQueryParam';
 export { useSortQueryParams } from './useSortQueryParams';
 export { useSearchArtistQueryParam } from './useSearchArtistQueryParam';

@@ -16,9 +16,13 @@ const usePageQueryParam = () => {
 
   const handleChangePage = useCallback(
     (newPage: number) => {
+      if (page === newPage) {
+        return;
+      }
+
       set(QUERY_PARAM_KEYS.page, newPage);
     },
-    [set],
+    [page, set],
   );
 
   return { page, handleChangePage };

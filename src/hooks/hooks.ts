@@ -1,11 +1,11 @@
 export { useDebounce } from './useDebounce';
 export { useAppMutation } from './useAppMutation';
-export { useQueryParams } from './useQueryParams';
 export { useValidatedQueryParam } from './useValidatedQueryParam';
 export { useSyncTrackStore } from './useSyncTrackStore';
 
 //* query params hooks */
 export {
+  useQueryParams,
   usePageQueryParam,
   useSortQueryParams,
   useSearchArtistQueryParam,

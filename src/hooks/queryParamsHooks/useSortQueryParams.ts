@@ -35,16 +35,24 @@ const useSortQueryParams = () => {
 
   const handleChangeOrder = useCallback(
     (newOrder: Order) => {
+      if (orderBy === newOrder) {
+        return;
+      }
+
       setParamWithResetPage(QUERY_PARAM_KEYS.orderBy, newOrder, setMany);
     },
-    [setMany],
+    [orderBy, setMany],
   );
 
   const handleChangeSort = useCallback(
     (newSort: TrackListSort) => {
+      if (sortBy === newSort) {
+        return;
+      }
+
       setParamWithResetPage(QUERY_PARAM_KEYS.sortBy, newSort, setMany);
     },
-    [setMany],
+    [sortBy, setMany],
   );
 
   return {
