@@ -9,7 +9,7 @@ import {
 } from '@/Components/components';
 import { useDialogStore } from '@/stores/stores';
 
-import type { Track } from '@/lib/types/types';
+import type { DialogIds, Track } from '@/lib/types/types';
 
 type TrackFormDialogButtonProps = {
   triggerComponent: React.ReactNode;
@@ -18,11 +18,13 @@ type TrackFormDialogButtonProps = {
 };
 
 const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData }: TrackFormDialogButtonProps) => {
-  const isDialogOpen = useDialogStore((state) => state.isDialogOpen);
+  const dialogId: DialogIds = actionType === 'add' ? 'create-track-dialog' : 'edit-track-dialog';
+
+  const isDialogOpen = useDialogStore((state) => state.isOpen(dialogId));
   const setDialog = useDialogStore((state) => state.setDialog);
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setDialog}>
+    <Dialog open={isDialogOpen} onOpenChange={(value) => setDialog(dialogId, value)}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent className='sm:max-w-[600px]'>

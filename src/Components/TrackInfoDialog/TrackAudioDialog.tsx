@@ -16,12 +16,12 @@ type TrackInfoDialogProps = {
   trackData: Track;
 };
 
-const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
-  const isDialogOpen = useDialogStore((state) => state.isDialogOpen);
+const TrackAudioDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
+  const isDialogOpen = useDialogStore((state) => state.isOpen('track-audio-dialog'));
   const setDialog = useDialogStore((state) => state.setDialog);
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setDialog}>
+    <Dialog open={isDialogOpen} onOpenChange={(value) => setDialog('track-audio-dialog', value)}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent className='sm:max-w-[600px]'>
@@ -40,4 +40,4 @@ const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) 
   );
 };
 
-export { TrackInfoDialog };
+export { TrackAudioDialog };

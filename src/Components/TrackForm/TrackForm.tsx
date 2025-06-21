@@ -11,7 +11,7 @@ import {
 import { useDialogStore } from '@/stores/stores';
 import { trackMetadataSchema } from '@/lib/validation-schema/validation-schema';
 
-import type { TrackPayload, TrackMetadataValues, Track } from '@/lib/types/types';
+import type { TrackPayload, TrackMetadataValues, Track, DialogIds } from '@/lib/types/types';
 
 type TrackFormProps = {
   initialValues: Track | undefined;
@@ -19,6 +19,7 @@ type TrackFormProps = {
 
 const TrackForm = ({ initialValues }: TrackFormProps) => {
   const { handleAddTrack, handleEditTrack } = useTrackContext();
+  const dialogId: DialogIds = initialValues ? 'edit-track-dialog' : 'create-track-dialog';
   const setDialog = useDialogStore((state) => state.setDialog);
 
   const form = useForm<TrackMetadataValues>({
@@ -49,7 +50,7 @@ const TrackForm = ({ initialValues }: TrackFormProps) => {
       await handleAddTrack(trackData);
     }
 
-    setDialog(false);
+    setDialog(dialogId, false);
   };
 
   const handleFormSubmit = handleSubmit((dto) => {

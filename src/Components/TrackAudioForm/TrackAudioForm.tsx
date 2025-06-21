@@ -44,7 +44,7 @@ const TrackAudioForm = ({ trackData }: TrackFormProps) => {
         handleDeleteAudioTrack(trackData.id);
       }
 
-      setDialog(false);
+      setDialog('track-audio-dialog', false);
     } catch (error: unknown) {
       const err = error instanceof Error ? error : new Error('Something went wrong');
       toast.error(`Error! ${err.message}`);
