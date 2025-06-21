@@ -16,8 +16,8 @@ const TrackAudioForm = ({ trackData }: TrackFormProps) => {
   const { uploadAudioTrack } = useUploadAudioTrack(trackData.id);
   const { deleteAudioFile } = useDeleteAudioFile(trackData.id);
 
-  const addTrackAudio = useTrackStore((state) => state.addAudioFile);
-  const deleteTrackAudio = useTrackStore((state) => state.deleteAudioFile);
+  const addTrackAudio = useTrackStore((state) => state.addTrackAudio);
+  const deleteTrackAudio = useTrackStore((state) => state.deleteTrackAudio);
 
   const setDialog = useDialogStore((state) => state.setDialog);
 

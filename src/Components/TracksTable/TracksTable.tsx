@@ -18,9 +18,13 @@ import { ORDER_BY } from '@/lib/constants/constants';
 import type { Track, Order } from '@/lib/types/types';
 
 const TracksTable = () => {
-  const tracks = useTrackStore((state) => state.tracks);
+  const tracksMap = useTrackStore((state) => state.tracks);
   const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
   const { handleDeleteMultiTracks } = useTrackActions();
+
+  const tracks = useMemo(() => {
+    return Object.values(tracksMap);
+  }, [tracksMap]);
 
   const { handleChangeSort, handleChangeOrder } = useSortQueryParams();
 
