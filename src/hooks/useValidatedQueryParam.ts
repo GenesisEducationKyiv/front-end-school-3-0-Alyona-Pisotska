@@ -1,4 +1,4 @@
-import { useEffect, useQueryParamsContext } from '@/hooks/hooks';
+import { useEffect, useQueryParams } from '@/hooks/hooks';
 import { O } from '@mobily/ts-belt';
 import { isValidQueryParam } from '@/lib/utils/utils';
 
@@ -17,7 +17,7 @@ const useValidatedQueryParam = <T>({
   key,
   defaultValue,
 }: UseValidatedQueryParamProps<T>): O.Option<T> => {
-  const { set } = useQueryParamsContext();
+  const { set } = useQueryParams();
 
   const isValid = isValidQueryParam(option, validator);
 

@@ -1,3 +1,4 @@
+export { TrackSelectionToast } from './TrackSelectionToast';
 export { TracksTableHeader } from './TracksTableHeader';
 export { TracksTableRow } from './TracksTableRow';
 export { EmptyTable } from './EmptyTable';

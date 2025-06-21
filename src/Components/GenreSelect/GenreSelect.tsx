@@ -1,13 +1,18 @@
-import { useGenreContext, useTrackContext } from '@/hooks/hooks';
+import { useGenreData, useQueryParams } from '@/hooks/hooks';
 import { O, pipe } from '@mobily/ts-belt';
 import { Select } from '@/Components/components';
+import { useTrackStore } from '@/stores/stores';
+import { setParamWithResetPage } from '@/lib/utils/utils';
+import { QUERY_PARAM_KEYS } from '@/lib/constants/constants';
 
 import type { SingleValue } from 'react-select';
 import type { SelectOption } from '@/lib/types/types';
 
 const GenreSelect = () => {
-  const { selectedGenre, genreOptions, handleChangeSelectedGenre } = useGenreContext();
-  const { isLoadingTrackList } = useTrackContext();
+  const { genreOptions, selectedGenre } = useGenreData();
+  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
+
+  const { setMany } = useQueryParams();
 
   const selectedGenreOption: SelectOption | null = pipe(
     O.fromNullable(selectedGenre),
@@ -16,7 +21,9 @@ const GenreSelect = () => {
   );
 
   const handleChangeSelectedValues = (newValue: SingleValue<SelectOption>) => {
-    handleChangeSelectedGenre(newValue?.value ?? '');
+    const selectedGenre = newValue?.value || '';
+
+    setParamWithResetPage(QUERY_PARAM_KEYS.genre, selectedGenre, setMany);
   };
 
   return (
@@ -27,8 +34,8 @@ const GenreSelect = () => {
       isMulti={false}
       placeholder='Select composition genres...'
       data-testid='filter-genre'
-      aria-disabled={isLoadingTrackList}
-      data-loading={isLoadingTrackList ? 'true' : undefined}
+      aria-disabled={isLoadingTracks}
+      data-loading={isLoadingTracks ? 'true' : undefined}
     />
   );
 };

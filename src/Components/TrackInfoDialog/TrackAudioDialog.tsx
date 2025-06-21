@@ -1,5 +1,4 @@
 import { flushSync } from 'react-dom';
-import { useState } from '@/hooks/hooks';
 import {
   Dialog,
   DialogContent,
@@ -9,6 +8,7 @@ import {
   DialogTrigger,
   TrackAudioForm,
 } from '@/Components/components';
+import { useDialogStore } from '@/stores/stores';
 
 import type { Track } from '@/lib/types/types';
 
@@ -17,11 +17,12 @@ type TrackInfoDialogProps = {
   trackData: Track;
 };
 
-const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+const TrackAudioDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
+  const isDialogOpen = useDialogStore((state) => state.isOpen('track-audio-dialog'));
+  const setDialog = useDialogStore((state) => state.setDialog);
 
   return (
-    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+    <Dialog open={isDialogOpen} onOpenChange={(value) => setDialog('track-audio-dialog', value)}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent className='sm:max-w-[600px]'>
@@ -37,7 +38,7 @@ const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) 
             trackData={trackData}
             onFormSubmission={() => {
               flushSync(() => {
-                setIsFormOpen(false);
+                setDialog('track-audio-dialog', false);
               });
             }}
           />
@@ -47,4 +48,4 @@ const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) 
   );
 };
 
-export { TrackInfoDialog };
+export { TrackAudioDialog };
