@@ -3,15 +3,15 @@ import { O } from '@mobily/ts-belt';
 import { setParamWithResetPage } from '@/lib/utils/utils';
 import { QUERY_PARAM_KEYS, INITIAL_QUERY_PARAMS_VALUE } from '@/lib/constants/constants';
 
-const DEFAULT_DEBOUNCE = 250;
+const DELAY = 250;
 
-const useSearchQueryParam = (debounce = DEFAULT_DEBOUNCE) => {
+const useSearchQueryParam = (delay = DELAY) => {
   const { get, setMany } = useQueryParams();
 
   const rawSearchText = get(QUERY_PARAM_KEYS.search);
   const searchText = O.getWithDefault(rawSearchText, INITIAL_QUERY_PARAMS_VALUE.search);
 
-  const debouncedSearchText = useDebounce(searchText, debounce);
+  const debouncedSearchText = useDebounce(searchText, delay);
 
   const handleChangeSearchText = useCallback(
     (newSearchText: string) => {
