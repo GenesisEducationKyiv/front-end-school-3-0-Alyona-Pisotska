@@ -37,7 +37,9 @@ const TrackActionsDropdownMenu = ({ track }: TrackActionsDropdownMenuProps) => {
           />
           <TrackFormDialogButton
             triggerComponent={
-              <DropdownMenuItem onSelect={(event) => event.preventDefault()}>Edit track</DropdownMenuItem>
+              <DropdownMenuItem onSelect={(event) => event.preventDefault()} data-testid={`edit-track-${track.id}`}>
+                Edit track
+              </DropdownMenuItem>
             }
             actionType={'edit'}
             initialTrackData={track}

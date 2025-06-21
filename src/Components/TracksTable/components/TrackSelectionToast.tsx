@@ -17,7 +17,7 @@ const TrackSelectionToast = () => {
   }, [clearSelectedIds, handleDeleteMultiTracks, selectedTrackIds]);
 
   useEffect(() => {
-    if (selectedTrackIds.length === 0) {
+    if (!selectedTrackIds.length) {
       toast.dismiss(SELECTED_TOAST_ID);
       return;
     }
