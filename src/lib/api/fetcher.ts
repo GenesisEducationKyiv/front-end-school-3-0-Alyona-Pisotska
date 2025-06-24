@@ -2,8 +2,7 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import { type ZodSchema } from 'zod';
 import { type Result, err } from 'neverthrow';
 import { handleAxiosError, parseWithSchema } from '@/lib/utils/utils';
-
-const API_BASE = 'http://localhost:8000';
+import { API_BASE_URL } from '@/lib/constants/constants';
 
 const fetcherGet = async <T>(
   url: string,
@@ -11,7 +10,7 @@ const fetcherGet = async <T>(
   schema: ZodSchema<T>,
 ): Promise<Result<T, Error>> => {
   try {
-    const response = await axios.get(`${API_BASE}${url}`, config);
+    const response = await axios.get(`${API_BASE_URL}${url}`, config);
 
     return parseWithSchema(response.data, schema);
   } catch (e) {
@@ -26,7 +25,7 @@ const fetcherPost = async <TResponse, TBody = unknown>(
   schema?: ZodSchema<TResponse>,
 ): Promise<Result<TResponse, Error>> => {
   try {
-    const response = await axios.post(`${API_BASE}${url}`, data, config);
+    const response = await axios.post(`${API_BASE_URL}${url}`, data, config);
 
     return parseWithSchema(response.data, schema);
   } catch (e) {
@@ -41,7 +40,7 @@ const fetcherPut = async <TResponse, TBody = unknown>(
   schema?: ZodSchema<TResponse>,
 ): Promise<Result<TResponse, Error>> => {
   try {
-    const response = await axios.put<TResponse>(`${API_BASE}${url}`, data, config);
+    const response = await axios.put<TResponse>(`${API_BASE_URL}${url}`, data, config);
 
     return parseWithSchema(response.data, schema);
   } catch (e) {
@@ -55,7 +54,7 @@ const fetcherDelete = async <T>(
   schema?: ZodSchema<T>,
 ): Promise<Result<T, Error>> => {
   try {
-    const response = await axios.delete(`${API_BASE}${url}`, config);
+    const response = await axios.delete(`${API_BASE_URL}${url}`, config);
 
     return parseWithSchema(response.data, schema);
   } catch (e) {
