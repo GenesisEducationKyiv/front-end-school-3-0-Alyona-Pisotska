@@ -10,7 +10,6 @@ type TrackTitleFieldProps = {
 const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
   return (
     <FormField
-      data-testid='input-title'
       control={control}
       name='title'
       render={({ field }) => (
@@ -19,7 +18,7 @@ const TrackTitleField = ({ control }: TrackTitleFieldProps) => {
             Composition <span className='text-red-500'>*</span>
           </FormLabel>
           <FormControl>
-            <Input placeholder='Enter composition name...' {...field} />
+            <Input placeholder='Enter composition name...' data-testid='input-title' {...field} />
           </FormControl>
           <FormMessage data-testid='error-title' />
         </FormItem>
