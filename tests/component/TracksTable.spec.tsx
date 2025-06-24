@@ -5,50 +5,36 @@ import { API_ENDPOINTS } from '@/lib/constants/constants';
 
 import type { Track, PaginationMeta } from '@/lib/types/types';
 
+const queenTrack = {
+  id: '1',
+  title: 'Bohemian Rhapsody',
+  artist: 'Queen',
+  album: 'A Night at the Opera',
+  slug: 'bohemian-rhapsody',
+  genres: ['Rock'],
+  createdAt: '1975-10-31T00:00:00.000Z',
+  updatedAt: '1975-10-31T00:00:00.000Z',
+};
+
+const nirvanaTrack = {
+  id: '2',
+  title: 'Smells Like Teen Spirit',
+  artist: 'Nirvana',
+  album: 'Nevermind',
+  slug: 'smells-like-teen-spirit',
+  genres: ['Grunge', 'Rock'],
+  createdAt: '1991-09-10T00:00:00.000Z',
+  updatedAt: '1991-09-10T00:00:00.000Z',
+};
+
 const mockTracksSortedByTitle: Track[] = [
-  {
-    id: '1',
-    title: 'Bohemian Rhapsody',
-    artist: 'Queen',
-    album: 'A Night at the Opera',
-    slug: 'bohemian-rhapsody',
-    genres: ['Rock'],
-    createdAt: '1975-10-31T00:00:00.000Z',
-    updatedAt: '1975-10-31T00:00:00.000Z',
-  },
-  {
-    id: '2',
-    title: 'Smells Like Teen Spirit',
-    artist: 'Nirvana',
-    album: 'Nevermind',
-    slug: 'smells-like-teen-spirit',
-    genres: ['Grunge', 'Rock'],
-    createdAt: '1991-09-10T00:00:00.000Z',
-    updatedAt: '1991-09-10T00:00:00.000Z',
-  },
+  { ...queenTrack },
+  { ... nirvanaTrack },
 ];
 
 const mockTracksSortedByArtist: Track[] = [
-  {
-    id: '2',
-    title: 'Smells Like Teen Spirit',
-    artist: 'Nirvana',
-    album: 'Nevermind',
-    slug: 'smells-like-teen-spirit',
-    genres: ['Grunge', 'Rock'],
-    createdAt: '1991-09-10T00:00:00.000Z',
-    updatedAt: '1991-09-10T00:00:00.000Z',
-  },
-  {
-    id: '1',
-    title: 'Bohemian Rhapsody',
-    artist: 'Queen',
-    album: 'A Night at the Opera',
-    slug: 'bohemian-rhapsody',
-    genres: ['Rock'],
-    createdAt: '1975-10-31T00:00:00.000Z',
-    updatedAt: '1975-10-31T00:00:00.000Z',
-  },
+  { ...nirvanaTrack },
+  { ...queenTrack },
 ];
 
 const mockPaginationMeta: PaginationMeta = {
