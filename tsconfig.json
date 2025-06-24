@@ -9,6 +9,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "types": ["vitest/globals", "node"],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -27,7 +28,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src"],
+  "include": ["src", "tests", "playwright"],
   "references": [
     {
       "path": "./tsconfig.node.json"
