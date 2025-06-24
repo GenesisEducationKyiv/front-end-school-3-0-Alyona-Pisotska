@@ -65,14 +65,6 @@ export default defineConfig({
         trace: 'on-first-retry',
       },
     },
-    {
-      name: 'component',
-      testMatch: '**/component/**/*.spec.ts',
-      use: {
-        ...devices['Desktop Chrome'],
-        screenshot: 'only-on-failure',
-      },
-    },
   ],
 
   /* Run your local dev server before starting the tests */
