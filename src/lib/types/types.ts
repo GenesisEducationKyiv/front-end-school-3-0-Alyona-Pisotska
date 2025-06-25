@@ -4,4 +4,3 @@ export type { TrackListSort } from './track-list-sort.type';
 export type { AudioData } from './audio.type';
 export type { SelectOption, SelectComponentProps } from './select-component.type';
 export type { QueryParamKey, QueryParamValue, QueryParamsHookType } from './query-params.type';
-export type { DialogIds } from './dialog-ids.type';

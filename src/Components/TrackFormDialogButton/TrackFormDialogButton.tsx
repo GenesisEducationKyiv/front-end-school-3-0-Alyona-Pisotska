@@ -1,3 +1,4 @@
+import { useState } from '@/hooks/hooks';
 import { flushSync } from 'react-dom';
 import {
   Dialog,
@@ -8,9 +9,8 @@ import {
   DialogTrigger,
   TrackForm,
 } from '@/Components/components';
-import { useDialogStore } from '@/stores/stores';
 
-import type { DialogIds, Track } from '@/lib/types/types';
+import type { Track } from '@/lib/types/types';
 
 type TrackFormDialogButtonProps = {
   triggerComponent: React.ReactNode;
@@ -19,13 +19,10 @@ type TrackFormDialogButtonProps = {
 };
 
 const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData }: TrackFormDialogButtonProps) => {
-  const dialogId: DialogIds = actionType === 'add' ? 'create-track-dialog' : 'edit-track-dialog';
-
-  const isDialogOpen = useDialogStore((state) => state.isOpen(dialogId));
-  const setDialog = useDialogStore((state) => state.setDialog);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={(value) => setDialog(dialogId, value)}>
+    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent className='sm:max-w-[600px]' data-testid='track-form-dialog'>
@@ -41,9 +38,7 @@ const TrackFormDialogButton = ({ triggerComponent, actionType, initialTrackData 
             initialValues={initialTrackData}
             onFormSubmission={() => {
               flushSync(() => {
-                const dialogId: DialogIds = initialTrackData ? 'edit-track-dialog' : 'create-track-dialog';
-
-                setDialog(dialogId, false);
+                setIsFormOpen(false);
               });
             }}
           />
