@@ -6,9 +6,6 @@ import { TrackAudioForm } from './TrackAudioForm';
 
 import type { AudioData, Track } from '@/lib/types/types';
 
-const mockAddTrackAudio = vi.fn();
-const mockDeleteTrackAudio = vi.fn();
-
 vi.mock('@/hooks/hooks', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/hooks/hooks')>();
   return {
@@ -22,15 +19,6 @@ vi.mock('@/hooks/hooks', async (importOriginal) => {
     })),
   };
 });
-
-vi.mock('@/stores/stores', () => ({
-  useTrackStore: vi.fn((selector) =>
-    selector({
-      addTrackAudio: mockAddTrackAudio,
-      deleteTrackAudio: mockDeleteTrackAudio,
-    }),
-  ),
-}));
 
 vi.mock('sonner', () => ({
   toast: {
@@ -110,7 +98,7 @@ describe('TrackAudioForm', () => {
     expect(screen.getByTestId('save-submit-audio-button')).toBeEnabled();
   });
 
-  test('should call uploadAudioTrack and addTrackAudio when a new file is present', async () => {
+  test('should call uploadAudioTrack when a new file is present', async () => {
     const expectedUploadedAudioFile = 'new-uploaded-path.mp3';
 
     const mockUploadAudioTrack = vi.fn().mockResolvedValue({ ...mockTrackData, audioFile: expectedUploadedAudioFile });
@@ -140,18 +128,14 @@ describe('TrackAudioForm', () => {
     expect(mockUploadAudioTrack).toHaveBeenCalledTimes(1);
     expect(mockUploadAudioTrack).toHaveBeenCalledWith(newFile);
 
-    expect(mockDeleteAudioFile).not.toHaveBeenCalled();
-    expect(mockDeleteTrackAudio).not.toHaveBeenCalled();
-
-    expect(mockAddTrackAudio).toHaveBeenCalledTimes(1);
-    expect(mockAddTrackAudio).toHaveBeenCalledWith(mockTrackData.id, expectedUploadedAudioFile);
-
     expect(mockOnFormSubmission).toHaveBeenCalledTimes(1);
+
+    expect(mockDeleteAudioFile).not.toHaveBeenCalled();
 
     expect(toast.error).not.toHaveBeenCalled();
   });
 
-  test('should call deleteAudioFile and deleteTrackAudio when audioFile is null', async () => {
+  test('should call deleteAudioFile when audioFile is null', async () => {
     const mockDeleteAudioFile = vi.fn().mockResolvedValue(undefined);
     const mockUploadAudioTrack = vi.fn();
     const mockOnFormSubmission = vi.fn();
@@ -181,13 +165,7 @@ describe('TrackAudioForm', () => {
     await waitFor(() => screen.getByTestId('save-submit-audio-button').click());
 
     expect(mockDeleteAudioFile).toHaveBeenCalledTimes(1);
-
-    expect(mockDeleteTrackAudio).toHaveBeenCalledTimes(1);
-    expect(mockDeleteTrackAudio).toHaveBeenCalledWith(mockTrackData.id);
-
     expect(mockUploadAudioTrack).not.toHaveBeenCalled();
-    expect(mockAddTrackAudio).not.toHaveBeenCalled();
-
     expect(mockOnFormSubmission).toHaveBeenCalledTimes(1);
 
     expect(toast.error).not.toHaveBeenCalled();
@@ -218,6 +196,5 @@ describe('TrackAudioForm', () => {
     expect(toast.error).toHaveBeenCalledWith('Error! Upload failed');
 
     expect(mockOnFormSubmission).not.toHaveBeenCalled();
-    expect(mockAddTrackAudio).not.toHaveBeenCalled();
   });
 });
