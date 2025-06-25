@@ -3,6 +3,7 @@ export { useAppMutation } from './useAppMutation';
 export { useQueryParams } from './useQueryParams';
 export { useTrackQueryParams } from './useTrackQueryParams';
 export { useValidatedQueryParam } from './useValidatedQueryParam';
+export { useActiveTrack } from './useActiveTrack';
 
 //* request hooks */
 export {
