@@ -1,9 +1,8 @@
-import { usePageQueryParam } from '@/hooks/hooks';
+import { useGetTrackList, usePageQueryParam } from '@/hooks/hooks';
 import { TrackToolbar, TracksTable, AppPagination, AdvancedSearchSection, PageTitle } from '@/Components/components';
-import { useTrackStore } from '@/stores/stores';
 
 const ContentContainer = () => {
-  const totalPages = useTrackStore((state) => state.totalPages);
+  const { totalPages } = useGetTrackList();
   const { page, handleChangePage } = usePageQueryParam();
 
   return (

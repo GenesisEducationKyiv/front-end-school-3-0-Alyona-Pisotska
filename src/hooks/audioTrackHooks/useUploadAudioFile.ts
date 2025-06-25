@@ -25,6 +25,7 @@ const useUploadAudioTrack = (trackId: TrackWithAudio['id']) => {
       );
     },
     successMessage: 'Track audio is uploaded',
+    invalidateQueryKey: [API_ENDPOINTS.trackList],
   });
 
   return { uploadAudioTrack };

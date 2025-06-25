@@ -1,16 +1,16 @@
+import { useGetTrackList } from '@/hooks/hooks';
 import { Button, TrackFormDialogButton } from '@/Components/components';
-import { useTrackStore } from '@/stores/stores';
 
 const CreateTrackButton = () => {
-  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
+  const { isLoadingTrackList } = useGetTrackList();
 
   return (
     <TrackFormDialogButton
       triggerComponent={
         <Button
-          disabled={isLoadingTracks}
-          aria-disabled={isLoadingTracks}
-          data-loading={isLoadingTracks ? 'true' : undefined}
+          disabled={isLoadingTrackList}
+          aria-disabled={isLoadingTrackList}
+          data-loading={isLoadingTrackList ? 'true' : undefined}
           data-testid='create-track-button'
         >
           Create track

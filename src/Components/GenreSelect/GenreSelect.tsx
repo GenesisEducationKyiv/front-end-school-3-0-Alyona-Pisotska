@@ -1,7 +1,6 @@
-import { useGenreData, useQueryParams } from '@/hooks/hooks';
+import { useGenreData, useGetTrackList, useQueryParams } from '@/hooks/hooks';
 import { O, pipe } from '@mobily/ts-belt';
 import { Select } from '@/Components/components';
-import { useTrackStore } from '@/stores/stores';
 import { setParamWithResetPage } from '@/lib/utils/utils';
 import { QUERY_PARAM_KEYS } from '@/lib/constants/constants';
 
@@ -10,7 +9,7 @@ import type { SelectOption } from '@/lib/types/types';
 
 const GenreSelect = () => {
   const { genreOptions, selectedGenre } = useGenreData();
-  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
+  const { isLoadingTrackList } = useGetTrackList();
 
   const { setMany } = useQueryParams();
 
@@ -34,8 +33,8 @@ const GenreSelect = () => {
       isMulti={false}
       placeholder='Select composition genres...'
       data-testid='filter-genre'
-      aria-disabled={isLoadingTracks}
-      data-loading={isLoadingTracks ? 'true' : undefined}
+      aria-disabled={isLoadingTrackList}
+      data-loading={isLoadingTrackList ? 'true' : undefined}
     />
   );
 };

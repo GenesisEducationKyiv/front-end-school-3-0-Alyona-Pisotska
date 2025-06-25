@@ -1,7 +1,6 @@
 export { useDebounce } from './useDebounce';
 export { useAppMutation } from './useAppMutation';
 export { useValidatedQueryParam } from './useValidatedQueryParam';
-export { useSyncTrackStore } from './useSyncTrackStore';
 
 //* query params hooks */
 export {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useSortQueryParams } from '@/hooks/hooks';
+import { useState, useEffect, useCallback, useSortQueryParams, useGetTrackList } from '@/hooks/hooks';
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -21,16 +21,11 @@ import { ORDER_BY } from '@/lib/constants/constants';
 import type { Track, Order } from '@/lib/types/types';
 
 const TracksTable = () => {
-  const tracksMap = useTrackStore((state) => state.tracks);
-  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
-  const selectedTrackIds = useTrackStore((state) => state.selectedTrackIds);
-  const setSelectedIds = useTrackStore((state) => state.setSelectedIds);
-
+  const { trackList, isLoadingTrackList } = useGetTrackList();
   const { handleChangeSort, handleChangeOrder } = useSortQueryParams();
 
-  const tracks = useMemo(() => {
-    return Object.values(tracksMap);
-  }, [tracksMap]);
+  const selectedTrackIds = useTrackStore((state) => state.selectedTrackIds);
+  const setSelectedIds = useTrackStore((state) => state.setSelectedIds);
 
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -55,7 +50,7 @@ const TracksTable = () => {
   }, [sorting, handleChangeTrackContextData]);
 
   const table = useReactTable<Track>({
-    data: tracks,
+    data: trackList,
     columns: TABLE_COLUMNS,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -80,13 +75,13 @@ const TracksTable = () => {
   return (
     <>
       <Table
-        className={cn(isLoadingTracks && 'h-full', 'w-full border-y')}
-        data-loading={isLoadingTracks ? 'true' : undefined}
+        className={cn(isLoadingTrackList && 'h-full', 'w-full border-y')}
+        data-loading={isLoadingTrackList ? 'true' : undefined}
         data-testid='tracks-table'
       >
         <TracksTableHeader headersGroup={headersGroup} />
         <TableBody>
-          {isLoadingTracks ? (
+          {isLoadingTrackList ? (
             <TableLoader colSpan={TABLE_COLUMNS.length} />
           ) : tableRows.length ? (
             tableRows.map((row) => <TracksTableRow row={row} key={row.id} />)

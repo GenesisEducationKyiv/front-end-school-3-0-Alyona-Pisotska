@@ -1,10 +1,9 @@
-import { useSearchArtistQueryParam } from '@/hooks/hooks';
+import { useGetTrackList, useSearchArtistQueryParam } from '@/hooks/hooks';
 import { SearchInput } from '@/Components/components';
-import { useTrackStore } from '@/stores/stores';
 
 const ArtistSearch = () => {
   const { searchArtist, handleChangeSearchArtist } = useSearchArtistQueryParam();
-  const isLoadingTracks = useTrackStore((state) => state.isLoadingTracks);
+  const { isLoadingTrackList } = useGetTrackList();
 
   return (
     <SearchInput
@@ -12,8 +11,8 @@ const ArtistSearch = () => {
       onChangeSearchText={handleChangeSearchArtist}
       placeholder='Start typing artist name...'
       data-testid='filter-artist'
-      aria-disabled={isLoadingTracks}
-      data-loading={isLoadingTracks ? 'true' : undefined}
+      aria-disabled={isLoadingTrackList}
+      data-loading={isLoadingTrackList ? 'true' : undefined}
     />
   );
 };
