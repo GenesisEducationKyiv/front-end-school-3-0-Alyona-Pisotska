@@ -21,10 +21,10 @@ type TrackListResponse = z.infer<typeof trackListResponseSchema>;
 
 const useGetTrackList = () => {
   const { page } = usePageQueryParam();
-  const { selectedGenre } = useSelectGenreQueryParam();
+  const { selectedGenre: genre } = useSelectGenreQueryParam();
   const { sortBy, orderBy } = useSortQueryParams();
-  const { debouncedSearchArtist } = useSearchArtistQueryParam();
-  const { debouncedSearchText } = useSearchQueryParam();
+  const { debouncedSearchArtist: artist } = useSearchArtistQueryParam();
+  const { debouncedSearchText: search } = useSearchQueryParam();
 
   const {
     isFetching,
@@ -32,16 +32,16 @@ const useGetTrackList = () => {
     data: responseData,
     error,
   } = useQuery({
-    queryKey: [URL, page, sortBy, orderBy, debouncedSearchText, selectedGenre, debouncedSearchArtist],
+    queryKey: [URL, page, sortBy, orderBy, search, genre, artist],
     queryFn: async () => {
       const params = new URLSearchParams();
       params.append('page', page.toString());
       params.append('limit', LIMIT.toString());
       params.append('sort', sortBy);
       params.append('order', orderBy);
-      debouncedSearchText?.length && params.append('search', debouncedSearchText);
-      selectedGenre?.length && params.append('genre', selectedGenre);
-      debouncedSearchArtist?.length && params.append('artist', debouncedSearchArtist);
+      search.length && params.append('search', search);
+      genre.length && params.append('genre', genre);
+      artist.length && params.append('artist', artist);
 
       const result = await fetcherGet<TrackListResponse>(URL, { params }, trackListResponseSchema);
 

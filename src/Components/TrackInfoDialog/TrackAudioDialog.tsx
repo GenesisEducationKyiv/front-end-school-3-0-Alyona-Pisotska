@@ -1,5 +1,5 @@
-import { useState } from '@/hooks/hooks';
 import { flushSync } from 'react-dom';
+import { useState } from '@/hooks/hooks';
 import {
   Dialog,
   DialogContent,
