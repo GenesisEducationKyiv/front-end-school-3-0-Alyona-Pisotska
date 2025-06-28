@@ -1,8 +1,9 @@
-import { useTrackContext } from '@/hooks/hooks';
+import { useGetTrackList, usePageQueryParam } from '@/hooks/hooks';
 import { TrackToolbar, TracksTable, AppPagination, AdvancedSearchSection, PageTitle } from '@/Components/components';
 
 const ContentContainer = () => {
-  const { page, totalPages, handleChangePage } = useTrackContext();
+  const { totalPages } = useGetTrackList();
+  const { page, handleChangePage } = usePageQueryParam();
 
   return (
     <div className='h-full flex-grow rounded-[4px] bg-white p-6 shadow-2xl'>

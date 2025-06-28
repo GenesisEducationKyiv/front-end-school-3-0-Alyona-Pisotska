@@ -1,6 +1,8 @@
 import { useEffect, useState } from '@/hooks/hooks';
 
-function useDebounce<T>(value: T, delay = 500): T {
+const DEFAULT_DELAY = 250;
+
+function useDebounce<T>(value: T, delay = DEFAULT_DELAY): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

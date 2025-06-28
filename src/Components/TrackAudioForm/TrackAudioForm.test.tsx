@@ -1,4 +1,4 @@
-import { useForm, useUploadAudioTrack, useDeleteAudioFile, useTrackContext } from '@/hooks/hooks';
+import { useForm, useUploadAudioTrack, useDeleteAudioFile } from '@/hooks/hooks';
 import { render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import { toast } from 'sonner';
@@ -16,10 +16,6 @@ vi.mock('@/hooks/hooks', async (importOriginal) => {
     })),
     useDeleteAudioFile: vi.fn(() => ({
       deleteAudioFile: vi.fn(),
-    })),
-    useTrackContext: vi.fn(() => ({
-      handleAddAudioTrack: vi.fn(),
-      handleDeleteAudioTrack: vi.fn(),
     })),
   };
 });
@@ -102,21 +98,15 @@ describe('TrackAudioForm', () => {
     expect(screen.getByTestId('save-submit-audio-button')).toBeEnabled();
   });
 
-  test('should call uploadAudioTrack and handleAddAudioTrack when a new file is present', async () => {
+  test('should call uploadAudioTrack when a new file is present', async () => {
     const expectedUploadedAudioFile = 'new-uploaded-path.mp3';
 
     const mockUploadAudioTrack = vi.fn().mockResolvedValue({ ...mockTrackData, audioFile: expectedUploadedAudioFile });
-    const mockAddAudioTrack = vi.fn();
-    const mockDeleteAudioTrack = vi.fn();
     const mockDeleteAudioFile = vi.fn();
     const mockOnFormSubmission = vi.fn();
 
     (useUploadAudioTrack as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       uploadAudioTrack: mockUploadAudioTrack,
-    });
-    (useTrackContext as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      handleAddAudioTrack: mockAddAudioTrack,
-      handleDeleteAudioTrack: mockDeleteAudioTrack,
     });
     (useDeleteAudioFile as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       deleteAudioFile: mockDeleteAudioFile,
@@ -138,30 +128,20 @@ describe('TrackAudioForm', () => {
     expect(mockUploadAudioTrack).toHaveBeenCalledTimes(1);
     expect(mockUploadAudioTrack).toHaveBeenCalledWith(newFile);
 
-    expect(mockDeleteAudioTrack).not.toHaveBeenCalled();
-    expect(mockDeleteAudioFile).not.toHaveBeenCalled();
-
-    expect(mockAddAudioTrack).toHaveBeenCalledTimes(1);
-    expect(mockAddAudioTrack).toHaveBeenCalledWith(mockTrackData.id, expectedUploadedAudioFile);
-
     expect(mockOnFormSubmission).toHaveBeenCalledTimes(1);
+
+    expect(mockDeleteAudioFile).not.toHaveBeenCalled();
 
     expect(toast.error).not.toHaveBeenCalled();
   });
 
-  test('should call deleteAudioFile and handleDeleteAudioTrack when audioFile is null', async () => {
+  test('should call deleteAudioFile when audioFile is null', async () => {
     const mockDeleteAudioFile = vi.fn().mockResolvedValue(undefined);
-    const mockDeleteAudioTrack = vi.fn();
-    const mockOnFormSubmission = vi.fn();
     const mockUploadAudioTrack = vi.fn();
-    const mockAddAudioTrack = vi.fn();
+    const mockOnFormSubmission = vi.fn();
 
     (useDeleteAudioFile as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       deleteAudioFile: mockDeleteAudioFile,
-    });
-    (useTrackContext as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      handleDeleteAudioTrack: mockDeleteAudioTrack,
-      handleAddAudioTrack: mockAddAudioTrack,
     });
     (useUploadAudioTrack as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       uploadAudioTrack: mockUploadAudioTrack,
@@ -185,13 +165,7 @@ describe('TrackAudioForm', () => {
     await waitFor(() => screen.getByTestId('save-submit-audio-button').click());
 
     expect(mockDeleteAudioFile).toHaveBeenCalledTimes(1);
-
-    expect(mockDeleteAudioTrack).toHaveBeenCalledTimes(1);
-    expect(mockDeleteAudioTrack).toHaveBeenCalledWith(mockTrackData.id);
-
     expect(mockUploadAudioTrack).not.toHaveBeenCalled();
-    expect(mockAddAudioTrack).not.toHaveBeenCalled();
-
     expect(mockOnFormSubmission).toHaveBeenCalledTimes(1);
 
     expect(toast.error).not.toHaveBeenCalled();
@@ -203,10 +177,6 @@ describe('TrackAudioForm', () => {
 
     (useUploadAudioTrack as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       uploadAudioTrack: mockUploadAudioTrack,
-    });
-    (useTrackContext as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
-      handleAddAudioTrack: vi.fn(),
-      handleDeleteAudioTrack: vi.fn(),
     });
 
     const newFile = new File(['audio content'], 'failed-track.mp3', { type: 'audio/mpeg' });

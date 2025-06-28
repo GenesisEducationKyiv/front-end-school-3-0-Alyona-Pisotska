@@ -17,7 +17,7 @@ type TrackInfoDialogProps = {
   trackData: Track;
 };
 
-const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
+const TrackAudioDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   return (
@@ -47,4 +47,4 @@ const TrackInfoDialog = ({ triggerComponent, trackData }: TrackInfoDialogProps) 
   );
 };
 
-export { TrackInfoDialog };
+export { TrackAudioDialog };
