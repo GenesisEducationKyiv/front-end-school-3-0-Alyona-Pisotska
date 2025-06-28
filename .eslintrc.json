@@ -62,7 +62,8 @@
         "ts": "never",
         "tsx": "never",
         "js": "never",
-        "jsx": "never"
+        "jsx": "never",
+        "json": "always"
       }
     ],
 
