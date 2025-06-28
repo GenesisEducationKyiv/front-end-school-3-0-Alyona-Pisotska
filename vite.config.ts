@@ -36,6 +36,46 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       sourcemap: 'hidden',
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              // 1. TanStack Query та Axios
+              if (id.includes('@tanstack') || id.includes('axios')) {
+                return 'data-fetching';
+              }
+
+              // 2. Radix UI, Lucide Icons and related utilities for classes
+              if (
+                id.includes('@radix-ui') ||
+                id.includes('lucide-react') ||
+                id.includes('class-variance-authority') ||
+                id.includes('clsx') ||
+                id.includes('tailwind-merge')
+              ) {
+                return 'ui-vendors';
+              }
+
+              // 3. React Hook Form and validation
+              if (id.includes('react-hook-form') || id.includes('@hookform/resolvers') || id.includes('zod')) {
+                return 'form-validation';
+              }
+
+              // 4. React Select
+              if (id.includes('react-select')) {
+                return 'select-library';
+              }
+
+              // 5. Sentry
+              if (id.includes('@sentry')) {
+                return 'sentry';
+              }
+
+              return 'core';
+            }
+          },
+        },
+      },
     },
     test: {
       globals: true,
