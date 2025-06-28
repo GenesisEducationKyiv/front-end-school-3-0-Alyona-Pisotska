@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/react';
 if (import.meta.env.MODE === 'production') {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,
-    release: import.meta.env.VITE_SENTRY_PROJECT + '@' + __APP_VERSION__,
+    release: `${import.meta.env.VITE_SENTRY_PROJECT}@${__APP_VERSION__}`,
     environment: import.meta.env.MODE,
 
     integrations: [
