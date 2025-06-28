@@ -31,3 +31,6 @@ dist-ssr
 
 # Bundle analysis reports
 /bundle-report
+
+# Sentry Config File
+.env

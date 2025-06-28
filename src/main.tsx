@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import { SearchTextContextProvider, GenreContextProvider, QueryParamsProvider } from '@/contexts/contexts';
 
+import '@/integrations/sentry';
 import './index.css';
 
 const queryClient = new QueryClient();
