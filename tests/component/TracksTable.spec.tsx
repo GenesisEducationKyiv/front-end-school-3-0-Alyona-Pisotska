@@ -27,15 +27,8 @@ const nirvanaTrack = {
   updatedAt: '1991-09-10T00:00:00.000Z',
 };
 
-const mockTracksSortedByTitle: Track[] = [
-  { ...queenTrack },
-  { ... nirvanaTrack },
-];
-
-const mockTracksSortedByArtist: Track[] = [
-  { ...nirvanaTrack },
-  { ...queenTrack },
-];
+const mockTracksSortedByTitle: Track[] = [{ ...queenTrack }, { ...nirvanaTrack }];
+const mockTracksSortedByArtist: Track[] = [{ ...nirvanaTrack }, { ...queenTrack }];
 
 const mockPaginationMeta: PaginationMeta = {
   page: 1,
