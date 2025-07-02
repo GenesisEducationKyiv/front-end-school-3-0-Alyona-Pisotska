@@ -20,9 +20,9 @@
     "test:playwright:component": "playwright test --config playwright-ct.config.ts"
   },
   "dependencies": {
-    "@playwright/experimental-ct-react": "^1.53.1",
     "@hookform/resolvers": "^5.0.1",
     "@mobily/ts-belt": "^3.13.1",
+    "@playwright/experimental-ct-react": "^1.53.1",
     "@radix-ui/react-checkbox": "^1.2.2",
     "@radix-ui/react-dialog": "^1.1.10",
     "@radix-ui/react-dropdown-menu": "^2.1.11",
@@ -51,6 +51,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^24.0.10",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
