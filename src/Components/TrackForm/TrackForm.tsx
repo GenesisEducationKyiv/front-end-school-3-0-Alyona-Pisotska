@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTrackContext, useForm } from '@/hooks/hooks';
+import { useForm, useTrackActions } from '@/hooks/hooks';
 import { Button, Form } from '@/Components/components';
 import {
   TrackTitleField,
@@ -18,7 +18,7 @@ type TrackFormProps = {
 };
 
 const TrackForm = ({ onFormSubmission, initialValues }: TrackFormProps) => {
-  const { handleAddTrack, handleEditTrack } = useTrackContext();
+  const { handleAddTrack, handleEditTrack } = useTrackActions();
 
   const form = useForm<TrackMetadataValues>({
     resolver: zodResolver(trackMetadataSchema),

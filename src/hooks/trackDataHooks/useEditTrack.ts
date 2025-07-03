@@ -15,6 +15,7 @@ const useEditTrack = () => {
       return fetcherPut<Track, TrackPayload>(`${URL}/${id}`, payload, {}, trackSchema);
     },
     successMessage: 'Track is updated',
+    invalidateQueryKey: [URL],
   });
 
   return { editTrack };
