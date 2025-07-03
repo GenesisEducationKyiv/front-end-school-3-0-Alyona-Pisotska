@@ -1,25 +1,31 @@
-import { useEffect, useQueryParamsContext } from '@/hooks/hooks';
-import { O } from '@mobily/ts-belt';
-import { isValidQueryParam } from '@/lib/utils/utils';
+import { useEffect, useQueryParams } from '@/hooks/hooks';
+import { O, pipe } from '@mobily/ts-belt';
 
 import type { QueryParamKey, QueryParamValue } from '@/lib/types/types';
 
-type UseValidatedQueryParamProps<T> = {
+type NonNullQueryParamValue = NonNullable<QueryParamValue>;
+
+type UseValidatedQueryParamProps<T, U extends NonNullable<T>> = {
   option: O.Option<T>;
-  validator: (value: T) => boolean;
+  validator: (value: T) => value is U;
   key: QueryParamKey;
-  defaultValue: QueryParamValue;
+  defaultValue: U & NonNullQueryParamValue;
 };
 
-const useValidatedQueryParam = <T>({
+const useValidatedQueryParam = <T, U extends NonNullable<T>>({
   option,
   validator,
   key,
   defaultValue,
-}: UseValidatedQueryParamProps<T>): O.Option<T> => {
-  const { set } = useQueryParamsContext();
+}: UseValidatedQueryParamProps<T, U>): U => {
+  const { set } = useQueryParams();
 
-  const isValid = isValidQueryParam(option, validator);
+  const validatedOption: O.Option<U> = pipe(
+    option,
+    O.flatMap((val: T) => (validator(val) ? O.Some(val) : O.None)),
+  );
+
+  const isValid = O.isSome(validatedOption);
 
   useEffect(() => {
     if (!isValid) {
@@ -27,7 +33,7 @@ const useValidatedQueryParam = <T>({
     }
   }, [isValid, key, defaultValue, set]);
 
-  return isValid ? option : O.None;
+  return O.getWithDefault(validatedOption, defaultValue);
 };
 
 export { useValidatedQueryParam };

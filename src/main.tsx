@@ -6,7 +6,6 @@ import * as Sentry from '@sentry/react';
 
 import App from './App';
 import { ErrorComponent } from '@/Components/components';
-import { SearchTextContextProvider, GenreContextProvider, QueryParamsProvider } from '@/contexts/contexts';
 
 import '@/integrations/sentry';
 import './index.css';
@@ -23,13 +22,7 @@ createRoot(rootElement).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <Sentry.ErrorBoundary fallback={<ErrorComponent />}>
-          <QueryParamsProvider>
-            <SearchTextContextProvider>
-              <GenreContextProvider>
-                <App />
-              </GenreContextProvider>
-            </SearchTextContextProvider>
-          </QueryParamsProvider>
+          <App />
         </Sentry.ErrorBoundary>
       </QueryClientProvider>
     </BrowserRouter>

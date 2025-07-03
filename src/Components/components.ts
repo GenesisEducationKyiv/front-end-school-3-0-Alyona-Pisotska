@@ -9,7 +9,7 @@ export { InputWithIcon } from './InputWithIcon/InputWithIcon';
 export { TrackForm } from './TrackForm/TrackForm';
 export { Select } from './Select/Select';
 export { TrackFormDialogButton } from './TrackFormDialogButton/TrackFormDialogButton';
-export { TrackInfoDialog } from './TrackInfoDialog/TrackInfoDialog';
+export { TrackAudioDialog } from './TrackInfoDialog/TrackAudioDialog';
 export { TrackAudioForm } from './TrackAudioForm/TrackAudioForm';
 export { GenreSelect } from './GenreSelect/GenreSelect';
 export { TableLoader } from './TableLoader/TableLoader';
