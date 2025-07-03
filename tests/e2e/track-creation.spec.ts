@@ -70,7 +70,7 @@ test.describe('Track Creation Flow with Mocked API', () => {
     await expect(dialog).not.toBeVisible();
 
     const newTrackRow = page.getByTestId(`track-item-${mockNewTrack.id}`);
-    await expect(newTrackRow).not.toBeVisible();
+    await expect(newTrackRow).toBeVisible();
 
     await expect(newTrackRow.getByText(mockNewTrack.title)).toBeVisible();
     await expect(newTrackRow.getByText(mockNewTrack.artist)).toBeVisible();
