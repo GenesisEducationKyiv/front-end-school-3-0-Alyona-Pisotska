@@ -127,9 +127,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: component-test-report
-          path: |
-            playwright-report
-            test-results
+          path: playwright-report
+          retention-days: 30
 
   e2e-tests:
     timeout-minutes: 60
@@ -157,11 +156,9 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-artifacts
-          path: |
-            playwright-report
-            test-results
-            retention-days: 30
+          name: e2e-test-report
+          path: playwright-report
+          retention-days: 30
 
   build:
     runs-on: ubuntu-latest
