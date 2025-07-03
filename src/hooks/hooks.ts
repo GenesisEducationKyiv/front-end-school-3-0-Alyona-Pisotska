@@ -1,8 +1,16 @@
 export { useDebounce } from './useDebounce';
 export { useAppMutation } from './useAppMutation';
-export { useQueryParams } from './useQueryParams';
-export { useTrackQueryParams } from './useTrackQueryParams';
 export { useValidatedQueryParam } from './useValidatedQueryParam';
+
+//* query params hooks */
+export {
+  useQueryParams,
+  usePageQueryParam,
+  useSortQueryParams,
+  useSearchArtistQueryParam,
+  useSelectGenreQueryParam,
+  useSearchQueryParam,
+} from './queryParamsHooks/queryParamsHooks';
 
 //* request hooks */
 export {
@@ -11,18 +19,10 @@ export {
   useEditTrack,
   useDeleteTrack,
   useDeleteMultiTracks,
-  useTrackListState,
+  useTrackActions,
 } from './trackDataHooks/trackDataHooks';
 export { useUploadAudioTrack, useDeleteAudioFile } from './audioTrackHooks/audioTrackHooks';
-export { useGetGenreList } from './useGetGenreList';
-
-//* contexts hooks */
-export {
-  useTrackContext,
-  useSearchTextContext,
-  useGenreContext,
-  useQueryParamsContext,
-} from './contextHooks/contextHooks';
+export { useGetGenreList, useGenreData } from './genreDataHooks/genreDataHooks';
 
 //* react hooks */
 export { useMemo, useState, useEffect, useCallback, useContext, useRef } from 'react';

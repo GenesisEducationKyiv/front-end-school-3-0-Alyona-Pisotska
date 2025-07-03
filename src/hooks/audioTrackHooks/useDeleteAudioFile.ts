@@ -10,6 +10,7 @@ const useDeleteAudioFile = (trackId: Track['id']) => {
       return fetcherDelete<void>(`${API_ENDPOINTS.trackList}/${trackId}/file`);
     },
     successMessage: 'Track audio is deleted',
+    invalidateQueryKey: [API_ENDPOINTS.trackList],
   });
 
   return { deleteAudioFile };

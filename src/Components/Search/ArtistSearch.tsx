@@ -1,8 +1,9 @@
-import { useTrackContext } from '@/hooks/hooks';
+import { useGetTrackList, useSearchArtistQueryParam } from '@/hooks/hooks';
 import { SearchInput } from '@/Components/components';
 
 const ArtistSearch = () => {
-  const { searchArtist, isLoadingTrackList, handleChangeSearchArtist } = useTrackContext();
+  const { searchArtist, handleChangeSearchArtist } = useSearchArtistQueryParam();
+  const { isLoadingTrackList } = useGetTrackList();
 
   return (
     <SearchInput

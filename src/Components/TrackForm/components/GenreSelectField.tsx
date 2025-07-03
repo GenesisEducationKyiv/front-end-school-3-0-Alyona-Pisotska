@@ -1,4 +1,4 @@
-import { useGenreContext, useMemo } from '@/hooks/hooks';
+import { useMemo, useGenreData } from '@/hooks/hooks';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Select } from '@/Components/components';
 
 import type { Control } from 'react-hook-form';
@@ -9,7 +9,7 @@ type TrackTitleFieldProps = {
 };
 
 const GenreSelectField = ({ control }: TrackTitleFieldProps) => {
-  const { genreList } = useGenreContext();
+  const { genreList } = useGenreData();
 
   const options = useMemo(() => {
     return genreList.map((item) => ({ value: item, label: item }));
