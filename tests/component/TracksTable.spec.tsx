@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/experimental-ct-react';
 import { TracksTable } from '@/Components/components';
-import { TrackContextProvider } from '@/contexts/contexts';
 import { API_ENDPOINTS } from '@/lib/constants/constants';
 
 import type { Track, PaginationMeta } from '@/lib/types/types';
@@ -68,11 +67,7 @@ test.describe('Component: TracksTable Sorting', () => {
       return;
     });
 
-    const component = await mount(
-      <TrackContextProvider>
-        <TracksTable />
-      </TrackContextProvider>,
-    );
+    const component = await mount(<TracksTable />);
 
     await expect(component.getByTestId('tracks-table')).toBeVisible();
 
