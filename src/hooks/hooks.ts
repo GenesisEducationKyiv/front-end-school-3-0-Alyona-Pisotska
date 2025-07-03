@@ -1,6 +1,7 @@
 export { useDebounce } from './useDebounce';
 export { useAppMutation } from './useAppMutation';
 export { useValidatedQueryParam } from './useValidatedQueryParam';
+export { useActiveTrack } from './useActiveTrack';
 
 //* query params hooks */
 export {
