@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       sentryVitePlugin({
         org: env.VITE_SENTRY_ORG,
         project: env.VITE_SENTRY_PROJECT,
-        authToken: env.VITE_SENTRY_AUTH_TOKEN,
+        authToken: env.SENTRY_AUTH_TOKEN,
         telemetry: false,
       }) as PluginOption,
     ],

@@ -35,9 +35,9 @@
    ```env
    VITE_SENTRY_ORG=pisotska
    VITE_SENTRY_PROJECT=music-app
-   VITE_SENTRY_AUTH_TOKEN=
-
    VITE_SENTRY_DSN=
+
+   SENTRY_AUTH_TOKEN=
    ```
 
    ⚠️ Replace empty values with actual data from a Sentry account.
