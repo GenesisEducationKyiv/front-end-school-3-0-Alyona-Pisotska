@@ -8,6 +8,10 @@ on:
 
 env:
   NODE_VERSION: 20.13.0
+  VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  VITE_SENTRY_ORG: ${{ vars.VITE_SENTRY_ORG }}
+  VITE_SENTRY_PROJECT: ${{ vars.VITE_SENTRY_PROJECT }}
 
 jobs:
   lint:
