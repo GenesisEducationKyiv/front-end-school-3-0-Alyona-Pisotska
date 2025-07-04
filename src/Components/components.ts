@@ -15,6 +15,7 @@ export { GenreSelect } from './GenreSelect/GenreSelect';
 export { TableLoader } from './TableLoader/TableLoader';
 export { AdvancedSearchSection } from './AdvancedSearchSection/AdvancedSearchSection';
 export { PageTitle } from './PageTitle/PageTitle';
+export { ErrorComponent } from './ErrorComponent/ErrorComponent';
 
 /** shad-cn components */
 export { Button } from './ui/button/button';
