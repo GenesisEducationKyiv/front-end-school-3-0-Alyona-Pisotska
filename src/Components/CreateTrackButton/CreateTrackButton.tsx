@@ -12,6 +12,9 @@ const CreateTrackButton = () => {
           aria-disabled={isLoadingTrackList}
           data-loading={isLoadingTrackList ? 'true' : undefined}
           data-testid='create-track-button'
+          onClick={() => {
+            throw new Error('test error');
+          }}
         >
           Create track
         </Button>
