@@ -1,5 +1,6 @@
 import { useEffect, useState, useWatch } from '@/hooks/hooks';
 import { FormItem, FormLabel, FormControl, FormMessage, FormField, Input } from '@/Components/components';
+import { cn } from '@/lib/utils/utils';
 
 import type { Control } from 'react-hook-form';
 import type { TrackMetadataValues } from '@/lib/types/types';
@@ -21,25 +22,29 @@ const CoverImageField = ({ control }: CoverImageFieldProps) => {
       data-testid='input-cover-image'
       control={control}
       name='coverImage'
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Cover image link</FormLabel>
-          <FormControl>
-            <Input placeholder='Enter cover image link...' {...field} />
-          </FormControl>
+      render={({ field }) => {
+        const hasImage = Boolean(field.value && !imageError);
 
-          <div className='border-accent mt-2 h-[150px] overflow-hidden rounded border border-dashed'>
-            <img
-              src={field.value && !imageError ? field.value : '/no-image.png'}
-              onError={() => setImageError(true)}
-              alt='Cover Preview'
-              className='h-full w-full rounded object-cover'
-            />
-          </div>
+        return (
+          <FormItem>
+            <FormLabel>Cover image link</FormLabel>
+            <FormControl>
+              <Input placeholder='Enter cover image link...' {...field} />
+            </FormControl>
 
-          <FormMessage data-testid='error-cover-image' />
-        </FormItem>
-      )}
+            <div className='border-accent mt-2 h-[150px] overflow-hidden rounded border border-dashed'>
+              <img
+                src={hasImage ? field.value : '/no-image.svg'}
+                onError={() => setImageError(true)}
+                alt='Cover Preview'
+                className={cn('h-full w-full rounded object-cover', hasImage ? 'object-cover' : 'object-contain')}
+              />
+            </div>
+
+            <FormMessage data-testid='error-cover-image' />
+          </FormItem>
+        );
+      }}
     />
   );
 };
