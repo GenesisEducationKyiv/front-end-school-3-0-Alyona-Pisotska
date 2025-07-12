@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Check } from 'lucide-react';
 import { Button } from './button';
 
@@ -73,7 +73,7 @@ export const AsLink: Story = {
     variant: 'link',
     asChild: true,
     children: (
-      <a href='https://storybook.js.org/' target='_blank'>
+      <a href='https://storybook.js.org/' target='_blank' rel='noreferrer'>
         Link
       </a>
     ),
