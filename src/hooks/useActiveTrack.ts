@@ -14,10 +14,6 @@ const useActiveTrack = () => {
   useEffect(() => {
     const socket = io(API_BASE_URL);
 
-    socket.on('connect', () => {
-      console.log('Connected to Socket.IO server for active track updates!');
-    });
-
     socket.on('active-track:update', (data: ActiveTrack) => {
       setActiveTrack(data.title);
     });
@@ -32,7 +28,6 @@ const useActiveTrack = () => {
 
     return () => {
       socket.disconnect();
-      console.log('Socket.IO client for active track disconnected on cleanup.');
     };
   }, []);
 
