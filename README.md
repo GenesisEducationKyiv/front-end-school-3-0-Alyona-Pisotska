@@ -33,6 +33,7 @@
 2. Add the following variables:
 
    ```env
+   VITE_API_BASE_URL=http://localhost:8000
    VITE_SENTRY_ORG=pisotska
    VITE_SENTRY_PROJECT=music-app
    VITE_SENTRY_DSN=
