@@ -1,4 +1,3 @@
-export { API_BASE_URL, SENTRY_ORG, SENTRY_PROJECT, SENTRY_DSN } from './config';
 export { API_ENDPOINTS } from './api-endpoints';
 export { ORDER_BY } from './order-by';
 export { TRACK_TABLE_CELL_IDS } from './track-table-cell-ids';

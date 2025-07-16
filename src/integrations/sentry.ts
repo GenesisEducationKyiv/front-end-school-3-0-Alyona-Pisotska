@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/react';
-import { SENTRY_PROJECT, SENTRY_DSN } from '@/lib/constants/constants';
+import { SENTRY_PROJECT, SENTRY_DSN } from '@/config/config';
 
 if (import.meta.env.MODE === 'production') {
   Sentry.init({

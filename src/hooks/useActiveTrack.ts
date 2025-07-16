@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { API_BASE_URL } from '@/lib/constants/constants';
+import { API_BASE_URL } from '@/config/config';
 
 import type { Track } from '@/lib/types/types';
 

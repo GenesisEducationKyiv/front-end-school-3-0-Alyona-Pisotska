@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import { type ZodSchema } from 'zod';
 import { type Result, err } from 'neverthrow';
 import { handleAxiosError, parseWithSchema } from '@/lib/utils/utils';
-import { API_BASE_URL } from '@/lib/constants/constants';
+import { API_BASE_URL } from '@/config/config';
 
 const fetcherGet = async <T>(
   url: string,
