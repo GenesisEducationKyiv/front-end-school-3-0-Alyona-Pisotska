@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/react';
+import { SENTRY_PROJECT, SENTRY_DSN } from '@/config/config';
 
 if (import.meta.env.MODE === 'production') {
   Sentry.init({
-    dsn: import.meta.env.VITE_SENTRY_DSN,
-    release: `${import.meta.env.VITE_SENTRY_PROJECT}-${__APP_VERSION__}`,
+    dsn: SENTRY_DSN,
+    release: `${SENTRY_PROJECT}-${__APP_VERSION__}`,
     environment: import.meta.env.MODE,
 
     integrations: [

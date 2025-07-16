@@ -27,7 +27,6 @@ const nirvanaTrack = {
 };
 
 const mockTracksSortedByTitle: Track[] = [{ ...queenTrack }, { ...nirvanaTrack }];
-
 const mockTracksSortedByArtist: Track[] = [{ ...nirvanaTrack }, { ...queenTrack }];
 
 const mockPaginationMeta: PaginationMeta = {
